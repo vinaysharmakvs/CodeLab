@@ -10,7 +10,61 @@ const finderStage = document.querySelector("[data-finder-stage]");
 const finderGoal = document.querySelector("[data-finder-goal]");
 const finderResult = document.querySelector("[data-finder-result]");
 const guidedForms = document.querySelectorAll("[data-guided-form]");
+const pathButtons = document.querySelectorAll("[data-path]");
+const pathResult = document.querySelector("[data-path-result]");
+const projectCards = document.querySelectorAll("[data-project]");
+const projectPreview = document.querySelector("[data-project-preview]");
 const whatsappNumber = "918826758881";
+
+const pathData = {
+  young: {
+    label: "Recommended path",
+    title: "Scratch, Scratch Jr & App Starter",
+    text: "Start with block-based coding, creative logic, simple app thinking and a fun demo project.",
+    tags: ["Scratch Jr", "Scratch", "App building"],
+  },
+  teen: {
+    label: "Recommended path",
+    title: "Python, JavaScript & AI Builder",
+    text: "Move from coding foundations into websites, apps, chatbots, AI tools and presentation-ready projects.",
+    tags: ["Python", "JavaScript", "AI"],
+  },
+  college: {
+    label: "Career-focused path",
+    title: "Internship & Live Project Lab",
+    text: "Build portfolio projects, improve GitHub, prepare for interviews and learn to explain work with confidence.",
+    tags: ["Live project", "GitHub", "Interview prep"],
+  },
+  business: {
+    label: "Growth-focused path",
+    title: "Digital Presence & AI Systems",
+    text: "Create websites, social media systems, WhatsApp leads, dashboards, chatbots and automation for real business needs.",
+    tags: ["Website", "Leads", "AI automation"],
+  },
+};
+
+const projectData = {
+  scratch: {
+    title: "Game Builder",
+    text: "Students design a simple game, add rules, scoring, characters and a short demo presentation.",
+    bars: ["82%", "58%", "74%"],
+  },
+  app: {
+    title: "Mini App",
+    text: "Students plan screens, buttons, user flow and logic, then present how the app solves a small problem.",
+    bars: ["64%", "86%", "70%"],
+  },
+  web: {
+    title: "Portfolio Website",
+    text: "Students build a personal website with sections, styling, interaction and a clear project story.",
+    bars: ["78%", "66%", "92%"],
+  },
+  ai: {
+    title: "AI Chatbot",
+    text: "Students create a chatbot with prompt design, personality, memory ideas and a practical use case.",
+    bars: ["88%", "72%", "80%"],
+  },
+};
 
 const finderData = {
   student: {
@@ -120,6 +174,18 @@ function selectBookingButton(container, button, hiddenName, value) {
   setBookingError("");
 }
 
+function renderPath(pathKey) {
+  if (!pathResult || !pathData[pathKey]) return;
+  const item = pathData[pathKey];
+  pathResult.innerHTML = `<span>${item.label}</span><h3>${item.title}</h3><p>${item.text}</p><div class="path-tags">${item.tags.map((tag) => `<strong>${tag}</strong>`).join("")}</div>`;
+}
+
+function renderProject(projectKey) {
+  if (!projectPreview || !projectData[projectKey]) return;
+  const item = projectData[projectKey];
+  projectPreview.innerHTML = `<span>Project preview</span><h3>${item.title}</h3><p>${item.text}</p><div class="preview-bars" aria-hidden="true">${item.bars.map((width) => `<i style="--bar-width:${width}"></i>`).join("")}</div>`;
+}
+
 function guidedRecommendation(type, data) {
   if (type === "student") {
     const stage = data.get("stage");
@@ -205,6 +271,20 @@ finderForm?.addEventListener("submit", (event) => {
   finderResult.hidden = false;
 });
 
+pathButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    pathButtons.forEach((item) => item.classList.toggle("is-active", item === button));
+    renderPath(button.dataset.path);
+  });
+});
+
+projectCards.forEach((button) => {
+  button.addEventListener("click", () => {
+    projectCards.forEach((item) => item.classList.toggle("is-active", item === button));
+    renderProject(button.dataset.project);
+  });
+});
+
 guidedForms.forEach((form) => {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -218,7 +298,7 @@ guidedForms.forEach((form) => {
 });
 
 document.addEventListener("click", (event) => {
-  const target = event.target.closest(".primary-button, .secondary-button, .header-cta, .vertical-card a, .date-grid button, .slot-grid button, .finder-tabs button");
+  const target = event.target.closest(".primary-button, .secondary-button, .header-cta, .vertical-card a, .date-grid button, .slot-grid button, .finder-tabs button, .path-buttons button, .project-card");
   if (!target) return;
   const rect = target.getBoundingClientRect();
   const ripple = document.createElement("span");
