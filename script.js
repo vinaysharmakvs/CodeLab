@@ -36,6 +36,68 @@ const roleSkillPicker = document.querySelector(".role-skill-picker");
 const roleResult = document.querySelector("[data-role-result]");
 const whatsappNumber = "918826758881";
 
+const futureHubBotQuickQuestions = [
+  "Which course is right for my child?",
+  "I am a college student. What should I learn?",
+  "Can you build my business website?",
+  "How does the website checker work?",
+  "Do you provide internships?",
+  "Can schools or colleges invite FutureHub?",
+];
+
+const futureHubBotAnswers = [
+  {
+    keywords: ["child", "parent", "kid", "grade", "school", "course", "coding", "scratch", "python", "app"],
+    answer:
+      "For students and parents, FutureHub starts by understanding grade, confidence, interest and goal. Grade 3-5 can begin with Scratch, Scratch Jr, logic and app basics. Grade 6-8 can move into Python, JavaScript and apps. Grade 9-12 can explore AI, web apps and programming languages. Use Build My Coding Course on the homepage for a custom path.",
+  },
+  {
+    keywords: ["ai champions", "teen", "chatbot", "agent", "prompt", "gemini", "python"],
+    answer:
+      "The AI Champions Program is a live teen program where students learn Python basics, prompt engineering, chatbot personality, memory ideas, real-world data connections, AI agents and present a working AI app on Demo Day.",
+  },
+  {
+    keywords: ["college", "internship", "project", "final year", "fyp", "resume", "interview", "career", "role"],
+    answer:
+      "For college students, FutureHub can help with live project training, final year project direction, GitHub/portfolio building, resume improvement, interview preparation and entrepreneurship support. Try the Future Role Finder on the Students page to discover roles like AI App Developer, Web Developer, Data Analyst, UI/UX Designer or Business Analyst.",
+  },
+  {
+    keywords: ["business", "website", "site", "salon", "clinic", "store", "restaurant", "cafe", "real estate", "ngo", "startup"],
+    answer:
+      "For business owners, FutureHub can create websites, landing pages, branding, WhatsApp enquiry flows, Google-ready content, social media support, booking systems, dashboards and automation plans. The Business page has website demos for salons, clinics, schools, cafes, retail stores, real estate, NGOs, startups and local services.",
+  },
+  {
+    keywords: ["website checker", "readiness", "seo", "meta", "audit", "health", "score", "scan"],
+    answer:
+      "The Website Readiness Checker is our own FutureHub checker. It reviews live website HTML for meta tags, structured data, headings, image alt text, mobile basics, contact signals, maps, forms and SEO recommendations. It works best after deployment because the Vercel API fetches the public website securely.",
+  },
+  {
+    keywords: ["social", "instagram", "facebook", "marketing", "lead", "whatsapp", "ads", "growth"],
+    answer:
+      "For growth, we can support Instagram/Facebook handling, content planning, WhatsApp enquiry journeys, landing pages, basic SEO, lead forms and practical campaign ideas. We do not believe in pressure follow-ups; we move forward only when the customer feels the service is the right fit.",
+  },
+  {
+    keywords: ["school", "college", "institution", "workshop", "camp", "hackathon", "club"],
+    answer:
+      "For schools and colleges, FutureHub can run AI clubs, coding workshops, hackathons, summer camps, project sprints, teacher/team upskilling and digital admission systems with FAQ, forms, chatbot ideas and lead tracking.",
+  },
+  {
+    keywords: ["price", "pricing", "cost", "budget", "package", "fee"],
+    answer:
+      "Pricing depends on the goal and scope. Courses vary by 1:1 class, small group, bootcamp or project mentorship. Website projects vary by starter website, growth website or premium system. The best next step is to book a slot or send WhatsApp details so we can suggest a suitable plan.",
+  },
+  {
+    keywords: ["book", "call", "slot", "counselling", "guidance", "talk", "contact", "whatsapp"],
+    answer:
+      "You can book a counselling or service discussion slot from the homepage. You can also WhatsApp us at 8826758881 for course guidance, business website discussion, internship/project support, workshops or a custom digital growth plan.",
+  },
+  {
+    keywords: ["india", "usa", "singapore", "middle east", "online", "location", "rehan"],
+    answer:
+      "FutureHub is by Kidsverse Private Limited, Rehan, Himachal Pradesh, and we already teach learners across India, the US, Singapore and the Middle East through online guidance, live classes and project support.",
+  },
+];
+
 const pathData = {
   young: {
     label: "Recommended path",
@@ -955,6 +1017,96 @@ function guidedRecommendation(type, data) {
   return ["Book a Guidance Slot", "We will understand the requirement and suggest the right plan."];
 }
 
+function createFutureHubBot() {
+  const bot = document.createElement("div");
+  bot.className = "futurehub-bot";
+  bot.innerHTML = `
+    <button class="futurehub-bot-toggle" type="button" aria-expanded="false">
+      <span class="futurehub-bot-icon" aria-hidden="true">AI</span>
+      <span class="futurehub-bot-copy"><strong>Navi AI</strong><small>FutureHub guide</small></span>
+      <span class="futurehub-bot-ping" aria-hidden="true"></span>
+    </button>
+    <section class="futurehub-bot-panel" hidden aria-label="FutureHub Navi AI assistant">
+      <div class="futurehub-bot-head">
+        <div><span>FutureHub Navi AI</span><strong>Ask about courses, projects or business growth</strong></div>
+        <button type="button" aria-label="Close Navi AI">X</button>
+      </div>
+      <div class="futurehub-bot-messages" aria-live="polite"></div>
+      <div class="futurehub-bot-quick" aria-label="Quick FutureHub questions"></div>
+      <form class="futurehub-bot-form">
+        <input type="text" placeholder="Ask about courses, websites, internships..." aria-label="Ask FutureHub Navi AI a question" />
+        <button type="submit">Ask</button>
+      </form>
+      <a class="futurehub-bot-whatsapp" href="https://wa.me/${whatsappNumber}?text=Hello%20Kidsverse%20FutureHub%2C%20I%20need%20guidance%20for%20courses%2C%20projects%20or%20business%20services" target="_blank" rel="noopener noreferrer">Talk to FutureHub on WhatsApp</a>
+    </section>
+  `;
+  document.body.appendChild(bot);
+
+  const toggle = bot.querySelector(".futurehub-bot-toggle");
+  const panel = bot.querySelector(".futurehub-bot-panel");
+  const closeButton = bot.querySelector(".futurehub-bot-head button");
+  const messages = bot.querySelector(".futurehub-bot-messages");
+  const quick = bot.querySelector(".futurehub-bot-quick");
+  const form = bot.querySelector(".futurehub-bot-form");
+  const input = bot.querySelector(".futurehub-bot-form input");
+
+  function addMessage(text, type = "bot") {
+    const message = document.createElement("div");
+    message.className = `futurehub-bot-message is-${type}`;
+    message.textContent = text;
+    messages.appendChild(message);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function answerQuestion(question) {
+    const cleanQuestion = question.trim();
+    if (!cleanQuestion) return;
+    addMessage(cleanQuestion, "user");
+    const query = cleanQuestion.toLowerCase();
+    const ranked = futureHubBotAnswers
+      .map((item) => ({
+        item,
+        score: item.keywords.reduce((score, keyword) => score + (query.includes(keyword) ? 1 : 0), 0),
+      }))
+      .sort((a, b) => b.score - a.score);
+    const best = ranked[0];
+    addMessage(
+      best?.score
+        ? best.item.answer
+        : "I can help with student courses, parent guidance, college internships, Future Role Finder, AI Champions, business websites, website readiness checks, social media, workshops and booking a slot. For a personal discussion, use WhatsApp.",
+      "bot"
+    );
+  }
+
+  function setBotOpen(open) {
+    panel.hidden = !open;
+    toggle.setAttribute("aria-expanded", String(open));
+    bot.classList.toggle("is-open", open);
+    if (open) input.focus({ preventScroll: true });
+  }
+
+  addMessage("Hi, I am Navi AI. I can help you choose a student path, college role, business website direction, workshop idea or the right FutureHub next step.");
+
+  futureHubBotQuickQuestions.forEach((question) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = question;
+    button.addEventListener("click", () => answerQuestion(question));
+    quick.appendChild(button);
+  });
+
+  toggle.addEventListener("click", () => setBotOpen(panel.hidden));
+  closeButton.addEventListener("click", () => setBotOpen(false));
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    answerQuestion(input.value);
+    input.value = "";
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setBotOpen(false);
+  });
+}
+
 function selectedRoleSkills() {
   return [...document.querySelectorAll("[data-role-skill].is-selected")].map((button) => button.dataset.roleSkill);
 }
@@ -1168,7 +1320,7 @@ guidedForms.forEach((form) => {
 });
 
 document.addEventListener("click", (event) => {
-  const target = event.target.closest(".primary-button, .secondary-button, .header-cta, .vertical-card a, .date-grid button, .slot-grid button, .finder-tabs button, .path-buttons button, .project-card, .skill-picker button, .role-skill-picker button, .sample-nav span, .sample-hero button, .demo-filters button, .demo-card button, .business-sticky-cta a, .health-whatsapp, .role-whatsapp");
+  const target = event.target.closest(".primary-button, .secondary-button, .header-cta, .hero-path-card, .vertical-card a, .date-grid button, .slot-grid button, .finder-tabs button, .path-buttons button, .project-card, .skill-picker button, .role-skill-picker button, .sample-nav span, .sample-hero button, .demo-filters button, .demo-card button, .business-sticky-cta a, .health-whatsapp, .role-whatsapp");
   if (!target) return;
   const rect = target.getBoundingClientRect();
   const ripple = document.createElement("span");
@@ -1185,6 +1337,7 @@ renderBuilderSkills();
 renderBuilderPreview();
 renderBusinessSample();
 filterTemplateCards();
+createFutureHubBot();
 
 dateGrid?.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-date]");
