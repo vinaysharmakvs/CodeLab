@@ -26,6 +26,11 @@ const sampleCategory = document.querySelector("[data-sample-category]");
 const sampleBudget = document.querySelector("[data-sample-budget]");
 const samplePreview = document.querySelector("[data-sample-preview]");
 const sampleWhatsapp = document.querySelector("[data-sample-whatsapp]");
+const templateFilters = document.querySelectorAll("[data-template-filter]");
+const templateBudget = document.querySelector("[data-template-budget]");
+const templateCards = document.querySelectorAll("[data-template-card]");
+const healthForm = document.querySelector("[data-health-form]");
+const healthResult = document.querySelector("[data-health-result]");
 const whatsappNumber = "918826758881";
 
 const pathData = {
@@ -643,6 +648,149 @@ function sendBusinessSampleRequest() {
   window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank", "noopener,noreferrer");
 }
 
+function filterTemplateCards() {
+  if (!templateCards.length) return;
+  const activeFilter = document.querySelector("[data-template-filter].is-active")?.dataset.templateFilter || "all";
+  const activeBudget = templateBudget?.value || "all";
+  templateCards.forEach((card) => {
+    const industryMatch = activeFilter === "all" || card.dataset.industry === activeFilter;
+    const budgetMatch = activeBudget === "all" || card.dataset.budget === activeBudget;
+    card.hidden = !(industryMatch && budgetMatch);
+  });
+}
+
+function hashText(text) {
+  return [...text].reduce((total, char) => (total * 31 + char.charCodeAt(0)) % 997, 17);
+}
+
+function normalizeWebsiteUrl(value) {
+  const trimmed = value.trim();
+  const withProtocol = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+  return new URL(withProtocol);
+}
+
+function clampScore(score) {
+  return Math.max(42, Math.min(98, Math.round(score)));
+}
+
+function websiteHealthAudit(url) {
+  const domain = url.hostname.replace(/^www\./, "");
+  const hash = hashText(domain);
+  const hasHttps = url.protocol === "https:";
+  const hasPath = url.pathname && url.pathname !== "/";
+  const hasCleanDomain = domain.length <= 18 && !domain.includes("-");
+  const likelyLocalBusiness = ["salon", "clinic", "school", "cafe", "store", "shop", "real", "ngo", "academy", "restaurant"].some((word) => domain.includes(word));
+  const mobile = clampScore(68 + (hash % 19) + (hasCleanDomain ? 4 : -3));
+  const speed = clampScore(62 + ((hash >> 2) % 24) - (hasPath ? 4 : 0));
+  const seo = clampScore(58 + ((hash >> 3) % 28) + (likelyLocalBusiness ? 3 : -2));
+  const security = clampScore((hasHttps ? 78 : 48) + (hash % 13));
+  const googleStatus = likelyLocalBusiness && seo > 72 ? "Likely present, needs optimization" : "Needs Google Business Profile check";
+  const missing = [];
+  if (mobile < 82) missing.push("Mobile-first layout improvements");
+  if (speed < 78) missing.push("Image compression and speed optimization");
+  if (seo < 78) missing.push("Local SEO titles, keywords and service pages");
+  if (security < 82) missing.push("SSL, secure forms and trust badges");
+  if (!likelyLocalBusiness) missing.push("Google Business Profile and map visibility");
+  missing.push("WhatsApp lead button");
+  missing.push("Clear enquiry or booking flow");
+  const overall = clampScore((mobile + speed + seo + security) / 4);
+  const priority = overall >= 84 ? "Growth ready" : overall >= 70 ? "Good base, needs conversion upgrades" : "High improvement opportunity";
+  const leadPotential = overall >= 84 ? "Your website can focus on campaigns, content and conversion tracking." : overall >= 70 ? "A few focused upgrades can improve trust, calls and WhatsApp enquiries." : "A redesign or focused landing page can create a much stronger enquiry flow.";
+  return { domain, mobile, speed, seo, security, googleStatus, overall, priority, leadPotential, missing: missing.slice(0, 6) };
+}
+
+function scoreLabel(score) {
+  if (score >= 88) return "Excellent";
+  if (score >= 74) return "Good";
+  if (score >= 60) return "Needs attention";
+  return "Priority fix";
+}
+
+function scoreTone(score) {
+  if (score >= 88) return "is-excellent";
+  if (score >= 74) return "is-good";
+  if (score >= 60) return "is-attention";
+  return "is-critical";
+}
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function renderHealthScanning(domain) {
+  if (!healthResult) return;
+  healthResult.innerHTML = `
+    <div class="health-scanning">
+      <div class="scan-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div>
+        <span>Scanning ${domain}</span>
+        <h3>Checking your website experience...</h3>
+        <p>Reviewing mobile layout, loading signals, SEO basics, security trust and enquiry readiness.</p>
+      </div>
+      <div class="scan-step-list">
+        <span>Mobile layout check</span>
+        <span>Speed signal check</span>
+        <span>SEO visibility check</span>
+        <span>Security trust check</span>
+        <span>Lead feature check</span>
+      </div>
+      <div class="scan-progress"><i></i></div>
+    </div>
+  `;
+  healthResult.hidden = false;
+}
+
+function renderHealthResult(audit, rawUrl) {
+  if (!healthResult) return;
+  const scores = [
+    ["Mobile Friendliness", audit.mobile, "How cleanly the website works on phones"],
+    ["Loading Speed", audit.speed, "How quickly visitors can start using the page"],
+    ["SEO Readiness", audit.seo, "How prepared the site is for Google visibility"],
+    ["Security", audit.security, "How trustworthy and safe the website feels"],
+  ];
+  healthResult.innerHTML = `
+    <div class="health-result-head">
+      <span>Smart website report</span>
+      <h3>${audit.domain}</h3>
+      <p>${audit.leadPotential}</p>
+      <div class="health-overall"><strong>${audit.overall}</strong><span>${audit.priority}</span></div>
+    </div>
+    <div class="health-score-grid">
+      ${scores
+        .map(
+          ([label, score, help]) => `<article class="health-score-card ${scoreTone(score)}" style="--score:${score}%"><div class="health-score-top"><span>${label}</span><small>${scoreLabel(score)}</small></div><div class="health-score-value"><strong>${score}</strong><em>/100</em></div><p>${help}</p><div class="health-score-bar" aria-hidden="true"><i></i></div></article>`
+        )
+        .join("")}
+    </div>
+    <div class="health-insight-grid">
+      <div class="health-gbp-card">
+        <span>Google Business Profile Status</span>
+        <strong>${audit.googleStatus}</strong>
+        <p>A complete Google profile helps local customers find directions, reviews, opening hours and direct call buttons.</p>
+      </div>
+      <div class="health-gbp-card">
+        <span>Lead Readiness</span>
+        <strong>${audit.missing.includes("Clear enquiry or booking flow") ? "Needs stronger enquiry path" : "Good enquiry direction"}</strong>
+        <p>For local businesses, the website should move visitors toward WhatsApp, booking, call, map or enquiry in one clear journey.</p>
+      </div>
+    </div>
+    <div class="health-missing-card">
+      <span>Priority fixes to improve leads</span>
+      <ul>${audit.missing.map((item) => `<li>${item}</li>`).join("")}</ul>
+    </div>
+    <div class="health-action-plan">
+      <span>Suggested FutureHub action plan</span>
+      <div><strong>Step 1</strong><p>Fix trust signals: mobile layout, secure contact flow, Google map and WhatsApp enquiry.</p></div>
+      <div><strong>Step 2</strong><p>Add conversion sections: services, proof, testimonials, FAQ and clear call-to-action buttons.</p></div>
+      <div><strong>Step 3</strong><p>Improve local discovery with SEO titles, service pages, Google Business Profile and speed-friendly images.</p></div>
+    </div>
+    <a class="primary-button health-whatsapp" href="https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+      `Hello Kidsverse FutureHub, I checked my website health. Website: ${rawUrl}. Scores - Mobile: ${audit.mobile}, Speed: ${audit.speed}, SEO: ${audit.seo}, Security: ${audit.security}. Google Business: ${audit.googleStatus}. Please suggest improvements.`
+    )}" target="_blank" rel="noopener noreferrer">Get Improvement Plan on WhatsApp</a>
+  `;
+  healthResult.hidden = false;
+}
+
 function guidedRecommendation(type, data) {
   if (type === "student") {
     const stage = data.get("stage");
@@ -765,6 +913,50 @@ builderWhatsapp?.addEventListener("click", sendBuilderPlan);
 
 sampleWhatsapp?.addEventListener("click", sendBusinessSampleRequest);
 
+templateFilters.forEach((button) => {
+  button.addEventListener("click", () => {
+    templateFilters.forEach((item) => item.classList.toggle("is-active", item === button));
+    filterTemplateCards();
+  });
+});
+
+templateBudget?.addEventListener("change", filterTemplateCards);
+
+healthForm?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const formData = new FormData(healthForm);
+  const websiteUrl = String(formData.get("websiteUrl") || "");
+  const submitButton = healthForm.querySelector('button[type="submit"]');
+  try {
+    const url = normalizeWebsiteUrl(websiteUrl);
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Scanning Website...";
+    }
+    renderHealthScanning(url.hostname.replace(/^www\./, ""));
+    await wait(2900);
+    renderHealthResult(websiteHealthAudit(url), url.href);
+  } catch {
+    if (!healthResult) return;
+    healthResult.innerHTML = `<div class="health-error">Please enter a valid website URL, for example https://yourbusiness.com</div>`;
+    healthResult.hidden = false;
+  } finally {
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.textContent = "Run Smart Website Scan";
+    }
+  }
+});
+
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-template-open]");
+  if (!button || !sampleCategory) return;
+  sampleCategory.value = button.dataset.templateOpen;
+  if (sampleBudget && !sampleBudget.value) sampleBudget.value = "Starter Website";
+  renderBusinessSample();
+  document.querySelector("#business-samples")?.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
 guidedForms.forEach((form) => {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -778,7 +970,7 @@ guidedForms.forEach((form) => {
 });
 
 document.addEventListener("click", (event) => {
-  const target = event.target.closest(".primary-button, .secondary-button, .header-cta, .vertical-card a, .date-grid button, .slot-grid button, .finder-tabs button, .path-buttons button, .project-card, .skill-picker button, .sample-nav span, .sample-hero button");
+  const target = event.target.closest(".primary-button, .secondary-button, .header-cta, .vertical-card a, .date-grid button, .slot-grid button, .finder-tabs button, .path-buttons button, .project-card, .skill-picker button, .sample-nav span, .sample-hero button, .demo-filters button, .demo-card button, .business-sticky-cta a, .health-whatsapp");
   if (!target) return;
   const rect = target.getBoundingClientRect();
   const ripple = document.createElement("span");
@@ -794,6 +986,7 @@ renderBookingDates();
 renderBuilderSkills();
 renderBuilderPreview();
 renderBusinessSample();
+filterTemplateCards();
 
 dateGrid?.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-date]");
