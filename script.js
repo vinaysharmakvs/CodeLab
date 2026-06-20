@@ -2,6 +2,7 @@ const menuButton = document.querySelector(".menu-button");
 const mobileMenu = document.querySelector(".mobile-menu");
 const bookingForm = document.querySelector(".booking-planner");
 const dateGrid = document.querySelector("[data-date-grid]");
+const calendarLabel = document.querySelector("[data-calendar-label]");
 const slotGrid = document.querySelector("[data-slot-grid]");
 const bookingError = document.querySelector(".booking-error");
 const finderForm = document.querySelector(".solution-finder");
@@ -14,6 +15,17 @@ const pathButtons = document.querySelectorAll("[data-path]");
 const pathResult = document.querySelector("[data-path-result]");
 const projectCards = document.querySelectorAll("[data-project]");
 const projectPreview = document.querySelector("[data-project-preview]");
+const builderStage = document.querySelector("[data-builder-stage]");
+const builderGoal = document.querySelector("[data-builder-goal]");
+const builderMode = document.querySelector("[data-builder-mode]");
+const builderPace = document.querySelector("[data-builder-pace]");
+const skillPicker = document.querySelector(".skill-picker");
+const builderPreview = document.querySelector("[data-builder-preview]");
+const builderWhatsapp = document.querySelector("[data-builder-whatsapp]");
+const sampleCategory = document.querySelector("[data-sample-category]");
+const sampleBudget = document.querySelector("[data-sample-budget]");
+const samplePreview = document.querySelector("[data-sample-preview]");
+const sampleWhatsapp = document.querySelector("[data-sample-whatsapp]");
 const whatsappNumber = "918826758881";
 
 const pathData = {
@@ -63,6 +75,280 @@ const projectData = {
     title: "AI Chatbot",
     text: "Students create a chatbot with prompt design, personality, memory ideas and a practical use case.",
     bars: ["88%", "72%", "80%"],
+  },
+};
+
+const builderDurations = {
+  "Light pace": "6-8 weeks",
+  "Balanced pace": "8-10 weeks",
+  "Intensive pace": "4-6 weeks",
+};
+
+const builderSkillOptions = {
+  "Grade 3-5 student": ["Scratch Jr", "Scratch", "Block-based coding", "App building basics", "Logic games", "Creative coding"],
+  "Grade 6-8 student": ["Scratch advanced", "App building", "Python basics", "JavaScript basics", "Web basics", "AI chatbot basics"],
+  "Grade 9-12 student": ["Python", "JavaScript", "Web Development", "AI Chatbots", "AI Agents", "C", "C++", "Java"],
+  "College student": ["C", "C++", "Java", "Python", "JavaScript", "Web Development", "AI Agents", "Live projects", "GitHub portfolio", "Interview prep"],
+};
+
+const defaultBuilderSkills = {
+  "Grade 3-5 student": ["Scratch Jr", "Scratch"],
+  "Grade 6-8 student": ["Python basics", "App building"],
+  "Grade 9-12 student": ["Python", "AI Chatbots"],
+  "College student": ["Live projects", "GitHub portfolio"],
+};
+
+const businessBudgetSamples = {
+  "Starter Website": {
+    label: "Starter website direction",
+    scope: "A clean one-page website for trust, basic enquiries and Google sharing.",
+    pages: "1 page",
+    features: ["Mobile-friendly landing page", "WhatsApp enquiry button", "Google map / location", "Basic SEO setup"],
+    timeline: "Quick launch",
+  },
+  "Growth Website": {
+    label: "Growth website direction",
+    scope: "A multi-section website made for enquiries, content, offers and social proof.",
+    pages: "4-6 sections",
+    features: ["Service / program pages", "Lead form and WhatsApp funnel", "Gallery or portfolio", "Google Business and local SEO support"],
+    timeline: "Planned launch",
+  },
+  "Premium System": {
+    label: "Premium digital system",
+    scope: "A full website plus lead capture, booking, automation and AI-assisted support.",
+    pages: "Website + system",
+    features: ["Booking or admission flow", "AI FAQ / chatbot idea", "Lead tracking workflow", "Dashboard or automation plan"],
+    timeline: "Custom build",
+  },
+};
+
+const businessSampleData = {
+  School: {
+    accent: "#367cff",
+    name: "Future-ready School Website",
+    hero: "Admissions, campus story and parent trust in one place.",
+    audience: "Parents looking for admissions, facilities, transport, fees, FAQs and school credibility.",
+    nav: ["Admissions", "Campus", "Academics", "FAQ"],
+    sections: ["Hero with admission enquiry", "Facilities and safety", "Founder message", "Parent FAQ"],
+    conversion: "Admission enquiry and campus visit booking",
+  },
+  College: {
+    accent: "#7d5cff",
+    name: "Career-first College Website",
+    hero: "Programs, placements, internships and student outcomes presented clearly.",
+    audience: "Students and parents comparing courses, faculty, placements and campus life.",
+    nav: ["Courses", "Placements", "Campus", "Apply"],
+    sections: ["Program finder", "Placement highlights", "Student projects", "Online application"],
+    conversion: "Course enquiry and application lead",
+  },
+  "Coaching institute": {
+    accent: "#ff7c65",
+    name: "Result-focused Coaching Website",
+    hero: "Batches, results, demo classes and parent confidence.",
+    audience: "Parents and students checking subjects, batch timing, results and teacher support.",
+    nav: ["Courses", "Results", "Demo", "Fees"],
+    sections: ["Batch cards", "Result proof", "Demo class form", "Doubt support"],
+    conversion: "Demo class or counselling booking",
+  },
+  Salon: {
+    accent: "#d946ef",
+    name: "Premium Salon Booking Website",
+    hero: "Services, styling, packages and appointment booking with a polished look.",
+    audience: "Local customers comparing services, prices, bridal packages and availability.",
+    nav: ["Services", "Looks", "Packages", "Book"],
+    sections: ["Service menu", "Before-after gallery", "Bridal / event packages", "Appointment button"],
+    conversion: "WhatsApp appointment request",
+  },
+  "Retail store": {
+    accent: "#f59e0b",
+    name: "Local Store Showcase Website",
+    hero: "Products, offers and location made easy for nearby customers.",
+    audience: "Customers who want to check products, offers, timing and directions before visiting.",
+    nav: ["Products", "Offers", "Location", "Contact"],
+    sections: ["Product categories", "Weekly offers", "Store trust badges", "Map and WhatsApp"],
+    conversion: "Store visit or product enquiry",
+  },
+  Clinic: {
+    accent: "#10b981",
+    name: "Patient-friendly Clinic Website",
+    hero: "Doctor profile, services, appointment flow and patient clarity.",
+    audience: "Patients who need trust, timing, location, services and appointment support.",
+    nav: ["Doctor", "Services", "Timing", "Book"],
+    sections: ["Doctor introduction", "Treatment list", "Patient instructions", "Appointment request"],
+    conversion: "Appointment booking enquiry",
+  },
+  "Cafe / restaurant": {
+    accent: "#ef4444",
+    name: "Cafe and Restaurant Website",
+    hero: "Menu, ambience, offers and table enquiry in a warm visual style.",
+    audience: "Customers looking for menu, photos, offers, location and table booking.",
+    nav: ["Menu", "Gallery", "Offers", "Reserve"],
+    sections: ["Signature menu", "Ambience gallery", "Party / catering section", "Reservation button"],
+    conversion: "Table booking or food order enquiry",
+  },
+  "Chai stall / food stall": {
+    accent: "#b45309",
+    name: "Street Food Identity Page",
+    hero: "Make a small food business look memorable, searchable and easy to contact.",
+    audience: "Nearby customers, college students, office visitors and delivery enquiries.",
+    nav: ["Menu", "Specials", "Location", "Order"],
+    sections: ["Menu highlights", "Daily specials", "Customer reviews", "Map and WhatsApp order"],
+    conversion: "WhatsApp order or location visit",
+  },
+  Tutor: {
+    accent: "#2563eb",
+    name: "Tutor Trust Website",
+    hero: "Subjects, results, teaching style and demo class in a parent-friendly format.",
+    audience: "Parents checking tutor credibility, class mode, subjects and student improvement.",
+    nav: ["Subjects", "Results", "Method", "Demo"],
+    sections: ["Subject cards", "Student progress proof", "Teaching method", "Demo class enquiry"],
+    conversion: "Demo class booking",
+  },
+  "Real estate": {
+    accent: "#0f766e",
+    name: "Property Lead Website",
+    hero: "Listings, site visits and buyer trust with simple lead capture.",
+    audience: "Buyers and renters comparing properties, locations, pricing and site visit options.",
+    nav: ["Listings", "Locations", "Site Visit", "Contact"],
+    sections: ["Property cards", "Location highlights", "Site visit form", "WhatsApp lead flow"],
+    conversion: "Site visit or property enquiry",
+  },
+  "NGO / trust": {
+    accent: "#16a34a",
+    name: "Impact and Donation Website",
+    hero: "Mission, impact stories, volunteers and support requests.",
+    audience: "Donors, volunteers, families and partners who want to understand the cause.",
+    nav: ["Mission", "Impact", "Volunteer", "Support"],
+    sections: ["Impact numbers", "Stories", "Volunteer form", "Donation / support CTA"],
+    conversion: "Volunteer or support enquiry",
+  },
+  "Creator / personal brand": {
+    accent: "#8b5cf6",
+    name: "Creator Portfolio Website",
+    hero: "Personal story, work, offers and collaboration enquiries.",
+    audience: "Followers, brands, clients and students who want to know the creator better.",
+    nav: ["About", "Work", "Services", "Collaborate"],
+    sections: ["Profile hero", "Featured work", "Services / media kit", "Collaboration form"],
+    conversion: "Collaboration or service enquiry",
+  },
+  Startup: {
+    accent: "#06b6d4",
+    name: "Startup Launch Website",
+    hero: "Product story, problem-solution, waitlist and investor-ready clarity.",
+    audience: "Early customers, partners, investors and hiring candidates.",
+    nav: ["Product", "Use Cases", "Team", "Waitlist"],
+    sections: ["Problem-solution hero", "Product features", "Use cases", "Waitlist / demo form"],
+    conversion: "Demo request or waitlist signup",
+  },
+  "Local service business": {
+    accent: "#ea580c",
+    name: "Local Service Lead Website",
+    hero: "Services, service area, trust proof and quick WhatsApp enquiries.",
+    audience: "Nearby customers looking for reliable local help and quick response.",
+    nav: ["Services", "Area", "Proof", "Call"],
+    sections: ["Service packages", "Before-after proof", "Service area", "Call / WhatsApp CTA"],
+    conversion: "Call or WhatsApp service enquiry",
+  },
+};
+
+const businessVisualData = {
+  School: {
+    image: "assets/computer-lab.png",
+    caption: "Admissions and campus trust",
+    headline: "Parents should understand the school within the first visit.",
+    story: "The sample focuses on admission clarity, campus confidence, parent FAQs and a strong enquiry path.",
+    hooks: ["Campus visit CTA", "Facilities story", "Admission FAQ"],
+  },
+  College: {
+    image: "assets/robotics-lab.png",
+    caption: "Courses and career outcomes",
+    headline: "Students compare colleges by outcomes, not only buildings.",
+    story: "The sample highlights courses, placements, internships, projects and application support in a clean journey.",
+    hooks: ["Program finder", "Placement proof", "Apply online"],
+  },
+  "Coaching institute": {
+    image: "assets/computer-lab.png",
+    caption: "Batch and result confidence",
+    headline: "Parents want proof that the coaching can improve performance.",
+    story: "The sample makes demo classes, results, batch timings and doubt support easy to understand.",
+    hooks: ["Demo class CTA", "Result section", "Batch cards"],
+  },
+  Salon: {
+    image: "assets/balanced_growth.png",
+    caption: "Premium service presentation",
+    headline: "A salon website should feel stylish before the customer even visits.",
+    story: "The sample presents services, packages, looks, bridal offers and WhatsApp appointment booking.",
+    hooks: ["Look gallery", "Package cards", "Book appointment"],
+  },
+  "Retail store": {
+    image: "assets/circuit-campus.png",
+    caption: "Products, offers and location",
+    headline: "Local customers should know what is available before they visit.",
+    story: "The sample shows products, offers, timing, store trust and directions in a simple customer flow.",
+    hooks: ["Product categories", "Offer banners", "Map CTA"],
+  },
+  Clinic: {
+    image: "assets/balanced_growth.png",
+    caption: "Patient trust and appointment clarity",
+    headline: "Patients need confidence, timing and appointment guidance quickly.",
+    story: "The sample focuses on doctor introduction, services, timings, instructions and appointment enquiry.",
+    hooks: ["Doctor profile", "Service list", "Appointment CTA"],
+  },
+  "Cafe / restaurant": {
+    image: "assets/balanced_growth.png",
+    caption: "Menu, ambience and bookings",
+    headline: "Food businesses need appetite, location and easy ordering.",
+    story: "The sample brings menu highlights, ambience, offers, party bookings and WhatsApp ordering together.",
+    hooks: ["Menu preview", "Gallery", "Reserve table"],
+  },
+  "Chai stall / food stall": {
+    image: "assets/circuit-campus.png",
+    caption: "Small food brand identity",
+    headline: "Even a small food stall can look memorable and searchable.",
+    story: "The sample turns menu, daily specials, location and quick WhatsApp orders into a simple page.",
+    hooks: ["Daily special", "Location pin", "Order on WhatsApp"],
+  },
+  Tutor: {
+    image: "assets/computer-lab.png",
+    caption: "Teaching trust and demo class",
+    headline: "Parents choose tutors when they understand method and results.",
+    story: "The sample explains subjects, class style, progress proof, testimonials and demo class booking.",
+    hooks: ["Subject cards", "Progress proof", "Demo class"],
+  },
+  "Real estate": {
+    image: "assets/circuit-campus.png",
+    caption: "Property lead experience",
+    headline: "Buyers want listings, location clarity and site visit options.",
+    story: "The sample presents properties, neighbourhood highlights, site visit booking and WhatsApp lead capture.",
+    hooks: ["Listing cards", "Site visit CTA", "Lead form"],
+  },
+  "NGO / trust": {
+    image: "assets/balanced_growth.png",
+    caption: "Impact and support journey",
+    headline: "Supporters should understand the cause and how to help.",
+    story: "The sample brings mission, impact numbers, stories, volunteer flow and support enquiries together.",
+    hooks: ["Impact numbers", "Volunteer form", "Support CTA"],
+  },
+  "Creator / personal brand": {
+    image: "assets/robotics-lab.png",
+    caption: "Portfolio and collaboration",
+    headline: "A personal brand needs a home beyond social media.",
+    story: "The sample shows profile, work, offers, media kit and collaboration enquiries in one polished place.",
+    hooks: ["Featured work", "Services", "Collaborate"],
+  },
+  Startup: {
+    image: "assets/robotics-lab.png",
+    caption: "Launch and demo request",
+    headline: "A startup page should explain the product before the first call.",
+    story: "The sample focuses on problem, solution, features, use cases, demo requests and waitlist capture.",
+    hooks: ["Product story", "Use cases", "Demo CTA"],
+  },
+  "Local service business": {
+    image: "assets/circuit-campus.png",
+    caption: "Local trust and fast enquiries",
+    headline: "Local service customers want proof, area and quick contact.",
+    story: "The sample highlights services, service area, before-after proof and WhatsApp enquiry.",
+    hooks: ["Service area", "Proof section", "Call button"],
   },
 };
 
@@ -137,10 +423,16 @@ function renderFinderOptions() {
 
 function formatBookingDate(date) {
   return date.toLocaleDateString("en-IN", {
-    weekday: "short",
+    weekday: "long",
     day: "numeric",
-    month: "short",
+    month: "long",
+    year: "numeric",
   });
+}
+
+function formatCalendarHeading(dates) {
+  const monthNames = [...new Set(dates.map((date) => date.toLocaleDateString("en-IN", { month: "long", year: "numeric" })))];
+  return monthNames.join(" - ");
 }
 
 function renderBookingDates() {
@@ -152,13 +444,19 @@ function renderBookingDates() {
     return date;
   });
 
-  dateGrid.innerHTML = dates
-    .map((date) => {
-      const label = formatBookingDate(date);
-      const [weekday, day, month] = label.replace(",", "").split(" ");
-      return `<button type="button" data-date="${label}"><span>${weekday}</span><strong>${day}</strong><span>${month}</span></button>`;
-    })
-    .join("");
+  if (calendarLabel) calendarLabel.textContent = formatCalendarHeading(dates);
+
+  const emptyCells = Array.from({ length: dates[0].getDay() }, () => `<span class="calendar-empty" aria-hidden="true"></span>`);
+  const dateCells = dates.map((date, index) => {
+    const label = formatBookingDate(date);
+    const weekday = date.toLocaleDateString("en-IN", { weekday: "short" });
+    const month = date.toLocaleDateString("en-IN", { month: "short" });
+    const day = String(date.getDate()).padStart(2, "0");
+    const tag = index === 0 ? "<em>Next</em>" : "";
+    return `<button type="button" data-date="${label}" aria-label="${label}"><span>${weekday}</span><strong>${day}</strong><small>${month}</small>${tag}</button>`;
+  });
+
+  dateGrid.innerHTML = [...emptyCells, ...dateCells].join("");
 }
 
 function setBookingError(message) {
@@ -184,6 +482,165 @@ function renderProject(projectKey) {
   if (!projectPreview || !projectData[projectKey]) return;
   const item = projectData[projectKey];
   projectPreview.innerHTML = `<span>Project preview</span><h3>${item.title}</h3><p>${item.text}</p><div class="preview-bars" aria-hidden="true">${item.bars.map((width) => `<i style="--bar-width:${width}"></i>`).join("")}</div>`;
+}
+
+function selectedBuilderSkills() {
+  return [...document.querySelectorAll("[data-builder-skill]")].filter((button) => button.classList.contains("is-selected")).map((button) => button.dataset.builderSkill);
+}
+
+function builderCourseName(skills) {
+  const has = (text) => skills.some((skill) => skill.includes(text));
+  if (has("AI") && has("Python")) return "Python + AI Project Track";
+  if (has("AI")) return "AI + Coding Project Track";
+  if (skills.includes("Live projects") || skills.includes("GitHub portfolio") || skills.includes("Interview prep")) return "Career Project Track";
+  if (skills.includes("C") || skills.includes("C++") || skills.includes("Java")) return "Programming Foundation Track";
+  if (has("Python") && has("App building")) return "Python + App Builder Track";
+  if (has("Python")) return "Python Foundations Track";
+  if (skills.includes("Web Development") || has("JavaScript") || skills.includes("Web basics")) return "Web App Builder Track";
+  if (has("App building")) return "App Builder Track";
+  if (skills.includes("Block-based coding")) return "Block-Based Coding Starter";
+  if (skills.includes("Logic games")) return "Logic & Game Coding Starter";
+  if (skills.includes("Creative coding")) return "Creative Coding Starter";
+  if (skills.includes("Scratch advanced")) return "Scratch Advanced Project Track";
+  if (skills.includes("Scratch") || skills.includes("Scratch Jr")) return "Scratch + Scratch Jr Confidence Track";
+  return "Scratch + Scratch Jr Confidence Track";
+}
+
+function builderOutcomes(skills, goal) {
+  const outcomes = [];
+  if (skills.some((skill) => skill.includes("Scratch")) || skills.includes("Block-based coding")) outcomes.push("Logic games and visual coding activities");
+  if (skills.some((skill) => skill.includes("App building"))) outcomes.push("Simple app screens, buttons and user-flow thinking");
+  if (skills.some((skill) => skill.includes("Python"))) outcomes.push("Python basics with mini automation or game tasks");
+  if (skills.some((skill) => skill.includes("JavaScript")) || skills.includes("Web Development") || skills.includes("Web basics")) outcomes.push("Interactive website or portfolio-style web project");
+  if (skills.includes("C") || skills.includes("C++") || skills.includes("Java")) outcomes.push("Syntax confidence and problem-solving practice");
+  if (skills.some((skill) => skill.includes("AI"))) outcomes.push("AI chatbot or agent with prompt design and demo use case");
+  if (skills.includes("Live projects")) outcomes.push("Live project workflow with mentor review");
+  if (skills.includes("GitHub portfolio")) outcomes.push("GitHub portfolio setup and project documentation");
+  if (goal.includes("interview")) outcomes.push("Project explanation, resume talking points and interview practice");
+  if (!outcomes.length) outcomes.push("Personalized starter tasks based on learner confidence");
+  outcomes.push("Mini project with demo presentation");
+  outcomes.push("Parent-friendly progress discussion");
+  return outcomes.slice(0, 5);
+}
+
+function renderBuilderSkills() {
+  const picker = document.querySelector(".skill-picker");
+  if (!picker || !builderStage) return;
+  const stage = builderStage.value;
+  const options = builderSkillOptions[stage] || builderSkillOptions["Grade 3-5 student"];
+  const defaults = defaultBuilderSkills[stage] || options.slice(0, 2);
+  picker.innerHTML = options
+    .map((skill) => `<button class="${defaults.includes(skill) ? "is-selected" : ""}" type="button" data-builder-skill="${skill}">${skill}</button>`)
+    .join("");
+}
+
+function renderBuilderPreview() {
+  if (!builderPreview) return;
+  const stage = builderStage?.value || "Grade 3-5 student";
+  const goal = builderGoal?.value || "Build confidence with technology";
+  const mode = builderMode?.value || "1:1 live class";
+  const pace = builderPace?.value || "Light pace";
+  const skills = selectedBuilderSkills();
+  const safeSkills = skills.length ? skills : ["Scratch Jr", "Scratch"];
+  const duration = builderDurations[pace] || "8-10 weeks";
+  const title = builderCourseName(safeSkills);
+  const skillText = safeSkills.join(" + ");
+  const outcomes = builderOutcomes(safeSkills, goal);
+  builderPreview.innerHTML = `<span>Your custom course plan</span><h3>${title}</h3><p>A personalized ${skillText} course for ${stage} focused on ${goal.toLowerCase()}.</p><div class="builder-plan-grid"><strong>${duration}</strong><strong>${mode}</strong><strong>${pace}</strong></div><ul>${outcomes.map((item) => `<li>${item}</li>`).join("")}</ul>`;
+}
+
+function sendBuilderPlan() {
+  const stage = builderStage?.value || "Grade 3-5 student";
+  const goal = builderGoal?.value || "Build confidence with technology";
+  const mode = builderMode?.value || "1:1 live class";
+  const pace = builderPace?.value || "Light pace";
+  const skills = selectedBuilderSkills();
+  const safeSkills = skills.length ? skills : ["Scratch Jr", "Scratch"];
+  const title = builderCourseName(safeSkills);
+  const duration = builderDurations[pace] || "8-10 weeks";
+  const message = encodeURIComponent(
+    `Hello Kidsverse FutureHub, I created a custom coding course plan. Plan: ${title}. Learner: ${stage}. Skills: ${safeSkills.join(", ")}. Goal: ${goal}. Class style: ${mode}. Pace: ${pace}. Suggested duration: ${duration}. Please help me finalize this course.`
+  );
+  window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank", "noopener,noreferrer");
+}
+
+function renderBusinessSample() {
+  if (!samplePreview) return;
+  const category = sampleCategory?.value || "School";
+  const budget = sampleBudget?.value || "Starter Website";
+  const sample = businessSampleData[category] || businessSampleData.School;
+  const visual = businessVisualData[category] || businessVisualData.School;
+  const budgetPlan = businessBudgetSamples[budget] || businessBudgetSamples["Starter Website"];
+  samplePreview.style.setProperty("--sample-accent", sample.accent);
+  samplePreview.innerHTML = `
+    <div class="sample-browser">
+      <div class="sample-browser-top">
+        <span></span><span></span><span></span>
+        <strong>${category.toLowerCase().replaceAll(" ", "-")}.preview</strong>
+      </div>
+      <div class="sample-website-shell">
+        <nav class="sample-nav">
+          <strong>${sample.name}</strong>
+          <div>${sample.nav.map((item) => `<span>${item}</span>`).join("")}</div>
+        </nav>
+        <div class="sample-showcase">
+          <div class="sample-hero">
+            <span>${budgetPlan.label}</span>
+            <h3>${sample.name}</h3>
+            <p>${sample.hero}</p>
+            <button type="button">Enquire now</button>
+          </div>
+          <figure class="sample-image-card">
+            <img src="${visual.image}" alt="${visual.caption}" />
+            <figcaption>
+              <strong>${visual.caption}</strong>
+              <span>${visual.headline}</span>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="sample-customer-story">
+          <span>What your customer will understand</span>
+          <p>${visual.story}</p>
+          <div>${visual.hooks.map((hook) => `<strong>${hook}</strong>`).join("")}</div>
+        </div>
+        <div class="sample-mini-grid">
+          ${sample.sections.map((section) => `<article><span></span><strong>${section}</strong></article>`).join("")}
+        </div>
+      </div>
+    </div>
+    <div class="sample-detail-grid">
+      <article>
+        <span>Target visitor</span>
+        <p>${sample.audience}</p>
+      </article>
+      <article>
+        <span>Budget scope</span>
+        <p>${budgetPlan.scope}</p>
+      </article>
+      <article>
+        <span>Main conversion</span>
+        <p>${sample.conversion}</p>
+      </article>
+      <article>
+        <span>Build size</span>
+        <p>${budgetPlan.pages} • ${budgetPlan.timeline}</p>
+      </article>
+    </div>
+    <div class="sample-feature-list">
+      ${budgetPlan.features.map((feature) => `<span>${feature}</span>`).join("")}
+    </div>
+  `;
+}
+
+function sendBusinessSampleRequest() {
+  const category = sampleCategory?.value || "School";
+  const budget = sampleBudget?.value || "Starter Website";
+  const sample = businessSampleData[category] || businessSampleData.School;
+  const budgetPlan = businessBudgetSamples[budget] || businessBudgetSamples["Starter Website"];
+  const message = encodeURIComponent(
+    `Hello Kidsverse FutureHub, I selected a business website sample. Category: ${category}. Budget level: ${budget}. Sample direction: ${sample.name}. Main conversion: ${sample.conversion}. Suggested scope: ${budgetPlan.scope}. Please guide me with the next step.`
+  );
+  window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank", "noopener,noreferrer");
 }
 
 function guidedRecommendation(type, data) {
@@ -285,6 +742,29 @@ projectCards.forEach((button) => {
   });
 });
 
+skillPicker?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-builder-skill]");
+  if (!button || !skillPicker.contains(button)) return;
+  button.classList.toggle("is-selected");
+  if (!selectedBuilderSkills().length) button.classList.add("is-selected");
+  renderBuilderPreview();
+});
+
+[builderStage, builderGoal, builderMode, builderPace].forEach((control) => {
+  control?.addEventListener("change", () => {
+    if (control === builderStage) renderBuilderSkills();
+    renderBuilderPreview();
+  });
+});
+
+builderWhatsapp?.addEventListener("click", sendBuilderPlan);
+
+[sampleCategory, sampleBudget].forEach((control) => {
+  control?.addEventListener("change", renderBusinessSample);
+});
+
+sampleWhatsapp?.addEventListener("click", sendBusinessSampleRequest);
+
 guidedForms.forEach((form) => {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -298,7 +778,7 @@ guidedForms.forEach((form) => {
 });
 
 document.addEventListener("click", (event) => {
-  const target = event.target.closest(".primary-button, .secondary-button, .header-cta, .vertical-card a, .date-grid button, .slot-grid button, .finder-tabs button, .path-buttons button, .project-card");
+  const target = event.target.closest(".primary-button, .secondary-button, .header-cta, .vertical-card a, .date-grid button, .slot-grid button, .finder-tabs button, .path-buttons button, .project-card, .skill-picker button, .sample-nav span, .sample-hero button");
   if (!target) return;
   const rect = target.getBoundingClientRect();
   const ripple = document.createElement("span");
@@ -311,6 +791,9 @@ document.addEventListener("click", (event) => {
 
 renderFinderOptions();
 renderBookingDates();
+renderBuilderSkills();
+renderBuilderPreview();
+renderBusinessSample();
 
 dateGrid?.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-date]");
