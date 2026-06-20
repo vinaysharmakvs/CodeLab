@@ -22,11 +22,11 @@
         </span>
       </a>
       <nav class="desktop-nav" aria-label="Primary navigation">
-        <a href="#quick-start">Start Here</a>
+        <a href="#top">Start Here</a>
         <a href="students.html">Students</a>
         <a href="parents.html">Parents</a>
         <a href="business.html">Business</a>
-        <a href="business.html#website-health">Free Website Check</a>
+        <a href="business.html#website-health">Website Check</a>
         <a href="institutions.html">Schools / Colleges</a>
         <a href="faq.html">FAQ</a>
         <a href="#booking">Book Slot</a>
@@ -40,11 +40,11 @@
     </header>
 
     <nav class="mobile-menu" aria-label="Mobile navigation" hidden>
-      <a href="#quick-start">Start Here</a>
+      <a href="#top">Start Here</a>
       <a href="students.html">Students</a>
       <a href="parents.html">Parents</a>
       <a href="business.html">Business</a>
-      <a href="business.html#website-health">Free Website Check</a>
+      <a href="business.html#website-health">Website Check</a>
       <a href="institutions.html">Schools / Colleges</a>
       <a href="faq.html">FAQ</a>
       <a href="#booking">Book Slot</a>
@@ -53,26 +53,65 @@
     <main id="top">
       <section class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">Learning, digital growth and AI solutions</p>
-          <h1>One<br /><span class="no-break">FutureHub</span><br />for students, parents and growing businesses.</h1>
+          <p class="eyebrow">Choose your path</p>
+          <h1>We help students grow and businesses thrive with AI, tech, and real mentorship.</h1>
           <p class="hero-lead">
-            Build a coding course, check your website health, preview business websites, or book a guided call. Start with the tool that fits your need.
+            Select who you are. We will guide you to the right courses, projects, website tools, business growth support, or a clear counselling call.
           </p>
-          <div class="hero-actions">
-            <a class="primary-button" href="#quick-start">Explore Tools</a>
-            <a class="secondary-button" href="business.html#website-health">Free Website Check</a>
-            <a class="secondary-button" href="#course-builder">Build Coding Course</a>
+          <div class="hero-path-chooser" aria-label="Choose FutureHub path">
+            <a class="hero-path-card hero-path-student" href="#student-parent-path">
+              <figure class="path-card-visual" data-asset="assets/parent.png">
+                <img src="assets/parent.png" alt="Parent and student learning path visual" onerror="this.parentElement.classList.add('is-empty'); this.remove();" />
+                <figcaption>Student / Parent visual</figcaption>
+              </figure>
+              <span>I'm a Student / Parent</span>
+              <strong>Find the right learning path</strong>
+              <p>Coding, AI, projects, internships, career roles and parent-friendly guidance.</p>
+            </a>
+            <a class="hero-path-card hero-path-business" href="#business-owner-path">
+              <figure class="path-card-visual" data-asset="assets/business.png">
+                <img src="assets/business.png" alt="Business owner digital growth visual" onerror="this.parentElement.classList.add('is-empty'); this.remove();" />
+                <figcaption>Business owner visual</figcaption>
+              </figure>
+              <span>I'm a Business Owner</span>
+              <strong>Grow my business online</strong>
+              <p>Websites, social media, WhatsApp enquiries, automation and readiness checks.</p>
+            </a>
           </div>
           <div class="trust-strip" aria-label="FutureHub highlights">
             <span>AI courses</span>
             <span>Website demos</span>
-            <span>Free tools</span>
+            <span>Smart tools</span>
             <span>Live projects</span>
             <span>Business growth</span>
           </div>
         </div>
         <div class="hero-visual" aria-label="FutureHub digital learning dashboard">
-          <img src="assets/computer-lab.png" alt="Students learning future technology in a modern computer lab" />
+          <div class="hero-media-stack">
+            <figure class="asset-placeholder hero-main-placeholder" data-asset="assets/futurehub-home-hero.gif">
+              <img src="assets/futurehub-home-hero.gif" alt="FutureHub animated hero visual" onerror="this.parentElement.classList.add('is-empty'); this.remove();" />
+              <figcaption>
+                <strong>Hero GIF / Image</strong>
+                <span>assets/futurehub-home-hero.gif</span>
+              </figcaption>
+            </figure>
+            <div class="hero-mini-placeholders">
+              <figure class="asset-placeholder" data-asset="assets/parent.png">
+                <img src="assets/parent.png" alt="Parent and student technology learning visual" onerror="this.parentElement.classList.add('is-empty'); this.remove();" />
+                <figcaption>
+                  <strong>Student / Parent</strong>
+                  <span>assets/parent.png</span>
+                </figcaption>
+              </figure>
+              <figure class="asset-placeholder" data-asset="assets/business.png">
+                <img src="assets/business.png" alt="Business digital growth visual" onerror="this.parentElement.classList.add('is-empty'); this.remove();" />
+                <figcaption>
+                  <strong>Business Growth</strong>
+                  <span>assets/business.png</span>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
           <div class="orbit-card orbit-card-one"><strong>CodeLab</strong><span>AI, Python, web and projects</span></div>
           <div class="orbit-card orbit-card-two"><strong>GrowthLab</strong><span>Leads, social and WhatsApp funnels</span></div>
           <div class="orbit-card orbit-card-three"><strong>Studio</strong><span>Websites, branding and automation</span></div>
@@ -95,24 +134,24 @@ team.build(project, leads, growth)</code></pre>
         </div>
       </section>
 
-      <section class="section audience-switch" id="quick-start">
+      <section class="section audience-switch" id="student-parent-path">
         <a href="#course-builder"><strong>Build Coding Course</strong><span>Customize skills, pace and class mode</span></a>
-        <a href="business.html#website-health"><strong>Free Website Check</strong><span>Scan mobile, SEO, speed and lead gaps</span></a>
-        <a href="business.html#demo-gallery"><strong>View Website Demos</strong><span>Salon, clinic, school, retail, startup and more</span></a>
+        <a href="students.html#future-role-finder"><strong>Find Future Role</strong><span>College students can discover practical career directions</span></a>
+        <a href="parents.html"><strong>Parent Guidance</strong><span>Choose the right path for your child without pressure</span></a>
       </section>
 
-      <section class="section home-tools-section">
+      <section class="section home-tools-section" id="business-owner-path">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">Interactive tools</p>
-            <h2>Choose a tool. Get a result.</h2>
+            <p class="eyebrow">For business owners</p>
+            <h2>Start with what your business needs today.</h2>
           </div>
-          <p>Less reading, more action. These tools help visitors quickly decide their next step.</p>
+          <p>Check your website, preview a business website direction, or book a practical discussion for digital growth.</p>
         </div>
         <div class="home-tool-grid">
           <a class="home-tool-card is-featured" href="business.html#website-health">
-            <span>Free</span>
-            <strong>Website Health Checker</strong>
+            <span>Website scan</span>
+            <strong>Website Readiness Checker</strong>
             <p>Get mobile, speed, SEO, security, Google Business and missing feature insights.</p>
             <em>Run website scan</em>
           </a>
@@ -425,6 +464,6 @@ team.build(project, leads, growth)</code></pre>
       <a href="https://wa.me/918826758881" target="_blank" rel="noopener noreferrer">WhatsApp: 8826758881</a>
     </footer>
 
-    <script src="script.js?v=20260620-21"></script>
+    <script src="script.js?v=20260621-04"></script>
   </body>
 </html>
