@@ -25,6 +25,7 @@
           <p class="hero-lead">Choose your grade, interest, learning style and outcome. FutureHub suggests a course path, project outcome and next step.</p>
           <div class="hero-actions page-hero-actions">
             <a class="primary-button" href="index.html#course-builder">Build My Coding Course</a>
+            <a class="secondary-button" href="#future-role-finder">Find Future Role</a>
             <a class="secondary-button" href="index.html#booking">Book Guidance Slot</a>
           </div>
         </div>
@@ -40,6 +41,117 @@
             <div class="coding-gif-tags"><span>Scratch</span><span>JavaScript</span><span>Java</span></div>
           </div>
         </figure>
+      </section>
+
+      <section class="section career-role-section" id="future-role-finder">
+        <div class="career-role-copy">
+          <p class="eyebrow">College career matcher</p>
+          <h2>College student? Find your future role.</h2>
+          <p>
+            Answer a few practical questions about your interests, work style and current strengths. FutureHub will suggest role directions, project ideas and the next skills to build.
+          </p>
+          <div class="role-hook-grid">
+            <span>Internship direction</span>
+            <span>Project idea</span>
+            <span>Skill gaps</span>
+            <span>Interview path</span>
+          </div>
+        </div>
+        <form class="role-matcher" data-role-matcher>
+          <div class="role-form-grid">
+            <label>
+              Student name
+              <input name="studentName" type="text" placeholder="Your name" required />
+            </label>
+            <label>
+              College year
+              <select name="year" required>
+                <option>1st year</option>
+                <option>2nd year</option>
+                <option>3rd year</option>
+                <option>Final year</option>
+                <option>Passed out / job seeker</option>
+              </select>
+            </label>
+            <label>
+              Branch / stream
+              <select name="branch" required>
+                <option>Computer Science / IT</option>
+                <option>Engineering - other branch</option>
+                <option>BCA / MCA</option>
+                <option>BBA / MBA</option>
+                <option>Commerce</option>
+                <option>Arts / Humanities</option>
+                <option>Other</option>
+              </select>
+            </label>
+            <label>
+              Current confidence
+              <select name="confidence" required>
+                <option>Beginner but ready to learn</option>
+                <option>Know basics, need direction</option>
+                <option>Built small projects</option>
+                <option>Preparing for internship / job</option>
+              </select>
+            </label>
+            <label>
+              Main interest
+              <select name="interest" required>
+                <option>Coding and app building</option>
+                <option>AI and automation</option>
+                <option>Data and analytics</option>
+                <option>Design and user experience</option>
+                <option>Business and product planning</option>
+                <option>Digital marketing and growth</option>
+              </select>
+            </label>
+            <label>
+              Work style
+              <select name="workStyle" required>
+                <option>I like building practical projects</option>
+                <option>I like analyzing information</option>
+                <option>I like designing screens and experiences</option>
+                <option>I like presenting and talking to people</option>
+                <option>I like researching and solving problems</option>
+                <option>I like planning business ideas</option>
+              </select>
+            </label>
+            <label>
+              Strongest quality
+              <select name="strength" required>
+                <option>Logical thinking</option>
+                <option>Creativity</option>
+                <option>Communication</option>
+                <option>Detail orientation</option>
+                <option>Fast learning</option>
+                <option>Leadership</option>
+              </select>
+            </label>
+            <label>
+              Immediate goal
+              <select name="goal" required>
+                <option>Find internship direction</option>
+                <option>Choose final year project</option>
+                <option>Prepare for interviews</option>
+                <option>Build portfolio / GitHub</option>
+                <option>Start my own idea</option>
+                <option>I am confused, guide me</option>
+              </select>
+            </label>
+          </div>
+          <div class="role-skill-picker" aria-label="Select skills or interests">
+            <button type="button" data-role-skill="Coding">Coding</button>
+            <button type="button" data-role-skill="AI">AI</button>
+            <button type="button" data-role-skill="Data">Data</button>
+            <button type="button" data-role-skill="Design">Design</button>
+            <button type="button" data-role-skill="Business">Business</button>
+            <button type="button" data-role-skill="Marketing">Marketing</button>
+            <button type="button" data-role-skill="Communication">Communication</button>
+            <button type="button" data-role-skill="Problem solving">Problem solving</button>
+          </div>
+          <button class="primary-button" type="submit">Generate My Future Role</button>
+          <article class="role-result" data-role-result hidden></article>
+        </form>
       </section>
 
       <section class="section guided-section">
@@ -93,6 +205,6 @@
     </main>
 
     <footer class="site-footer"><div><strong>Kidsverse FutureHub</strong><span>Student learning paths, live projects and career-ready support.</span></div><a href="https://wa.me/918826758881" target="_blank" rel="noopener noreferrer">WhatsApp: 8826758881</a></footer>
-    <script src="script.js?v=20260620-21"></script>
+    <script src="script.js?v=20260621-03"></script>
   </body>
 </html>
