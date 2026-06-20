@@ -31,6 +31,9 @@ const templateBudget = document.querySelector("[data-template-budget]");
 const templateCards = document.querySelectorAll("[data-template-card]");
 const healthForm = document.querySelector("[data-health-form]");
 const healthResult = document.querySelector("[data-health-result]");
+const roleMatcherForm = document.querySelector("[data-role-matcher]");
+const roleSkillPicker = document.querySelector(".role-skill-picker");
+const roleResult = document.querySelector("[data-role-result]");
 const whatsappNumber = "918826758881";
 
 const pathData = {
@@ -357,6 +360,81 @@ const businessVisualData = {
   },
 };
 
+const careerRoleData = [
+  {
+    title: "AI App Developer",
+    tags: ["Coding", "AI", "Problem solving"],
+    signals: ["AI", "automation", "Coding and app building", "building practical projects", "Fast learning", "Build portfolio", "internship"],
+    project: "Build an AI chatbot or assistant that answers college, business or customer questions.",
+    skills: ["Python basics", "Prompt engineering", "API usage", "Project documentation"],
+    action: "30-day mission: Week 1 learn AI prompts and Python basics, Week 2 build a working chatbot, Week 3 add memory or real data, Week 4 record a demo and present it like an internship project.",
+    support: "FutureHub can guide you through an AI app project, GitHub portfolio and demo presentation.",
+  },
+  {
+    title: "Web Developer",
+    tags: ["Coding", "Design", "Problem solving"],
+    signals: ["Coding and app building", "building practical projects", "Design", "Built small projects", "GitHub", "interviews"],
+    project: "Build a responsive business website with enquiry form, WhatsApp action and admin-ready content.",
+    skills: ["HTML/CSS", "JavaScript", "Responsive design", "Deployment"],
+    action: "30-day mission: Week 1 design a homepage, Week 2 build mobile-first pages, Week 3 add forms and interactions, Week 4 deploy the website and turn it into a portfolio case study.",
+    support: "FutureHub can help you build live websites, polish your portfolio and prepare for developer interviews.",
+  },
+  {
+    title: "Data Analyst",
+    tags: ["Data", "Problem solving"],
+    signals: ["Data and analytics", "analyzing information", "Logical thinking", "Detail orientation", "Commerce", "MBA"],
+    project: "Create a dashboard from sales, admission, attendance or social media data with clear insights.",
+    skills: ["Excel/Sheets", "SQL basics", "Python data basics", "Dashboard storytelling"],
+    action: "30-day mission: Week 1 clean real data, Week 2 create charts and insights, Week 3 build a dashboard, Week 4 explain findings like a business analyst in a mock interview.",
+    support: "FutureHub can train you on practical dashboards, data projects and interview explanation.",
+  },
+  {
+    title: "UI/UX Designer",
+    tags: ["Design", "Communication"],
+    signals: ["Design and user experience", "designing screens", "Creativity", "Communication", "Arts", "Humanities"],
+    project: "Design a mobile app prototype for salon booking, school enquiry or student study planning.",
+    skills: ["User research", "Wireframes", "Figma basics", "Presentation"],
+    action: "30-day mission: Week 1 research users, Week 2 create wireframes, Week 3 design a polished app prototype, Week 4 present the user journey as a UI/UX case study.",
+    support: "FutureHub can help you create a UI case study and present your design like a professional portfolio.",
+  },
+  {
+    title: "Digital Growth Specialist",
+    tags: ["Marketing", "Communication", "Business"],
+    signals: ["Digital marketing", "presenting and talking", "Communication", "Business", "Commerce", "MBA"],
+    project: "Create a growth plan for a local business with landing page, Instagram content and WhatsApp enquiry flow.",
+    skills: ["Content planning", "SEO basics", "Ads basics", "WhatsApp funnel thinking"],
+    action: "30-day mission: Week 1 choose a real business, Week 2 plan content and offers, Week 3 build a landing page funnel, Week 4 present a growth report with next campaign ideas.",
+    support: "FutureHub can train you on real digital campaigns, website funnels and client-ready reporting.",
+  },
+  {
+    title: "Business Analyst / Product Associate",
+    tags: ["Business", "Communication", "Problem solving"],
+    signals: ["Business and product", "planning business ideas", "Leadership", "Communication", "researching", "Start my own idea"],
+    project: "Plan a product or service app with problem statement, features, user journey and launch plan.",
+    skills: ["Requirement gathering", "User stories", "Market research", "Presentation"],
+    action: "30-day mission: Week 1 identify a real problem, Week 2 map users and features, Week 3 create product screens and requirements, Week 4 pitch the product with a launch plan.",
+    support: "FutureHub can help you convert business thinking into product documents, prototypes and startup planning.",
+  },
+  {
+    title: "QA Tester / Automation Starter",
+    tags: ["Problem solving", "Coding"],
+    signals: ["Detail orientation", "Logical thinking", "researching", "Coding", "Beginner", "Know basics"],
+    project: "Test a website or app, create bug reports and automate simple checks for important pages.",
+    skills: ["Manual testing", "Bug reporting", "Basic automation", "Quality mindset"],
+    action: "30-day mission: Week 1 learn testing mindset, Week 2 test a real website, Week 3 prepare bug reports and checklists, Week 4 add basic automation and explain your QA process.",
+    support: "FutureHub can guide you from testing basics to project-based QA practice and interview preparation.",
+  },
+  {
+    title: "Startup Builder",
+    tags: ["Business", "AI", "Communication"],
+    signals: ["Start my own idea", "planning business ideas", "Leadership", "AI", "Digital marketing", "Fast learning"],
+    project: "Create a simple MVP plan with landing page, customer problem, first offer and launch checklist.",
+    skills: ["Idea validation", "No-code/AI tools", "Landing page", "Customer discovery"],
+    action: "30-day mission: Week 1 select one idea, Week 2 validate it with target users, Week 3 build a landing page or prototype, Week 4 pitch the MVP with pricing and launch steps.",
+    support: "FutureHub can help you shape the idea, build the first digital presence and prepare a pitch.",
+  },
+];
+
 const finderData = {
   student: {
     stages: ["Grade 3-5", "Grade 6-8", "Grade 9-12", "College student"],
@@ -659,44 +737,65 @@ function filterTemplateCards() {
   });
 }
 
-function hashText(text) {
-  return [...text].reduce((total, char) => (total * 31 + char.charCodeAt(0)) % 997, 17);
-}
-
 function normalizeWebsiteUrl(value) {
   const trimmed = value.trim();
+  if (!trimmed || /\s/.test(trimmed)) {
+    throw new Error("Website URL cannot contain spaces.");
+  }
+  if (/[@]/.test(trimmed)) {
+    throw new Error("Please enter a website, not an email address.");
+  }
   const withProtocol = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
-  return new URL(withProtocol);
+  const url = new URL(withProtocol);
+  const hostname = url.hostname.toLowerCase().replace(/^www\./, "");
+  const labels = hostname.split(".");
+  const tld = labels[labels.length - 1] || "";
+  const hasValidLabels = labels.length >= 2 && labels.every((label) => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/i.test(label));
+  const hasValidTld = /^[a-z]{2,24}$/i.test(tld);
+  if (!hasValidLabels || !hasValidTld) {
+    throw new Error("Please enter a real website domain.");
+  }
+  return url;
+}
+
+function withTimeout(task, ms) {
+  const controller = new AbortController();
+  let timeout;
+  const timeoutPromise = new Promise((_, reject) => {
+    timeout = setTimeout(() => {
+      controller.abort();
+      reject(new Error("request-timeout"));
+    }, ms);
+  });
+  return {
+    signal: controller.signal,
+    run: Promise.race([task(controller.signal), timeoutPromise]).finally(() => clearTimeout(timeout)),
+  };
+}
+
+function renderHealthError(title, message) {
+  if (!healthResult) return;
+  healthResult.innerHTML = `<div class="health-error"><strong>${title}</strong><span>${message}</span></div>`;
+  healthResult.hidden = false;
 }
 
 function clampScore(score) {
-  return Math.max(42, Math.min(98, Math.round(score)));
+  return Math.max(0, Math.min(100, Math.round(Number(score) || 0)));
 }
 
-function websiteHealthAudit(url) {
-  const domain = url.hostname.replace(/^www\./, "");
-  const hash = hashText(domain);
-  const hasHttps = url.protocol === "https:";
-  const hasPath = url.pathname && url.pathname !== "/";
-  const hasCleanDomain = domain.length <= 18 && !domain.includes("-");
-  const likelyLocalBusiness = ["salon", "clinic", "school", "cafe", "store", "shop", "real", "ngo", "academy", "restaurant"].some((word) => domain.includes(word));
-  const mobile = clampScore(68 + (hash % 19) + (hasCleanDomain ? 4 : -3));
-  const speed = clampScore(62 + ((hash >> 2) % 24) - (hasPath ? 4 : 0));
-  const seo = clampScore(58 + ((hash >> 3) % 28) + (likelyLocalBusiness ? 3 : -2));
-  const security = clampScore((hasHttps ? 78 : 48) + (hash % 13));
-  const googleStatus = likelyLocalBusiness && seo > 72 ? "Likely present, needs optimization" : "Needs Google Business Profile check";
-  const missing = [];
-  if (mobile < 82) missing.push("Mobile-first layout improvements");
-  if (speed < 78) missing.push("Image compression and speed optimization");
-  if (seo < 78) missing.push("Local SEO titles, keywords and service pages");
-  if (security < 82) missing.push("SSL, secure forms and trust badges");
-  if (!likelyLocalBusiness) missing.push("Google Business Profile and map visibility");
-  missing.push("WhatsApp lead button");
-  missing.push("Clear enquiry or booking flow");
-  const overall = clampScore((mobile + speed + seo + security) / 4);
-  const priority = overall >= 84 ? "Growth ready" : overall >= 70 ? "Good base, needs conversion upgrades" : "High improvement opportunity";
-  const leadPotential = overall >= 84 ? "Your website can focus on campaigns, content and conversion tracking." : overall >= 70 ? "A few focused upgrades can improve trust, calls and WhatsApp enquiries." : "A redesign or focused landing page can create a much stronger enquiry flow.";
-  return { domain, mobile, speed, seo, security, googleStatus, overall, priority, leadPotential, missing: missing.slice(0, 6) };
+async function runServerWebsiteCheck(url) {
+  if (window.location.protocol === "file:") {
+    throw new Error("local-server-required");
+  }
+  const endpoint = new URL("/api/website-check", window.location.origin);
+  endpoint.searchParams.set("url", url.href);
+  const request = withTimeout((signal) => fetch(endpoint, { cache: "no-store", signal }), 50000);
+  const response = await request.run;
+  const data = await response.json().catch(() => null);
+  if (!response.ok || data?.error) {
+    throw new Error(data?.message || "Website could not be checked.");
+  }
+  return data;
 }
 
 function scoreLabel(score) {
@@ -713,26 +812,22 @@ function scoreTone(score) {
   return "is-critical";
 }
 
-function wait(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 function renderHealthScanning(domain) {
   if (!healthResult) return;
   healthResult.innerHTML = `
     <div class="health-scanning">
       <div class="scan-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
       <div>
-        <span>Scanning ${domain}</span>
-        <h3>Checking your website experience...</h3>
-        <p>Reviewing mobile layout, loading signals, SEO basics, security trust and enquiry readiness.</p>
+        <span>Checking ${domain}</span>
+        <h3>Running FutureHub website readiness check...</h3>
+        <p>This may take a little time because FutureHub is inspecting live website HTML, SEO basics, headings, images and enquiry-readiness signals.</p>
       </div>
       <div class="scan-step-list">
-        <span>Mobile layout check</span>
-        <span>Speed signal check</span>
-        <span>SEO visibility check</span>
-        <span>Security trust check</span>
-        <span>Lead feature check</span>
+        <span>Live website check</span>
+        <span>Meta tag review</span>
+        <span>Heading structure</span>
+        <span>Image alt check</span>
+        <span>Contact readiness</span>
       </div>
       <div class="scan-progress"><i></i></div>
     </div>
@@ -743,17 +838,28 @@ function renderHealthScanning(domain) {
 function renderHealthResult(audit, rawUrl) {
   if (!healthResult) return;
   const scores = [
-    ["Mobile Friendliness", audit.mobile, "How cleanly the website works on phones"],
-    ["Loading Speed", audit.speed, "How quickly visitors can start using the page"],
-    ["SEO Readiness", audit.seo, "How prepared the site is for Google visibility"],
-    ["Security", audit.security, "How trustworthy and safe the website feels"],
+    ["Mobile Readiness", audit.mobile, "Viewport, language, image and mobile-friendly page signals"],
+    ["Response Speed", audit.speed, "Initial HTML response time and page size signals"],
+    ["SEO Readiness", audit.seo, "Meta tags, structured data, headings and image health"],
+    ["Trust & Contact", audit.security, "HTTPS, WhatsApp, phone, form, map and enquiry signals"],
   ];
+  const seoHealth = audit.seoHealth || {};
   healthResult.innerHTML = `
     <div class="health-result-head">
-      <span>Smart website report</span>
+      <span>Website readiness preview</span>
       <h3>${audit.domain}</h3>
       <p>${audit.leadPotential}</p>
       <div class="health-overall"><strong>${audit.overall}</strong><span>${audit.priority}</span></div>
+    </div>
+    <div class="seo-health-overview">
+      <div>
+        <span>SEO Health Overview</span>
+        <strong>Overall: ${seoHealth.overall ?? audit.seo}</strong>
+      </div>
+      <article><small>Meta Tags</small><b>${seoHealth.metaTags ?? 0}</b></article>
+      <article><small>Structured Data</small><b>${seoHealth.structuredData ?? 0}</b></article>
+      <article><small>Headings</small><b>${seoHealth.headings ?? 0}</b></article>
+      <article><small>Images</small><b>${seoHealth.images ?? 0}</b></article>
     </div>
     <div class="health-score-grid">
       ${scores
@@ -770,22 +876,26 @@ function renderHealthResult(audit, rawUrl) {
       </div>
       <div class="health-gbp-card">
         <span>Lead Readiness</span>
-        <strong>${audit.missing.includes("Clear enquiry or booking flow") ? "Needs stronger enquiry path" : "Good enquiry direction"}</strong>
-        <p>For local businesses, the website should move visitors toward WhatsApp, booking, call, map or enquiry in one clear journey.</p>
+        <strong>Manual journey check recommended</strong>
+        <p>Automated checks can detect contact signals, but we still review the actual WhatsApp, booking, call, map or enquiry journey manually for business growth.</p>
       </div>
     </div>
     <div class="health-missing-card">
-      <span>Priority fixes to improve leads</span>
+      <span>Issues found</span>
       <ul>${audit.missing.map((item) => `<li>${item}</li>`).join("")}</ul>
+    </div>
+    <div class="health-missing-card health-recommend-card">
+      <span>Recommendations</span>
+      <ul>${(audit.recommendations || []).map((item) => `<li>${item}</li>`).join("")}</ul>
     </div>
     <div class="health-action-plan">
       <span>Suggested FutureHub action plan</span>
-      <div><strong>Step 1</strong><p>Fix trust signals: mobile layout, secure contact flow, Google map and WhatsApp enquiry.</p></div>
-      <div><strong>Step 2</strong><p>Add conversion sections: services, proof, testimonials, FAQ and clear call-to-action buttons.</p></div>
-      <div><strong>Step 3</strong><p>Improve local discovery with SEO titles, service pages, Google Business Profile and speed-friendly images.</p></div>
+      <div><strong>Step 1</strong><p>Fix SEO foundation: title, description, robots, canonical, heading order and image alt text.</p></div>
+      <div><strong>Step 2</strong><p>Improve trust and enquiry flow with WhatsApp, phone, map, form, reviews and visible call-to-action buttons.</p></div>
+      <div><strong>Step 3</strong><p>Add structured data, local service pages and social sharing tags so the website becomes easier to understand and share.</p></div>
     </div>
     <a class="primary-button health-whatsapp" href="https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-      `Hello Kidsverse FutureHub, I checked my website health. Website: ${rawUrl}. Scores - Mobile: ${audit.mobile}, Speed: ${audit.speed}, SEO: ${audit.seo}, Security: ${audit.security}. Google Business: ${audit.googleStatus}. Please suggest improvements.`
+      `Hello Kidsverse FutureHub, I checked my website readiness. Website: ${rawUrl}. Source: ${audit.source || "FutureHub Website Readiness Checker"}. Scores - Mobile: ${audit.mobile}, Speed: ${audit.speed}, SEO: ${audit.seo}, Trust: ${audit.security}. Google Business: ${audit.googleStatus}. Please suggest improvements.`
     )}" target="_blank" rel="noopener noreferrer">Get Improvement Plan on WhatsApp</a>
   `;
   healthResult.hidden = false;
@@ -843,6 +953,76 @@ function guidedRecommendation(type, data) {
   }
 
   return ["Book a Guidance Slot", "We will understand the requirement and suggest the right plan."];
+}
+
+function selectedRoleSkills() {
+  return [...document.querySelectorAll("[data-role-skill].is-selected")].map((button) => button.dataset.roleSkill);
+}
+
+function scoreCareerRole(role, answers, selectedSkills) {
+  const combined = `${answers.branch} ${answers.confidence} ${answers.interest} ${answers.workStyle} ${answers.strength} ${answers.goal} ${selectedSkills.join(" ")}`.toLowerCase();
+  let score = 48;
+  role.signals.forEach((signal) => {
+    if (combined.includes(signal.toLowerCase())) score += 8;
+  });
+  role.tags.forEach((tag) => {
+    if (selectedSkills.includes(tag)) score += 9;
+  });
+  if (answers.confidence.includes("Built small projects") || answers.confidence.includes("Preparing")) score += 5;
+  if (answers.goal.includes("confused")) score -= 2;
+  return Math.max(54, Math.min(96, score));
+}
+
+function roleFitLabel(score) {
+  if (score >= 86) return "Strong direction";
+  if (score >= 74) return "Good starting fit";
+  return "Explore with guidance";
+}
+
+function renderRoleMatcherResult(data) {
+  if (!roleResult) return;
+  const answers = {
+    studentName: String(data.get("studentName") || "Student").trim(),
+    year: String(data.get("year") || ""),
+    branch: String(data.get("branch") || ""),
+    confidence: String(data.get("confidence") || ""),
+    interest: String(data.get("interest") || ""),
+    workStyle: String(data.get("workStyle") || ""),
+    strength: String(data.get("strength") || ""),
+    goal: String(data.get("goal") || ""),
+  };
+  const skills = selectedRoleSkills();
+  const ranked = careerRoleData
+    .map((role) => ({ ...role, score: scoreCareerRole(role, answers, skills) }))
+    .sort((a, b) => b.score - a.score);
+  const top = ranked[0];
+  const alternates = ranked.slice(0, 3);
+  const skillFocus = top.skills.slice(0, 3);
+  const whatsappText = encodeURIComponent(
+    `Hello Kidsverse FutureHub, I used Future Role Finder. Name: ${answers.studentName}. Year: ${answers.year}. Branch: ${answers.branch}. Suggested role: ${top.title}. Goal: ${answers.goal}. Please guide me for the next step.`
+  );
+
+  roleResult.innerHTML = `
+    <div class="role-result-head">
+      <span>Future role direction</span>
+      <h3>${top.title}</h3>
+      <p>${answers.studentName}, your answers suggest this can be a strong starting direction. This is not a final career decision, but a practical path to begin projects, portfolio and interviews.</p>
+      <div><strong>${top.score}%</strong><em>${roleFitLabel(top.score)}</em></div>
+    </div>
+    <div class="role-match-grid">
+      ${alternates
+        .map((role) => `<article><span>${role.score}%</span><strong>${role.title}</strong><p>${roleFitLabel(role.score)}</p></article>`)
+        .join("")}
+    </div>
+    <div class="role-plan-grid">
+      <article><span>Suggested project</span><p>${top.project}</p></article>
+      <article><span>Skill focus</span><p>${skillFocus.join(", ")}</p></article>
+      <article class="role-mission-card"><span>30-day mission</span><p>${top.action}</p></article>
+      <article><span>How FutureHub can help</span><p>${top.support}</p></article>
+    </div>
+    <a class="primary-button role-whatsapp" href="https://wa.me/${whatsappNumber}?text=${whatsappText}" target="_blank" rel="noopener noreferrer">Discuss My Career Path on WhatsApp</a>
+  `;
+  roleResult.hidden = false;
 }
 
 menuButton?.addEventListener("click", () => {
@@ -907,6 +1087,17 @@ skillPicker?.addEventListener("click", (event) => {
 
 builderWhatsapp?.addEventListener("click", sendBuilderPlan);
 
+roleSkillPicker?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-role-skill]");
+  if (!button || !roleSkillPicker.contains(button)) return;
+  button.classList.toggle("is-selected");
+});
+
+roleMatcherForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  renderRoleMatcherResult(new FormData(roleMatcherForm));
+});
+
 [sampleCategory, sampleBudget].forEach((control) => {
   control?.addEventListener("change", renderBusinessSample);
 });
@@ -931,19 +1122,26 @@ healthForm?.addEventListener("submit", async (event) => {
     const url = normalizeWebsiteUrl(websiteUrl);
     if (submitButton) {
       submitButton.disabled = true;
-      submitButton.textContent = "Scanning Website...";
+      submitButton.textContent = "Checking Website...";
     }
     renderHealthScanning(url.hostname.replace(/^www\./, ""));
-    await wait(2900);
-    renderHealthResult(websiteHealthAudit(url), url.href);
-  } catch {
-    if (!healthResult) return;
-    healthResult.innerHTML = `<div class="health-error">Please enter a valid website URL, for example https://yourbusiness.com</div>`;
-    healthResult.hidden = false;
+    const audit = await runServerWebsiteCheck(url);
+    renderHealthResult(audit, audit.finalUrl || url.href);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "";
+    if (message === "local-server-required") {
+      renderHealthError("Open the deployed website to run this check", "This checker fetches another website's HTML through the FutureHub server. It will work after deployment on Vercel. Local file preview cannot inspect external websites because browsers block cross-site HTML access.");
+    } else if (message === "website-not-reachable" || message.includes("could not be reached") || message.includes("could not audit")) {
+      renderHealthError("Website is not reachable", "FutureHub could not reach this website. Please try the full URL with https:// or check if the website is live.");
+    } else if (message === "not-html" || message.includes("normal HTML")) {
+      renderHealthError("This URL is not a normal website page", "Please enter a public website page that returns HTML content, not an image, PDF, file download or app-only endpoint.");
+    } else {
+      renderHealthError("Website could not be checked", message || "Please enter a live website like kidsverseschool.com or https://yourbusiness.com. Business names or search phrases cannot be checked.");
+    }
   } finally {
     if (submitButton) {
       submitButton.disabled = false;
-      submitButton.textContent = "Run Smart Website Scan";
+      submitButton.textContent = "Run Website Check";
     }
   }
 });
@@ -970,7 +1168,7 @@ guidedForms.forEach((form) => {
 });
 
 document.addEventListener("click", (event) => {
-  const target = event.target.closest(".primary-button, .secondary-button, .header-cta, .vertical-card a, .date-grid button, .slot-grid button, .finder-tabs button, .path-buttons button, .project-card, .skill-picker button, .sample-nav span, .sample-hero button, .demo-filters button, .demo-card button, .business-sticky-cta a, .health-whatsapp");
+  const target = event.target.closest(".primary-button, .secondary-button, .header-cta, .vertical-card a, .date-grid button, .slot-grid button, .finder-tabs button, .path-buttons button, .project-card, .skill-picker button, .role-skill-picker button, .sample-nav span, .sample-hero button, .demo-filters button, .demo-card button, .business-sticky-cta a, .health-whatsapp, .role-whatsapp");
   if (!target) return;
   const rect = target.getBoundingClientRect();
   const ripple = document.createElement("span");
