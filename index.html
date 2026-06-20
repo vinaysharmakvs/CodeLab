@@ -129,6 +129,86 @@ team.build(project, leads, growth)</code></pre>
         </div>
       </section>
 
+      <section class="section course-builder-section" id="course-builder">
+        <div class="course-builder-copy">
+          <p class="eyebrow">Build your own coding course</p>
+          <h2>No fixed syllabus. Design a learning path around your child.</h2>
+          <p>
+            Most coding companies sell predefined curriculum. FutureHub lets parents and students combine skills, pace, class mode and outcomes to create a course plan that feels personal.
+          </p>
+          <div class="builder-promise">
+            <span>Choose skills</span>
+            <span>Set pace</span>
+            <span>Pick class style</span>
+            <span>Get instant plan</span>
+          </div>
+        </div>
+        <div class="course-builder" aria-label="Build your own coding course">
+          <div class="builder-controls">
+            <label>
+              Who is this for?
+              <select data-builder-stage>
+                <option>Grade 3-5 student</option>
+                <option>Grade 6-8 student</option>
+                <option>Grade 9-12 student</option>
+                <option>College student</option>
+              </select>
+            </label>
+            <label>
+              Main goal
+              <select data-builder-goal>
+                <option>Build confidence with technology</option>
+                <option>Reduce random screen time</option>
+                <option>Build school-ready projects</option>
+                <option>Create portfolio projects</option>
+                <option>Prepare for internship / interviews</option>
+              </select>
+            </label>
+            <label>
+              Class style
+              <select data-builder-mode>
+                <option>1:1 live class</option>
+                <option>Small group class</option>
+                <option>Weekend bootcamp</option>
+                <option>Project mentorship</option>
+              </select>
+            </label>
+            <label>
+              Learning pace
+              <select data-builder-pace>
+                <option>Light pace</option>
+                <option>Balanced pace</option>
+                <option>Intensive pace</option>
+              </select>
+            </label>
+          </div>
+          <div class="skill-picker" aria-label="Skill selector">
+            <button class="is-selected" type="button" data-builder-skill="Scratch Jr">Scratch Jr</button>
+            <button class="is-selected" type="button" data-builder-skill="Scratch">Scratch</button>
+            <button type="button" data-builder-skill="Block-based coding">Block-based coding</button>
+            <button type="button" data-builder-skill="App building basics">App building basics</button>
+            <button type="button" data-builder-skill="Logic games">Logic games</button>
+            <button type="button" data-builder-skill="Creative coding">Creative coding</button>
+          </div>
+          <article class="builder-preview" data-builder-preview>
+            <span>Your custom course plan</span>
+            <h3>Scratch + Scratch Jr Confidence Track</h3>
+            <p>A friendly starter course for Grade 3-5 student focused on Build confidence with technology.</p>
+            <div class="builder-plan-grid">
+              <strong>6-8 weeks</strong>
+              <strong>1:1 live class</strong>
+              <strong>Light pace</strong>
+            </div>
+            <ul>
+              <li>Logic games and visual coding activities</li>
+              <li>Mini project with demo presentation</li>
+              <li>Parent-friendly progress discussion</li>
+            </ul>
+          </article>
+          <button class="primary-button builder-whatsapp" type="button" data-builder-whatsapp>Send My Custom Plan on WhatsApp</button>
+        </div>
+      </section>
+
       <section class="section finder-section" id="finder">
         <div class="finder-copy">
           <p class="eyebrow">Smart solution finder</p>
@@ -399,10 +479,24 @@ team.build(project, leads, growth)</code></pre>
             <span>01</span>
             <div>
               <h3>Select preferred date</h3>
-              <p>Available discussion dates for the next two weeks.</p>
+              <p>Choose an available day from the calendar.</p>
             </div>
           </div>
-          <div class="date-grid" data-date-grid></div>
+          <div class="booking-calendar" aria-label="Booking calendar">
+            <div class="calendar-header">
+              <strong data-calendar-label>Available dates</strong>
+            </div>
+            <div class="calendar-weekdays" aria-hidden="true">
+              <span>Sun</span>
+              <span>Mon</span>
+              <span>Tue</span>
+              <span>Wed</span>
+              <span>Thu</span>
+              <span>Fri</span>
+              <span>Sat</span>
+            </div>
+            <div class="date-grid calendar-grid" data-date-grid></div>
+          </div>
 
           <div class="booking-step">
             <span>02</span>
@@ -442,6 +536,6 @@ team.build(project, leads, growth)</code></pre>
       <a href="https://wa.me/918826758881" target="_blank" rel="noopener noreferrer">WhatsApp: 8826758881</a>
     </footer>
 
-    <script src="script.js?v=20260619-3"></script>
+    <script src="script.js?v=20260620-7"></script>
   </body>
 </html>
