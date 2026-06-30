@@ -22,14 +22,11 @@
         </span>
       </a>
       <nav class="desktop-nav" aria-label="Primary navigation">
-        <a href="#top">Start Here</a>
-        <a href="students.html">Students</a>
-        <a href="parents.html">Parents</a>
-        <a href="business.html">Business</a>
-        <a href="business.html#website-health">Website Check</a>
-        <a href="institutions.html">Schools / Colleges</a>
-        <a href="faq.html">FAQ</a>
-        <a href="#booking">Book Slot</a>
+        <a href="#top" data-profile-nav="all">Start Here</a>
+        <a href="#profile-content" data-profile-nav="all">My Profile</a>
+        <a href="#batch-pricing" data-profile-nav="student parent">Pricing</a>
+        <a href="faq.html" data-profile-nav="all">FAQ</a>
+        <a href="#booking" data-profile-nav="all">Book Slot</a>
       </nav>
       <div class="header-actions">
         <a class="header-cta" href="#booking">Book Your Slot</a>
@@ -40,113 +37,141 @@
     </header>
 
     <nav class="mobile-menu" aria-label="Mobile navigation" hidden>
-      <a href="#top">Start Here</a>
-      <a href="students.html">Students</a>
-      <a href="parents.html">Parents</a>
-      <a href="business.html">Business</a>
-      <a href="business.html#website-health">Website Check</a>
-      <a href="institutions.html">Schools / Colleges</a>
-      <a href="faq.html">FAQ</a>
-      <a href="#booking">Book Slot</a>
+      <a href="#top" data-profile-nav="all">Start Here</a>
+      <a href="#profile-content" data-profile-nav="all">My Profile</a>
+      <a href="#batch-pricing" data-profile-nav="student parent">Pricing</a>
+      <a href="faq.html" data-profile-nav="all">FAQ</a>
+      <a href="#booking" data-profile-nav="all">Book Slot</a>
     </nav>
 
     <main id="top">
-      <section class="hero">
-        <div class="hero-copy">
-          <p class="eyebrow">Choose your path</p>
-          <h1>We help students grow and businesses thrive with AI, tech, and real mentorship.</h1>
+      <section class="hero profile-hero" aria-labelledby="profile-title">
+        <div class="profile-hero-copy">
+          <p class="eyebrow">Kidsverse FutureHub</p>
+          <h1 id="profile-title">Who's here today?</h1>
           <p class="hero-lead">
-            Select who you are. We will guide you to the right courses, projects, website tools, business growth support, or a clear counselling call.
+            Choose your profile. We will show the right learning, career, website or digital growth path without making you read everything.
           </p>
-          <div class="hero-path-chooser" aria-label="Choose FutureHub path">
-            <a class="hero-path-card hero-path-student" href="#student-parent-path">
-              <figure class="path-card-visual" data-asset="assets/parent.png">
-                <img src="assets/parent.png" alt="Parent and student learning path visual" onerror="this.parentElement.classList.add('is-empty'); this.remove();" />
-                <figcaption>Student / Parent visual</figcaption>
-              </figure>
-              <span>I'm a Student / Parent</span>
-              <strong>Find the right learning path</strong>
-              <p>Coding, AI, projects, internships, career roles and parent-friendly guidance.</p>
-            </a>
-            <a class="hero-path-card hero-path-business" href="#business-owner-path">
-              <figure class="path-card-visual" data-asset="assets/business.png">
-                <img src="assets/business.png" alt="Business owner digital growth visual" onerror="this.parentElement.classList.add('is-empty'); this.remove();" />
-                <figcaption>Business owner visual</figcaption>
-              </figure>
-              <span>I'm a Business Owner</span>
-              <strong>Grow my business online</strong>
-              <p>Websites, social media, WhatsApp enquiries, automation and readiness checks.</p>
-            </a>
-          </div>
-          <div class="trust-strip" aria-label="FutureHub highlights">
-            <span>AI courses</span>
-            <span>Website demos</span>
-            <span>Smart tools</span>
-            <span>Live projects</span>
-            <span>Business growth</span>
-          </div>
         </div>
-        <div class="hero-visual" aria-label="FutureHub digital learning dashboard">
-          <div class="hero-media-stack">
-            <figure class="asset-placeholder hero-main-placeholder" data-asset="assets/futurehub-home-hero.gif">
-              <img src="assets/futurehub-home-hero.gif" alt="FutureHub animated hero visual" onerror="this.parentElement.classList.add('is-empty'); this.remove();" />
-              <figcaption>
-                <strong>Hero GIF / Image</strong>
-                <span>assets/futurehub-home-hero.gif</span>
-              </figcaption>
+        <div class="profile-selector" aria-label="Select your FutureHub profile">
+          <a class="profile-card profile-student" href="#profile-content" data-profile-select="student">
+            <figure>
+              <img src="assets/student-parent-card.gif" alt="Student learning coding and AI with FutureHub" onerror="this.src='assets/parent.png';" />
             </figure>
-            <div class="hero-mini-placeholders">
-              <figure class="asset-placeholder" data-asset="assets/parent.png">
-                <img src="assets/parent.png" alt="Parent and student technology learning visual" onerror="this.parentElement.classList.add('is-empty'); this.remove();" />
-                <figcaption>
-                  <strong>Student / Parent</strong>
-                  <span>assets/parent.png</span>
-                </figcaption>
-              </figure>
-              <figure class="asset-placeholder" data-asset="assets/business.png">
-                <img src="assets/business.png" alt="Business digital growth visual" onerror="this.parentElement.classList.add('is-empty'); this.remove();" />
-                <figcaption>
-                  <strong>Business Growth</strong>
-                  <span>assets/business.png</span>
-                </figcaption>
-              </figure>
-            </div>
-          </div>
-          <div class="orbit-card orbit-card-one"><strong>CodeLab</strong><span>AI, Python, web and projects</span></div>
-          <div class="orbit-card orbit-card-two"><strong>GrowthLab</strong><span>Leads, social and WhatsApp funnels</span></div>
-          <div class="orbit-card orbit-card-three"><strong>Studio</strong><span>Websites, branding and automation</span></div>
-          <div class="code-panel">
-            <span class="terminal-dot"></span>
-            <span class="terminal-dot"></span>
-            <span class="terminal-dot"></span>
-            <pre><code>futurehub.match(visitor)
-solution = ai.recommend(path)
-team.build(project, leads, growth)</code></pre>
-          </div>
-          <div class="coding-gif-card hero-coding-gif" aria-label="Animated coding class preview">
-            <div class="coding-gif-top"><span></span><span></span><span></span><strong>live_code.py</strong></div>
-            <div class="coding-gif-screen">
-              <i></i><i></i><i></i><i></i>
-              <b>AI</b>
-            </div>
-            <div class="coding-gif-tags"><span>Python</span><span>Apps</span><span>AI</span></div>
-          </div>
+            <span>Student</span>
+            <strong>Build skills, projects and career confidence</strong>
+            <p>Grade 3 onward, teens and college learners.</p>
+          </a>
+          <a class="profile-card profile-parent" href="#profile-content" data-profile-select="parent">
+            <figure>
+              <img src="assets/parent.png" alt="Parent choosing technology course guidance" onerror="this.src='assets/student-parent-path.png';" />
+            </figure>
+            <span>Parent</span>
+            <strong>Find the right course for your child</strong>
+            <p>Clear guidance without pressure or confusing packages.</p>
+          </a>
+          <a class="profile-card profile-business" href="#profile-content" data-profile-select="business">
+            <figure>
+              <img src="assets/business-owner-card.gif" alt="Business owner digital growth profile" onerror="this.src='assets/business.png';" />
+            </figure>
+            <span>Business</span>
+            <strong>Grow with websites, leads and automation</strong>
+            <p>Digital presence, social media, WhatsApp funnels and AI tools.</p>
+          </a>
+        </div>
+        <div class="profile-quick-actions" aria-label="Popular FutureHub actions">
+          <a href="#profile-content" data-profile-select="student">I am a student</a>
+          <a href="#profile-content" data-profile-select="parent">I am a parent</a>
+          <a href="#profile-content" data-profile-select="business">I am a business owner</a>
+        </div>
+        <div class="trust-strip profile-trust-strip" aria-label="FutureHub highlights">
+          <span>AI courses</span>
+          <span>Live projects</span>
+          <span>Website studio</span>
+          <span>Internships</span>
+          <span>Business growth</span>
+          <span>India, US, Singapore & Middle East</span>
         </div>
       </section>
 
-      <section class="section audience-switch" id="student-parent-path">
+      <section class="section profile-selected-panel" id="profile-content" data-profile-section="all">
+        <div>
+          <p class="eyebrow">Selected profile</p>
+          <h2 data-profile-title>Choose a profile to continue.</h2>
+          <p data-profile-text>Pick Student, Parent or Business above. FutureHub will show only the relevant journey here.</p>
+        </div>
+        <div class="profile-switcher" aria-label="Switch FutureHub profile">
+          <button type="button" data-profile-select="student">Student</button>
+          <button type="button" data-profile-select="parent">Parent</button>
+          <button type="button" data-profile-select="business">Business</button>
+        </div>
+      </section>
+
+      <section class="section audience-switch" id="student-parent-path" data-profile-section="student">
         <a href="#course-builder"><strong>Build Coding Course</strong><span>Customize skills, pace and class mode</span></a>
         <a href="students.html#future-role-finder"><strong>Find Future Role</strong><span>College students can discover practical career directions</span></a>
-        <a href="parents.html"><strong>Parent Guidance</strong><span>Choose the right path for your child without pressure</span></a>
+        <a href="#campus-ambassador"><strong>Campus Ambassador</strong><span>Apply with a short challenge and leadership check</span></a>
       </section>
 
-      <section class="section home-tools-section" id="business-owner-path">
+      <section class="section audience-switch" data-profile-section="parent">
+        <a href="#course-builder"><strong>Design Child's Course</strong><span>Customize skills, pace and class mode for your child</span></a>
+        <a href="#batch-pricing"><strong>See Batch Pricing</strong><span>Understand 1:1 and group class options clearly</span></a>
+        <a href="parents.html"><strong>Parent Guidance</strong><span>Choose the right path without pressure</span></a>
+      </section>
+
+      <section class="section home-tools-section" id="business-owner-path" data-profile-section="business">
         <div class="section-heading">
           <div>
             <p class="eyebrow">For business owners</p>
             <h2>Start with what your business needs today.</h2>
           </div>
           <p>Check your website, preview a business website direction, or book a practical discussion for digital growth.</p>
+        </div>
+        <div class="business-home-mapper">
+          <div class="smart-business-mapper business-mapper-hero">
+            <label>
+              Business requirement
+              <textarea data-business-query rows="5" data-typing-placeholder="I run a salon and want a premium website with appointment enquiries.|We need a school website for admissions, FAQs and campus visits.|I have a local service business and want calls, WhatsApp leads and Google trust." placeholder="Start typing your business requirement..."></textarea>
+            </label>
+            <div class="mapper-actions">
+              <button class="primary-button" type="button" data-business-match>Suggest Website Direction</button>
+              <button class="secondary-button" type="button" data-business-clear>Clear</button>
+            </div>
+            <div class="business-match-result" data-business-result hidden></div>
+          </div>
+          <div class="business-sample-studio">
+            <aside class="sample-controls">
+              <label>
+                Business category
+                <select data-sample-category>
+                  <option>School</option>
+                  <option>College</option>
+                  <option>Coaching institute</option>
+                  <option>Salon</option>
+                  <option>Retail store</option>
+                  <option>Clinic</option>
+                  <option>Cafe / restaurant</option>
+                  <option>Chai stall / food stall</option>
+                  <option>Tutor</option>
+                  <option>Real estate</option>
+                  <option>NGO / trust</option>
+                  <option>Creator / personal brand</option>
+                  <option>Startup</option>
+                  <option>Local service business</option>
+                </select>
+              </label>
+              <label>
+                Budget level
+                <select data-sample-budget>
+                  <option>Starter Website</option>
+                  <option>Growth Website</option>
+                  <option>Premium System</option>
+                </select>
+              </label>
+              <button class="primary-button" type="button" data-sample-whatsapp>Request This Sample</button>
+            </aside>
+            <article class="sample-preview" data-sample-preview aria-live="polite"></article>
+          </div>
         </div>
         <div class="home-tool-grid">
           <a class="home-tool-card is-featured" href="business.html#website-health">
@@ -155,28 +180,28 @@ team.build(project, leads, growth)</code></pre>
             <p>Get mobile, speed, SEO, security, Google Business and missing feature insights.</p>
             <em>Run website scan</em>
           </a>
-          <a class="home-tool-card" href="#course-builder">
-            <span>For learners</span>
-            <strong>Build My Coding Course</strong>
-            <p>Parents and students can choose grade, skills, class style and pace.</p>
-            <em>Create course plan</em>
-          </a>
           <a class="home-tool-card" href="business.html#business-samples">
             <span>For businesses</span>
             <strong>Website Sample Studio</strong>
             <p>Select your business type and budget to preview a website direction.</p>
             <em>Preview samples</em>
           </a>
-          <a class="home-tool-card" href="#finder">
-            <span>Guided</span>
-            <strong>Smart Solution Finder</strong>
-            <p>Answer a few questions and get a recommended path for student or business needs.</p>
-            <em>Find my path</em>
+          <a class="home-tool-card" href="business.html#demo-gallery">
+            <span>Demo gallery</span>
+            <strong>Industry Website Demos</strong>
+            <p>Explore sample directions for salon, cafe, clinic, retail, real estate and more.</p>
+            <em>View business demos</em>
+          </a>
+          <a class="home-tool-card" href="#booking">
+            <span>Consultation</span>
+            <strong>Discuss My Business Growth</strong>
+            <p>Book a practical discussion for website, branding, social media or automation.</p>
+            <em>Book business slot</em>
           </a>
         </div>
       </section>
 
-      <section class="section interactive-lab-section" id="interactive-lab">
+      <section class="section interactive-lab-section" id="interactive-lab" data-profile-section="none">
         <div class="interactive-lab-copy">
           <p class="eyebrow">Interactive FutureHub</p>
           <h2>Pick a visitor type and see what we can build together.</h2>
@@ -205,7 +230,7 @@ team.build(project, leads, growth)</code></pre>
         </div>
       </section>
 
-      <section class="section course-builder-section" id="course-builder">
+      <section class="section course-builder-section" id="course-builder" data-profile-section="student parent">
         <div class="course-builder-copy">
           <p class="eyebrow">Build your own coding course</p>
           <h2>No fixed syllabus. Design a learning path around your child.</h2>
@@ -220,6 +245,22 @@ team.build(project, leads, growth)</code></pre>
           </div>
         </div>
         <div class="course-builder" aria-label="Build your own coding course">
+          <div class="smart-course-mapper">
+            <div>
+              <span>Smart course mapper</span>
+              <h3>Tell us what you want to learn.</h3>
+              <p>Type naturally. Example: "My child is in class 7 and wants Python with AI projects."</p>
+            </div>
+            <label>
+              Course requirement
+              <textarea data-course-query rows="3" data-typing-placeholder="My son is in Grade 6 and wants to learn Python, AI and app building.|My daughter is in Class 4 and likes games, Scratch and animation.|I am a college student and need live project plus internship support." placeholder="Start typing your course requirement..."></textarea>
+            </label>
+            <div class="mapper-actions">
+              <button class="primary-button" type="button" data-course-match>Suggest My Course</button>
+              <button class="secondary-button" type="button" data-course-clear>Clear</button>
+            </div>
+            <div class="course-match-result" data-course-result hidden></div>
+          </div>
           <div class="builder-controls">
             <label>
               Who is this for?
@@ -285,7 +326,39 @@ team.build(project, leads, growth)</code></pre>
         </div>
       </section>
 
-      <section class="section finder-section" id="finder">
+      <section class="section batch-pricing-section" id="batch-pricing" data-profile-section="student parent">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Batch-wise pricing</p>
+            <h2>Simple batches. Clear learning rhythm.</h2>
+          </div>
+          <p>Every batch is planned around live guidance, hands-on tasks, and a short challenge activity so students stay active throughout the session.</p>
+        </div>
+        <div class="pricing-card-grid">
+          <article class="learning-price-card is-premium">
+            <span>Personal mentorship</span>
+            <h3>1:1 Classes</h3>
+            <strong>₹4,000</strong>
+            <p>For 8 live sessions with focused attention, personalized pace and direct mentor support.</p>
+            <a class="primary-button" href="#booking">Book 1:1 Slot</a>
+          </article>
+          <article class="learning-price-card">
+            <span>Small group learning</span>
+            <h3>Group Classes</h3>
+            <strong>₹2,000-₹3,000</strong>
+            <p>For 8 live sessions in a guided group batch with peer learning and project practice.</p>
+            <a class="secondary-button" href="#booking">Book Group Slot</a>
+          </article>
+        </div>
+        <div class="batch-structure-grid" aria-label="Program structure">
+          <article><span>8</span><strong>sessions per batch</strong><p>A compact batch format with visible learning outcomes.</p></article>
+          <article><span>2</span><strong>sessions per week</strong><p>A steady rhythm that works well with school and college routines.</p></article>
+          <article><span>45</span><strong>minutes per session</strong><p>Focused learning time with live explanation and hands-on work.</p></article>
+          <article><span>15</span><strong>minute challenge included</strong><p>Every learning cycle includes a short challenge, activity or mini task.</p></article>
+        </div>
+      </section>
+
+      <section class="section finder-section" id="finder" data-profile-section="none">
         <div class="finder-copy">
           <p class="eyebrow">Smart solution finder</p>
           <h2>Answer a few questions. We suggest the right path.</h2>
@@ -339,7 +412,7 @@ team.build(project, leads, growth)</code></pre>
         </form>
       </section>
 
-      <section class="section project-showcase-section">
+      <section class="section project-showcase-section" data-profile-section="student">
         <div class="section-heading">
           <div>
             <p class="eyebrow">Tap a project</p>
@@ -363,7 +436,7 @@ team.build(project, leads, growth)</code></pre>
         </div>
       </section>
 
-      <section class="section flagship-section">
+      <section class="section flagship-section" data-profile-section="student parent">
         <div class="flagship-copy">
           <p class="eyebrow">Flagship live program</p>
           <h2>AI Champions Program</h2>
@@ -386,12 +459,44 @@ team.build(project, leads, growth)</code></pre>
         </div>
       </section>
 
-      <section class="section booking-section" id="booking">
+      <section class="section ambassador-section" id="campus-ambassador" data-profile-section="student">
+        <div class="ambassador-copy">
+          <p class="eyebrow">Campus Ambassador Program</p>
+          <h2>Apply with a 15-minute FutureHub challenge.</h2>
+          <p>
+            This quick assessment helps us understand initiative, communication, digital confidence and leadership mindset before selecting campus ambassadors.
+          </p>
+          <div class="ambassador-highlights">
+            <span>15-minute challenge</span>
+            <span>Leadership score</span>
+            <span>Communication check</span>
+            <span>Selection guidance</span>
+          </div>
+        </div>
+        <form class="ambassador-challenge" data-ambassador-form>
+          <div class="ambassador-form-grid">
+            <label>Applicant name<input name="applicantName" type="text" placeholder="Your full name" required /></label>
+            <label>College / school<input name="campusName" type="text" placeholder="Institution name" required /></label>
+            <label>Mobile / WhatsApp<input name="mobile" type="tel" placeholder="+91" required /></label>
+            <label>Current stage<select name="stage" required><option>Grade 9-12 student</option><option>College student</option><option>Passed out / job seeker</option></select></label>
+            <label>Why do you want to become an ambassador?<select name="motivation" required><option>I want to build leadership experience</option><option>I want to help students learn future skills</option><option>I want internship and project exposure</option><option>I want to grow my personal brand</option></select></label>
+            <label>If your friend is confused about coding, you will<select name="communication" required><option>Listen first, then suggest a simple starting path</option><option>Send them every course link</option><option>Ask them to decide later</option><option>Tell them coding is only for experts</option></select></label>
+            <label>You have 7 days to promote a workshop. Your first action?<select name="initiative" required><option>Create a student list and plan outreach</option><option>Wait for someone to tell me what to do</option><option>Post once and stop</option><option>Only invite close friends</option></select></label>
+            <label>Best ambassador quality<select name="quality" required><option>Trustworthy communication</option><option>Only social media followers</option><option>Speaking loudly</option><option>Working without updates</option></select></label>
+            <label>Digital confidence<select name="digital" required><option>I can use Canva, forms, WhatsApp and basic social tools</option><option>I use WhatsApp only</option><option>I avoid digital tools</option><option>I need support but can learn fast</option></select></label>
+            <label>Challenge task<select name="task" required><option>Explain FutureHub to 5 students and collect genuine feedback</option><option>Forward one message randomly</option><option>Ask someone else to promote</option><option>Only share if someone pays first</option></select></label>
+          </div>
+          <button class="primary-button" type="submit">Generate Ambassador Assessment</button>
+          <article class="ambassador-result" data-ambassador-result hidden></article>
+        </form>
+      </section>
+
+      <section class="section booking-section" id="booking" data-profile-section="all">
         <div class="booking-copy">
           <p class="eyebrow">Book your slot</p>
-          <h2>Choose a counselling or service discussion slot.</h2>
+          <h2>Start a counselling or service discussion on WhatsApp.</h2>
           <p>
-            Pick a preferred date and time. We will confirm the slot on WhatsApp and guide you for courses, projects, internships, workshops, websites, social media, lead funnels or AI automation.
+            Share your requirement and continue on WhatsApp. Our team will understand your need first, then coordinate the best meeting time with you directly.
           </p>
           <div class="booking-note">
             <strong>Popular booking reasons</strong>
@@ -403,42 +508,12 @@ team.build(project, leads, growth)</code></pre>
           </div>
         </div>
         <form class="booking-planner" aria-label="Kidsverse FutureHub booking planner">
-          <div class="booking-step">
+          <div class="booking-step whatsapp-booking-step">
             <span>01</span>
             <div>
-              <h3>Select preferred date</h3>
-              <p>Choose an available day from the calendar.</p>
+              <h3>Send your requirement</h3>
+              <p>We will continue the discussion on WhatsApp and book the meeting from there.</p>
             </div>
-          </div>
-          <div class="booking-calendar" aria-label="Booking calendar">
-            <div class="calendar-header">
-              <strong data-calendar-label>Available dates</strong>
-            </div>
-            <div class="calendar-weekdays" aria-hidden="true">
-              <span>Sun</span>
-              <span>Mon</span>
-              <span>Tue</span>
-              <span>Wed</span>
-              <span>Thu</span>
-              <span>Fri</span>
-              <span>Sat</span>
-            </div>
-            <div class="date-grid calendar-grid" data-date-grid></div>
-          </div>
-
-          <div class="booking-step">
-            <span>02</span>
-            <div>
-              <h3>Select time slot</h3>
-              <p>Slots are shown in India time. International learners can request a custom time.</p>
-            </div>
-          </div>
-          <div class="slot-grid" data-slot-grid>
-            <button type="button" data-slot="10:00 AM IST">10:00 AM</button>
-            <button type="button" data-slot="12:00 PM IST">12:00 PM</button>
-            <button type="button" data-slot="4:00 PM IST">4:00 PM</button>
-            <button type="button" data-slot="7:00 PM IST">7:00 PM</button>
-            <button type="button" data-slot="Request custom international slot">Custom slot</button>
           </div>
 
           <div class="booking-fields">
@@ -448,10 +523,8 @@ team.build(project, leads, growth)</code></pre>
             <label>Need help with<select name="bookingInterest" required><option value="">Select</option><option>Find right course</option><option>AI Champions Program</option><option>Python / web development</option><option>Final year project / internship</option><option>Website design / branding</option><option>Instagram / Facebook handling</option><option>Ads / WhatsApp lead funnel</option><option>AI chatbot / automation</option><option>School, college or corporate workshop</option></select></label>
             <label>Preferred support<select name="bookingMode" required><option value="">Select</option><option>1:1 live class</option><option>Small group class</option><option>Project consultation</option><option>Business service consultation</option><option>Workshop discussion</option><option>Not sure, guide me</option></select></label>
           </div>
-          <input name="bookingDate" type="hidden" required />
-          <input name="bookingSlot" type="hidden" required />
           <p class="booking-error" role="alert" hidden></p>
-          <button class="primary-button" type="submit">Request This Slot on WhatsApp</button>
+          <button class="primary-button" type="submit">Continue on WhatsApp</button>
         </form>
       </section>
     </main>
@@ -461,9 +534,10 @@ team.build(project, leads, growth)</code></pre>
         <strong>Kidsverse FutureHub</strong>
         <span>Learning, digital growth and AI solutions by Kidsverse Private Limited, Rehan, Himachal Pradesh.</span>
       </div>
-      <a href="https://wa.me/918826758881" target="_blank" rel="noopener noreferrer">WhatsApp: 8826758881</a>
+      <a class="footer-whatsapp-icon" href="https://wa.me/918826758881" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">☎</a>
     </footer>
 
-    <script src="script.js?v=20260621-05"></script>
+    <script src="lead-config.js?v=20260621-01"></script>
+    <script src="script.js?v=20260621-06"></script>
   </body>
 </html>
