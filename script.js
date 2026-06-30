@@ -1,9 +1,6 @@
 const menuButton = document.querySelector(".menu-button");
 const mobileMenu = document.querySelector(".mobile-menu");
 const bookingForm = document.querySelector(".booking-planner");
-const dateGrid = document.querySelector("[data-date-grid]");
-const calendarLabel = document.querySelector("[data-calendar-label]");
-const slotGrid = document.querySelector("[data-slot-grid]");
 const bookingError = document.querySelector(".booking-error");
 const finderForm = document.querySelector(".solution-finder");
 const finderTabs = document.querySelectorAll("[data-audience]");
@@ -22,6 +19,14 @@ const builderPace = document.querySelector("[data-builder-pace]");
 const skillPicker = document.querySelector(".skill-picker");
 const builderPreview = document.querySelector("[data-builder-preview]");
 const builderWhatsapp = document.querySelector("[data-builder-whatsapp]");
+const courseQuery = document.querySelector("[data-course-query]");
+const courseMatchButton = document.querySelector("[data-course-match]");
+const courseClearButton = document.querySelector("[data-course-clear]");
+const courseMatchResult = document.querySelector("[data-course-result]");
+const businessQuery = document.querySelector("[data-business-query]");
+const businessMatchButton = document.querySelector("[data-business-match]");
+const businessClearButton = document.querySelector("[data-business-clear]");
+const businessMatchResult = document.querySelector("[data-business-result]");
 const sampleCategory = document.querySelector("[data-sample-category]");
 const sampleBudget = document.querySelector("[data-sample-budget]");
 const samplePreview = document.querySelector("[data-sample-preview]");
@@ -34,7 +39,61 @@ const healthResult = document.querySelector("[data-health-result]");
 const roleMatcherForm = document.querySelector("[data-role-matcher]");
 const roleSkillPicker = document.querySelector(".role-skill-picker");
 const roleResult = document.querySelector("[data-role-result]");
+const ambassadorForm = document.querySelector("[data-ambassador-form]");
+const ambassadorResult = document.querySelector("[data-ambassador-result]");
+const profileTriggers = document.querySelectorAll("[data-profile-select]");
+const profileSections = document.querySelectorAll("[data-profile-section]");
+const profileNavLinks = document.querySelectorAll("[data-profile-nav]");
+const profileTitle = document.querySelector("[data-profile-title]");
+const profileText = document.querySelector("[data-profile-text]");
 const whatsappNumber = "918826758881";
+const futureHubSheetEndpoints = {
+  parent: "",
+  child: "",
+  business: "",
+  ...(window.futureHubSheetEndpoints || {}),
+};
+
+function formDataToObject(data) {
+  return [...data.entries()].reduce((payload, [key, value]) => {
+    payload[key] = value;
+    return payload;
+  }, {});
+}
+
+async function submitFutureHubLead(type, payload) {
+  const endpoint = futureHubSheetEndpoints[type];
+  if (!endpoint) return false;
+  try {
+    await fetch(endpoint, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        leadType: type,
+        sourcePage: window.location.pathname.split("/").pop() || "index.html",
+        submittedAt: new Date().toISOString(),
+        ...payload,
+      }),
+    });
+    return true;
+  } catch (error) {
+    console.warn("FutureHub lead submission failed", error);
+    return false;
+  }
+}
+
+function leadTypeForGuidedForm(type) {
+  if (type === "business") return "business";
+  if (type === "parent") return "parent";
+  return "child";
+}
+
+function leadTypeForBooking(level) {
+  if (String(level).toLowerCase().includes("business")) return "business";
+  if (String(level).toLowerCase().includes("parent")) return "parent";
+  return "child";
+}
 
 const futureHubBotQuickQuestions = [
   "Which course is right for my child?",
@@ -43,6 +102,8 @@ const futureHubBotQuickQuestions = [
   "How does the website checker work?",
   "Do you provide internships?",
   "Can schools or colleges invite FutureHub?",
+  "What are the batch prices?",
+  "How can I apply as campus ambassador?",
 ];
 
 const futureHubBotAnswers = [
@@ -84,7 +145,12 @@ const futureHubBotAnswers = [
   {
     keywords: ["price", "pricing", "cost", "budget", "package", "fee"],
     answer:
-      "Pricing depends on the goal and scope. Courses vary by 1:1 class, small group, bootcamp or project mentorship. Website projects vary by starter website, growth website or premium system. The best next step is to book a slot or send WhatsApp details so we can suggest a suitable plan.",
+      "For learning batches, 1:1 classes are ₹4,000 for 8 sessions. Group classes are ₹2,000-₹3,000 for 8 sessions. Each batch has 2 sessions per week, 45 minutes per session and a 15-minute challenge/activity experience. Website projects vary by starter website, growth website or premium system.",
+  },
+  {
+    keywords: ["campus", "ambassador", "apply", "applicant", "challenge"],
+    answer:
+      "The Campus Ambassador Program has a 15-minute assessment on the homepage. It checks initiative, communication, leadership mindset, digital confidence and whether the applicant can explain FutureHub responsibly to students.",
   },
   {
     keywords: ["book", "call", "slot", "counselling", "guidance", "talk", "contact", "whatsapp"],
@@ -124,6 +190,102 @@ const pathData = {
     tags: ["Website", "Leads", "AI automation"],
   },
 };
+
+const profileCopy = {
+  student: {
+    title: "Student journey unlocked",
+    text:
+      "You will now see student-focused learning paths: custom coding course, future role direction, project outcomes, AI Champions, campus ambassador and booking.",
+  },
+  parent: {
+    title: "Parent journey unlocked",
+    text:
+      "You will now see parent-focused guidance: build your child's course, understand pricing, explore AI Champions and book a guidance slot without pressure.",
+  },
+  business: {
+    title: "Business journey unlocked",
+    text:
+      "You will now see business-focused tools: website readiness, website demos, digital growth consultation and booking for services.",
+  },
+};
+
+function getStoredProfile() {
+  try {
+    return localStorage.getItem("futureHubProfile") || "";
+  } catch (error) {
+    return "";
+  }
+}
+
+function storeProfile(profile) {
+  try {
+    localStorage.setItem("futureHubProfile", profile);
+  } catch (error) {
+    // Local storage can be unavailable in some private browser contexts.
+  }
+}
+
+function inferProfileFromPage() {
+  const page = window.location.pathname.split("/").pop();
+  if (page === "students.html") return "student";
+  if (page === "parents.html") return "parent";
+  if (page === "business.html" || page === "institutions.html") return "business";
+  return "";
+}
+
+function applyProfileNavigation(profile) {
+  if (!profileCopy[profile]) return;
+  profileNavLinks.forEach((link) => {
+    const allowed = (link.dataset.profileNav || "").split(/\s+/);
+    link.hidden = !(allowed.includes("all") || allowed.includes(profile));
+  });
+}
+
+function applyProfile(profile) {
+  if (!profileCopy[profile]) return;
+  storeProfile(profile);
+  document.body.dataset.activeProfile = profile;
+
+  profileTriggers.forEach((trigger) => {
+    trigger.classList.toggle("is-selected", trigger.dataset.profileSelect === profile);
+  });
+
+  applyProfileNavigation(profile);
+
+  profileSections.forEach((section) => {
+    const allowed = (section.dataset.profileSection || "").split(/\s+/);
+    const shouldShow = allowed.includes("all") || allowed.includes(profile);
+    section.hidden = !shouldShow;
+  });
+
+  if (profileTitle) profileTitle.textContent = profileCopy[profile].title;
+  if (profileText) profileText.textContent = profileCopy[profile].text;
+}
+
+profileSections.forEach((section) => {
+  section.hidden = true;
+});
+document.body.classList.add("profile-filter-ready");
+
+const activeProfile = inferProfileFromPage() || getStoredProfile();
+if (activeProfile) {
+  storeProfile(activeProfile);
+  if (profileSections.length) {
+    applyProfile(activeProfile);
+  } else {
+    applyProfileNavigation(activeProfile);
+    document.body.dataset.activeProfile = activeProfile;
+  }
+}
+
+profileTriggers.forEach((trigger) => {
+  trigger.addEventListener("click", (event) => {
+    event.preventDefault();
+    const profile = trigger.dataset.profileSelect;
+    applyProfile(profile);
+    document.querySelector("#profile-content")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+});
 
 const projectData = {
   scratch: {
@@ -167,6 +329,97 @@ const defaultBuilderSkills = {
   "Grade 9-12 student": ["Python", "AI Chatbots"],
   "College student": ["Live projects", "GitHub portfolio"],
 };
+
+const courseMapperCatalog = [
+  {
+    title: "Scratch Jr Creative Starter",
+    stages: ["Grade 3-5 student"],
+    skills: ["Scratch Jr", "Scratch", "Creative coding"],
+    goal: "Build confidence with technology",
+    keywords: ["scratch jr", "small child", "beginner", "first coding", "creative", "animation", "story", "grade 3", "class 3", "grade 4", "class 4", "grade 5", "class 5"],
+    outcome: "A gentle starter path for young learners who need confidence, visual coding and creative digital projects.",
+  },
+  {
+    title: "Block Coding & Game Builder",
+    stages: ["Grade 3-5 student", "Grade 6-8 student"],
+    skills: ["Block-based coding", "Scratch", "Logic games"],
+    goal: "Build school-ready projects",
+    keywords: ["scratch", "block", "game", "games", "logic", "puzzle", "animation", "screen time", "computer basics"],
+    outcome: "Best for students who enjoy games and need a structured way to learn logic through visual coding.",
+  },
+  {
+    title: "App Building Starter",
+    stages: ["Grade 3-5 student", "Grade 6-8 student"],
+    skills: ["App building basics", "App building", "Logic games"],
+    goal: "Build school-ready projects",
+    keywords: ["app", "mobile app", "application", "android", "build app", "app building", "buttons", "screens"],
+    outcome: "Students learn app thinking, screen flow, buttons, logic and presentation through small app-style projects.",
+  },
+  {
+    title: "Python Foundations Track",
+    stages: ["Grade 6-8 student", "Grade 9-12 student", "College student"],
+    skills: ["Python basics", "Python", "Logic games"],
+    goal: "Create portfolio projects",
+    keywords: ["python", "coding language", "programming", "automation", "problem solving", "logic"],
+    outcome: "A practical Python path for syntax confidence, mini projects and step-by-step programming maturity.",
+  },
+  {
+    title: "Python + AI Starter",
+    stages: ["Grade 6-8 student"],
+    skills: ["Python basics", "AI chatbot basics", "App building"],
+    goal: "Build school-ready projects",
+    keywords: ["python ai", "ai", "artificial intelligence", "chatbot", "gemini", "prompt", "class 6", "grade 6", "class 7", "grade 7", "class 8", "grade 8"],
+    outcome: "A balanced middle-school path with Python basics, safe AI activities, chatbot ideas and small project demos.",
+  },
+  {
+    title: "JavaScript & Web Builder",
+    stages: ["Grade 6-8 student", "Grade 9-12 student", "College student"],
+    skills: ["JavaScript basics", "JavaScript", "Web basics", "Web Development"],
+    goal: "Create portfolio projects",
+    keywords: ["javascript", "js", "website", "web", "html", "css", "frontend", "web development", "portfolio website"],
+    outcome: "A web project path where students build interactive pages, responsive layouts and portfolio-ready work.",
+  },
+  {
+    title: "AI Champions Program",
+    stages: ["Grade 9-12 student"],
+    skills: ["Python", "AI Chatbots", "AI Agents"],
+    goal: "Create portfolio projects",
+    keywords: ["ai", "artificial intelligence", "chatgpt", "gemini", "prompt", "prompt engineering", "chatbot", "agent", "llm", "teen"],
+    outcome: "A teen-friendly AI path with Python basics, prompt engineering, chatbots, memory ideas, agents and Demo Day.",
+  },
+  {
+    title: "Programming Foundation Track",
+    stages: ["Grade 9-12 student", "College student"],
+    skills: ["C", "C++", "Java"],
+    goal: "Create portfolio projects",
+    keywords: ["c language", "c++", "cpp", "java", "dsa", "data structure", "algorithm", "competitive coding", "school computer"],
+    outcome: "Best for older students who need strong language foundations, syntax confidence and problem-solving practice.",
+  },
+  {
+    title: "College Live Project & Internship Track",
+    stages: ["College student"],
+    skills: ["Live projects", "GitHub portfolio", "Interview prep"],
+    goal: "Prepare for internship / interviews",
+    keywords: ["college", "btech", "bca", "mca", "internship", "final year", "major project", "minor project", "resume", "interview", "placement", "github", "live project"],
+    outcome: "A career-focused track with live project guidance, documentation, GitHub portfolio and interview explanation practice.",
+  },
+  {
+    title: "AI App Developer Track",
+    stages: ["College student", "Grade 9-12 student"],
+    skills: ["Python", "AI Agents", "Web Development", "Live projects"],
+    goal: "Create portfolio projects",
+    keywords: ["ai app", "ai project", "automation", "api", "agent", "startup idea", "build product", "saas", "real project"],
+    outcome: "A future-ready project path for learners who want to build AI-powered apps with practical use cases.",
+  },
+  {
+    title: "Digital Growth & Website Starter",
+    stages: ["College student"],
+    skills: ["Web Development", "JavaScript", "Live projects"],
+    goal: "Create portfolio projects",
+    keywords: ["digital marketing", "website service", "client project", "freelancing", "business website", "social media", "seo", "lead generation"],
+    outcome: "Good for college students who want practical website, digital growth and client-facing project skills.",
+  },
+];
 
 const businessBudgetSamples = {
   "Starter Website": {
@@ -422,6 +675,93 @@ const businessVisualData = {
   },
 };
 
+const businessMapperCatalog = [
+  {
+    category: "School",
+    budget: "Growth Website",
+    keywords: ["school", "admission", "campus", "students", "parents", "principal", "facilities", "school tour", "fees", "faq"],
+    reason: "Schools need admission clarity, trust-building, parent FAQs, campus highlights and visit enquiries.",
+  },
+  {
+    category: "College",
+    budget: "Growth Website",
+    keywords: ["college", "campus", "placement", "course", "department", "students", "admission", "internship", "training"],
+    reason: "Colleges need course pages, placement proof, admission flow, student outcomes and enquiry capture.",
+  },
+  {
+    category: "Coaching institute",
+    budget: "Growth Website",
+    keywords: ["coaching", "tuition", "academy", "batch", "result", "demo class", "competitive exam", "classes"],
+    reason: "Coaching businesses need results, batch details, demo class flow and strong trust proof.",
+  },
+  {
+    category: "Salon",
+    budget: "Starter Website",
+    keywords: ["salon", "beauty", "makeup", "bridal", "hair", "spa", "appointment", "styling", "service menu"],
+    reason: "Salons need a stylish service showcase, package visibility, gallery and WhatsApp appointment flow.",
+  },
+  {
+    category: "Retail store",
+    budget: "Starter Website",
+    keywords: ["retail", "store", "shop", "products", "offers", "inventory", "near me", "timing", "catalog"],
+    reason: "Retail stores need products, offers, location, timing and quick customer enquiry actions.",
+  },
+  {
+    category: "Clinic",
+    budget: "Growth Website",
+    keywords: ["clinic", "doctor", "dentist", "patient", "appointment", "health", "medical", "treatment", "timing"],
+    reason: "Clinics need doctor trust, services, timings, patient instructions and appointment enquiries.",
+  },
+  {
+    category: "Cafe / restaurant",
+    budget: "Starter Website",
+    keywords: ["cafe", "restaurant", "food", "menu", "table", "order", "party", "ambience", "delivery"],
+    reason: "Food businesses need menu highlights, ambience, location, offers and easy order or table enquiries.",
+  },
+  {
+    category: "Chai stall / food stall",
+    budget: "Starter Website",
+    keywords: ["chai", "food stall", "stall", "snacks", "tea", "small food", "local food", "quick order"],
+    reason: "Small food businesses need memorable branding, location, daily specials and WhatsApp ordering.",
+  },
+  {
+    category: "Tutor",
+    budget: "Starter Website",
+    keywords: ["tutor", "teacher", "home tuition", "online class", "subject", "demo class", "student results"],
+    reason: "Tutors need subject clarity, teaching style, demo class CTA and parent confidence.",
+  },
+  {
+    category: "Real estate",
+    budget: "Growth Website",
+    keywords: ["real estate", "property", "plot", "flat", "house", "site visit", "listing", "broker", "builder"],
+    reason: "Real estate needs listings, location highlights, lead forms and site visit requests.",
+  },
+  {
+    category: "NGO / trust",
+    budget: "Starter Website",
+    keywords: ["ngo", "trust", "donation", "volunteer", "impact", "mission", "charity", "social work"],
+    reason: "NGOs need mission clarity, impact stories, volunteer flow and support enquiries.",
+  },
+  {
+    category: "Creator / personal brand",
+    budget: "Starter Website",
+    keywords: ["creator", "personal brand", "portfolio", "blog", "influencer", "consultant", "speaker", "profile"],
+    reason: "Personal brands need portfolio, profile, services, media proof and collaboration enquiries.",
+  },
+  {
+    category: "Startup",
+    budget: "Premium System",
+    keywords: ["startup", "app", "product", "saas", "mvp", "waitlist", "demo", "investor", "launch"],
+    reason: "Startups need product story, use cases, demo request, waitlist and launch-ready conversion flow.",
+  },
+  {
+    category: "Local service business",
+    budget: "Starter Website",
+    keywords: ["local service", "repair", "electrician", "plumber", "cleaning", "service area", "call", "whatsapp leads", "leads"],
+    reason: "Local services need service area, proof, quick call buttons and WhatsApp lead capture.",
+  },
+];
+
 const careerRoleData = [
   {
     title: "AI App Developer",
@@ -566,55 +906,203 @@ function renderFinderOptions() {
   if (finderResult) finderResult.hidden = true;
 }
 
-function formatBookingDate(date) {
-  return date.toLocaleDateString("en-IN", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+function normalizeQuery(text) {
+  return String(text || "")
+    .toLowerCase()
+    .replace(/\+/g, " plus ")
+    .replace(/[^a-z0-9\s.-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
-function formatCalendarHeading(dates) {
-  const monthNames = [...new Set(dates.map((date) => date.toLocaleDateString("en-IN", { month: "long", year: "numeric" })))];
-  return monthNames.join(" - ");
+function detectLearnerStage(text) {
+  const query = normalizeQuery(text);
+  if (/\b(college|btech|bca|mca|degree|university|final year|placement|internship)\b/.test(query)) return "College student";
+
+  const gradeMatch = query.match(/\b(?:class|grade|std|standard)\s*([0-9]{1,2})\b/);
+  const grade = gradeMatch ? Number(gradeMatch[1]) : null;
+  if (grade >= 3 && grade <= 5) return "Grade 3-5 student";
+  if (grade >= 6 && grade <= 8) return "Grade 6-8 student";
+  if (grade >= 9 && grade <= 12) return "Grade 9-12 student";
+
+  const ageMatch = query.match(/\b(?:age\s*)?([0-9]{1,2})\s*(?:year|years|yr|yrs|old)\b/);
+  const age = ageMatch ? Number(ageMatch[1]) : null;
+  if (age >= 7 && age <= 10) return "Grade 3-5 student";
+  if (age >= 11 && age <= 13) return "Grade 6-8 student";
+  if (age >= 14 && age <= 17) return "Grade 9-12 student";
+  if (age >= 18) return "College student";
+
+  if (/\b(teen|teenager|board|class x|class xi|class xii)\b/.test(query)) return "Grade 9-12 student";
+  if (/\b(child|kid|son|daughter|school student)\b/.test(query)) return "Grade 6-8 student";
+  return "";
 }
 
-function renderBookingDates() {
-  if (!dateGrid || !bookingForm) return;
-  const today = new Date();
-  const dates = Array.from({ length: 14 }, (_, index) => {
-    const date = new Date(today);
-    date.setDate(today.getDate() + index + 1);
-    return date;
+function stageSafeSkills(stage, requestedSkills) {
+  const options = builderSkillOptions[stage] || builderSkillOptions["Grade 3-5 student"];
+  const normalizedOptions = new Map(options.map((skill) => [normalizeQuery(skill), skill]));
+  const selected = [];
+
+  requestedSkills.forEach((skill) => {
+    const direct = normalizedOptions.get(normalizeQuery(skill));
+    if (direct && !selected.includes(direct)) selected.push(direct);
   });
 
-  if (calendarLabel) calendarLabel.textContent = formatCalendarHeading(dates);
+  if (!selected.length) {
+    const defaults = defaultBuilderSkills[stage] || options.slice(0, 2);
+    defaults.forEach((skill) => {
+      if (options.includes(skill) && !selected.includes(skill)) selected.push(skill);
+    });
+  }
 
-  const emptyCells = Array.from({ length: dates[0].getDay() }, () => `<span class="calendar-empty" aria-hidden="true"></span>`);
-  const dateCells = dates.map((date, index) => {
-    const label = formatBookingDate(date);
-    const weekday = date.toLocaleDateString("en-IN", { weekday: "short" });
-    const month = date.toLocaleDateString("en-IN", { month: "short" });
-    const day = String(date.getDate()).padStart(2, "0");
-    const tag = index === 0 ? "<em>Next</em>" : "";
-    return `<button type="button" data-date="${label}" aria-label="${label}"><span>${weekday}</span><strong>${day}</strong><small>${month}</small>${tag}</button>`;
+  return selected.slice(0, 4);
+}
+
+function scoreCourseMatch(course, query, stage) {
+  let score = 0;
+  if (stage && course.stages.includes(stage)) score += 36;
+  if (stage && !course.stages.includes(stage)) score -= 24;
+  if (!stage) score += 8;
+
+  course.keywords.forEach((keyword) => {
+    const cleanKeyword = normalizeQuery(keyword);
+    if (cleanKeyword && query.includes(cleanKeyword)) score += cleanKeyword.includes(" ") ? 14 : 9;
   });
 
-  dateGrid.innerHTML = [...emptyCells, ...dateCells].join("");
+  course.skills.forEach((skill) => {
+    const cleanSkill = normalizeQuery(skill);
+    if (cleanSkill && query.includes(cleanSkill)) score += 12;
+  });
+
+  if (/\b(project|portfolio|build|create|demo)\b/.test(query) && /project|portfolio|builder|developer/i.test(course.title)) score += 10;
+  if (/\b(parent|son|daughter|child|kid)\b/.test(query) && course.stages.some((item) => item.includes("Grade"))) score += 5;
+  if (/\b(not sure|confused|guide|recommend|suggest)\b/.test(query)) score += 5;
+
+  return score;
+}
+
+function renderCourseMapperResult(match, alternatives, needsMoreDetail) {
+  if (!courseMatchResult) return;
+  if (needsMoreDetail) {
+    courseMatchResult.innerHTML = `
+      <span>Need a little more detail</span>
+      <h4>Please add grade/age and interest.</h4>
+      <p>Example: "Class 7 student wants Python and AI" or "College student needs internship project support".</p>
+    `;
+    courseMatchResult.hidden = false;
+    return;
+  }
+
+  courseMatchResult.innerHTML = `
+    <span>Recommended match</span>
+    <h4>${match.title}</h4>
+    <p>${match.outcome}</p>
+    <div class="course-match-chips">
+      <strong>${match.stage}</strong>
+      <strong>${match.confidence}% confidence</strong>
+      <strong>${match.skills.join(" + ")}</strong>
+    </div>
+    ${alternatives.length ? `<div class="course-alternatives"><span>Also suitable</span>${alternatives.map((item) => `<button type="button" data-course-alt="${item.title}">${item.title}</button>`).join("")}</div>` : ""}
+  `;
+  courseMatchResult.hidden = false;
+}
+
+function applyCourseMatch(course, stage) {
+  if (builderStage) builderStage.value = stage;
+  renderBuilderSkills();
+
+  const safeSkills = stageSafeSkills(stage, course.skills);
+  document.querySelectorAll("[data-builder-skill]").forEach((button) => {
+    button.classList.toggle("is-selected", safeSkills.includes(button.dataset.builderSkill));
+  });
+
+  if (builderGoal) builderGoal.value = course.goal;
+  if (builderMode && stage === "College student") builderMode.value = "Project mentorship";
+  if (builderPace && stage === "College student") builderPace.value = "Balanced pace";
+  renderBuilderPreview();
+}
+
+function matchCourseFromText(text, preferredTitle = "") {
+  const query = normalizeQuery(text);
+  if (!query || query.length < 8) {
+    renderCourseMapperResult(null, [], true);
+    return;
+  }
+
+  const stage = detectLearnerStage(query);
+  const ranked = courseMapperCatalog
+    .map((course) => ({ ...course, score: scoreCourseMatch(course, query, stage) + (course.title === preferredTitle ? 50 : 0) }))
+    .sort((a, b) => b.score - a.score);
+  const best = ranked[0];
+  const needsMoreDetail = !stage && best.score < 28;
+  if (!best || needsMoreDetail) {
+    renderCourseMapperResult(null, [], true);
+    return;
+  }
+
+  const safeStage = stage || best.stages[0];
+  const safeSkills = stageSafeSkills(safeStage, best.skills);
+  const confidence = Math.max(62, Math.min(96, best.score + 34));
+  applyCourseMatch(best, safeStage);
+  renderCourseMapperResult({ ...best, stage: safeStage, skills: safeSkills, confidence }, ranked.filter((item) => item.title !== best.title && (!safeStage || item.stages.includes(safeStage))).slice(0, 2), false);
+}
+
+function startTypingPlaceholder(field, fallbackText) {
+  if (!field || !field.dataset.typingPlaceholder) return;
+  const examples = field.dataset.typingPlaceholder.split("|").map((item) => item.trim()).filter(Boolean);
+  if (!examples.length) return;
+
+  let exampleIndex = 0;
+  let charIndex = 0;
+  let deleting = false;
+  let paused = false;
+
+  function tick() {
+    if (document.activeElement === field || field.value.trim()) {
+      field.placeholder = fallbackText;
+      window.setTimeout(tick, 900);
+      return;
+    }
+
+    const current = examples[exampleIndex];
+    if (!deleting && charIndex <= current.length) {
+      field.placeholder = current.slice(0, charIndex);
+      charIndex += 1;
+      if (charIndex > current.length) paused = true;
+    } else if (deleting && charIndex >= 0) {
+      field.placeholder = current.slice(0, charIndex);
+      charIndex -= 1;
+      if (charIndex < 0) {
+        deleting = false;
+        exampleIndex = (exampleIndex + 1) % examples.length;
+        charIndex = 0;
+      }
+    }
+
+    if (paused) {
+      paused = false;
+      deleting = true;
+      window.setTimeout(tick, 1400);
+      return;
+    }
+
+    window.setTimeout(tick, deleting ? 28 : 42);
+  }
+
+  tick();
+}
+
+function startCoursePlaceholderTyping() {
+  startTypingPlaceholder(courseQuery, "Type your child's grade, interest and goal...");
+}
+
+function startBusinessPlaceholderTyping() {
+  startTypingPlaceholder(businessQuery, "Type your business type, goal and expected website features...");
 }
 
 function setBookingError(message) {
   if (!bookingError) return;
   bookingError.textContent = message;
   bookingError.hidden = !message;
-}
-
-function selectBookingButton(container, button, hiddenName, value) {
-  container?.querySelectorAll("button").forEach((item) => item.classList.remove("is-selected"));
-  button.classList.add("is-selected");
-  bookingForm.elements[hiddenName].value = value;
-  setBookingError("");
 }
 
 function renderPath(pathKey) {
@@ -786,6 +1274,71 @@ function sendBusinessSampleRequest() {
     `Hello Kidsverse FutureHub, I selected a business website sample. Category: ${category}. Budget level: ${budget}. Sample direction: ${sample.name}. Main conversion: ${sample.conversion}. Suggested scope: ${budgetPlan.scope}. Please guide me with the next step.`
   );
   window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank", "noopener,noreferrer");
+}
+
+function scoreBusinessMatch(item, query) {
+  let score = 0;
+  item.keywords.forEach((keyword) => {
+    const cleanKeyword = normalizeQuery(keyword);
+    if (query.includes(cleanKeyword)) score += cleanKeyword.includes(" ") ? 16 : 10;
+  });
+  if (/\b(website|site|landing page|online presence)\b/.test(query)) score += 12;
+  if (/\b(lead|leads|enquiry|whatsapp|booking|appointment)\b/.test(query)) score += item.budget === "Starter Website" ? 8 : 12;
+  if (/\b(automation|dashboard|chatbot|ai|system|crm)\b/.test(query)) score += item.budget === "Premium System" ? 18 : 6;
+  if (/\b(grow|growth|seo|ads|social media|instagram|facebook)\b/.test(query)) score += item.budget === "Growth Website" ? 14 : 6;
+  return score;
+}
+
+function renderBusinessMapperResult(match, alternatives, needsMoreDetail) {
+  if (!businessMatchResult) return;
+  if (needsMoreDetail) {
+    businessMatchResult.innerHTML = `
+      <span>Need a little more detail</span>
+      <h4>Please add business type and goal.</h4>
+      <p>Example: "I run a salon and want appointment enquiries" or "We need a school website for admissions".</p>
+    `;
+    businessMatchResult.hidden = false;
+    return;
+  }
+
+  const ctaText = encodeURIComponent(
+    `Hello Kidsverse FutureHub, I used the Smart Website Mapper. Recommended direction: ${match.category} - ${match.budget}. Reason: ${match.reason}. Please connect with me and guide the next step.`
+  );
+
+  businessMatchResult.innerHTML = `
+    <span>Recommended direction</span>
+    <h4>${match.category} • ${match.budget}</h4>
+    <p>${match.reason}</p>
+    <div class="course-match-chips">
+      <strong>${match.confidence}% match</strong>
+      <strong>${businessSampleData[match.category]?.conversion || "Enquiry flow"}</strong>
+    </div>
+    ${alternatives.length ? `<div class="course-alternatives"><span>Also suitable</span>${alternatives.map((item) => `<button type="button" data-business-alt="${item.category}">${item.category}</button>`).join("")}</div>` : ""}
+    <a class="primary-button business-match-cta" href="https://wa.me/${whatsappNumber}?text=${ctaText}" target="_blank" rel="noopener noreferrer">Connect With Us on WhatsApp</a>
+  `;
+  businessMatchResult.hidden = false;
+}
+
+function matchBusinessFromText(text, preferredCategory = "") {
+  const query = normalizeQuery(text);
+  if (!query || query.length < 8) {
+    renderBusinessMapperResult(null, [], true);
+    return;
+  }
+
+  const ranked = businessMapperCatalog
+    .map((item) => ({ ...item, score: scoreBusinessMatch(item, query) + (item.category === preferredCategory ? 50 : 0) }))
+    .sort((a, b) => b.score - a.score);
+  const best = ranked[0];
+  if (!best || best.score < 16) {
+    renderBusinessMapperResult(null, [], true);
+    return;
+  }
+
+  if (sampleCategory) sampleCategory.value = best.category;
+  if (sampleBudget) sampleBudget.value = best.budget;
+  renderBusinessSample();
+  renderBusinessMapperResult({ ...best, confidence: Math.max(62, Math.min(96, best.score + 44)) }, ranked.filter((item) => item.category !== best.category).slice(0, 2), false);
 }
 
 function filterTemplateCards() {
@@ -1107,6 +1660,88 @@ function createFutureHubBot() {
   });
 }
 
+function scoreAmbassadorChallenge(data) {
+  const scoring = {
+    motivation: {
+      "I want to build leadership experience": 22,
+      "I want to help students learn future skills": 24,
+      "I want internship and project exposure": 20,
+      "I want to grow my personal brand": 16,
+    },
+    communication: {
+      "Listen first, then suggest a simple starting path": 25,
+      "Send them every course link": 10,
+      "Ask them to decide later": 8,
+      "Tell them coding is only for experts": 0,
+    },
+    initiative: {
+      "Create a student list and plan outreach": 25,
+      "Wait for someone to tell me what to do": 4,
+      "Post once and stop": 8,
+      "Only invite close friends": 10,
+    },
+    quality: {
+      "Trustworthy communication": 18,
+      "Only social media followers": 8,
+      "Speaking loudly": 6,
+      "Working without updates": 4,
+    },
+    digital: {
+      "I can use Canva, forms, WhatsApp and basic social tools": 18,
+      "I use WhatsApp only": 9,
+      "I avoid digital tools": 2,
+      "I need support but can learn fast": 14,
+    },
+    task: {
+      "Explain FutureHub to 5 students and collect genuine feedback": 20,
+      "Forward one message randomly": 5,
+      "Ask someone else to promote": 2,
+      "Only share if someone pays first": 0,
+    },
+  };
+  const total = Object.entries(scoring).reduce((sum, [key, values]) => sum + (values[data.get(key)] || 0), 0);
+  return Math.min(100, Math.round((total / 130) * 100));
+}
+
+function ambassadorBand(score) {
+  if (score >= 86) return ["Strong ambassador profile", "You show strong initiative, communication maturity and campus leadership potential."];
+  if (score >= 72) return ["Promising applicant", "You have a good starting profile. A short interview can help us understand your campus reach and confidence."];
+  if (score >= 58) return ["Needs guided onboarding", "You may be suitable after a short training task focused on communication, planning and reporting."];
+  return ["Training recommended first", "Start with a guided FutureHub task before applying for an active ambassador role."];
+}
+
+async function renderAmbassadorResult(data) {
+  if (!ambassadorResult) return;
+  const score = scoreAmbassadorChallenge(data);
+  const [title, description] = ambassadorBand(score);
+  const applicantName = String(data.get("applicantName") || "Applicant").trim();
+  const task = data.get("task");
+  const whatsappText = encodeURIComponent(
+    `Hello Kidsverse FutureHub, I completed the Campus Ambassador assessment. Name: ${applicantName}. Institution: ${data.get("campusName")}. Mobile: ${data.get("mobile")}. Score: ${score}%. Result: ${title}. Please guide me for the next step.`
+  );
+  ambassadorResult.innerHTML = `
+    <div class="ambassador-result-head">
+      <span>Assessment result</span>
+      <h3>${title}</h3>
+      <p>${description}</p>
+      <strong>${score}%</strong>
+    </div>
+    <div class="ambassador-next-grid">
+      <article><span>Recommended task</span><p>${task}</p></article>
+      <article><span>What we will check next</span><p>Communication clarity, honesty, campus reach, reporting discipline and willingness to learn.</p></article>
+      <article><span>Next step</span><p>Share your result on WhatsApp so our team can review your ambassador application.</p></article>
+    </div>
+    <a class="primary-button role-whatsapp" href="https://wa.me/${whatsappNumber}?text=${whatsappText}" target="_blank" rel="noopener noreferrer">Send Ambassador Result on WhatsApp</a>
+  `;
+  ambassadorResult.hidden = false;
+  await submitFutureHubLead("child", {
+    formType: "Campus Ambassador Challenge",
+    score,
+    result: title,
+    ...formDataToObject(data),
+  });
+}
+
 function selectedRoleSkills() {
   return [...document.querySelectorAll("[data-role-skill].is-selected")].map((button) => button.dataset.roleSkill);
 }
@@ -1237,6 +1872,31 @@ skillPicker?.addEventListener("click", (event) => {
   });
 });
 
+courseMatchButton?.addEventListener("click", () => {
+  matchCourseFromText(courseQuery?.value || "");
+});
+
+courseQuery?.addEventListener("keydown", (event) => {
+  if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+    event.preventDefault();
+    matchCourseFromText(courseQuery.value);
+  }
+});
+
+courseClearButton?.addEventListener("click", () => {
+  if (courseQuery) courseQuery.value = "";
+  if (courseMatchResult) {
+    courseMatchResult.hidden = true;
+    courseMatchResult.innerHTML = "";
+  }
+});
+
+courseMatchResult?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-course-alt]");
+  if (!button) return;
+  matchCourseFromText(courseQuery?.value || "", button.dataset.courseAlt);
+});
+
 builderWhatsapp?.addEventListener("click", sendBuilderPlan);
 
 roleSkillPicker?.addEventListener("click", (event) => {
@@ -1245,9 +1905,20 @@ roleSkillPicker?.addEventListener("click", (event) => {
   button.classList.toggle("is-selected");
 });
 
-roleMatcherForm?.addEventListener("submit", (event) => {
+roleMatcherForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
-  renderRoleMatcherResult(new FormData(roleMatcherForm));
+  const data = new FormData(roleMatcherForm);
+  renderRoleMatcherResult(data);
+  await submitFutureHubLead("child", {
+    formType: "Future Role Finder",
+    selectedSkills: selectedRoleSkills().join(", "),
+    ...formDataToObject(data),
+  });
+});
+
+ambassadorForm?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  await renderAmbassadorResult(new FormData(ambassadorForm));
 });
 
 [sampleCategory, sampleBudget].forEach((control) => {
@@ -1255,6 +1926,31 @@ roleMatcherForm?.addEventListener("submit", (event) => {
 });
 
 sampleWhatsapp?.addEventListener("click", sendBusinessSampleRequest);
+
+businessMatchButton?.addEventListener("click", () => {
+  matchBusinessFromText(businessQuery?.value || "");
+});
+
+businessQuery?.addEventListener("keydown", (event) => {
+  if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+    event.preventDefault();
+    matchBusinessFromText(businessQuery.value);
+  }
+});
+
+businessClearButton?.addEventListener("click", () => {
+  if (businessQuery) businessQuery.value = "";
+  if (businessMatchResult) {
+    businessMatchResult.hidden = true;
+    businessMatchResult.innerHTML = "";
+  }
+});
+
+businessMatchResult?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-business-alt]");
+  if (!button) return;
+  matchBusinessFromText(businessQuery?.value || "", button.dataset.businessAlt);
+});
 
 templateFilters.forEach((button) => {
   button.addEventListener("click", () => {
@@ -1279,6 +1975,20 @@ healthForm?.addEventListener("submit", async (event) => {
     renderHealthScanning(url.hostname.replace(/^www\./, ""));
     const audit = await runServerWebsiteCheck(url);
     renderHealthResult(audit, audit.finalUrl || url.href);
+    await submitFutureHubLead("business", {
+      formType: "Website Readiness Checker",
+      website: audit.finalUrl || url.href,
+      domain: audit.domain,
+      mobileScore: audit.mobile,
+      speedScore: audit.speed,
+      seoScore: audit.seo,
+      trustScore: audit.security,
+      overallScore: audit.overall,
+      googleStatus: audit.googleStatus,
+      issues: (audit.missing || []).join(" | "),
+      recommendations: (audit.recommendations || []).join(" | "),
+      ...formDataToObject(formData),
+    });
   } catch (error) {
     const message = error instanceof Error ? error.message : "";
     if (message === "local-server-required") {
@@ -1308,7 +2018,7 @@ document.addEventListener("click", (event) => {
 });
 
 guidedForms.forEach((form) => {
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const data = new FormData(form);
     const [title, description] = guidedRecommendation(form.dataset.guidedForm, data);
@@ -1316,6 +2026,12 @@ guidedForms.forEach((form) => {
     if (!result) return;
     result.innerHTML = `<strong>${title}</strong><span>Recommended next step</span><p>${description}</p><p>Book a slot if you want us to confirm the course, service scope, timeline and mode.</p>`;
     result.hidden = false;
+    await submitFutureHubLead(leadTypeForGuidedForm(form.dataset.guidedForm), {
+      formType: `${form.dataset.guidedForm} Guided Finder`,
+      recommendation: title,
+      recommendationDetails: description,
+      ...formDataToObject(data),
+    });
   });
 });
 
@@ -1332,37 +2048,25 @@ document.addEventListener("click", (event) => {
 });
 
 renderFinderOptions();
-renderBookingDates();
 renderBuilderSkills();
 renderBuilderPreview();
+startCoursePlaceholderTyping();
+startBusinessPlaceholderTyping();
 renderBusinessSample();
 filterTemplateCards();
 createFutureHubBot();
 
-dateGrid?.addEventListener("click", (event) => {
-  const button = event.target.closest("button[data-date]");
-  if (!button) return;
-  selectBookingButton(dateGrid, button, "bookingDate", button.dataset.date);
-});
-
-slotGrid?.addEventListener("click", (event) => {
-  const button = event.target.closest("button[data-slot]");
-  if (!button) return;
-  selectBookingButton(slotGrid, button, "bookingSlot", button.dataset.slot);
-});
-
-bookingForm?.addEventListener("submit", (event) => {
+bookingForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
   const data = new FormData(bookingForm);
-  const date = data.get("bookingDate");
-  const slot = data.get("bookingSlot");
-  if (!date || !slot) {
-    setBookingError("Please select a preferred date and time slot before sending the booking request.");
-    return;
-  }
+  setBookingError("");
 
   const message = encodeURIComponent(
-    `Hello Kidsverse FutureHub, I want to book a discussion slot. Name: ${data.get("bookingStudent")}. Mobile: ${data.get("bookingMobile")}. I am: ${data.get("bookingLevel")}. Need help with: ${data.get("bookingInterest")}. Preferred support: ${data.get("bookingMode")}. Preferred date: ${date}. Preferred slot: ${slot}.`
+    `Hello Kidsverse FutureHub, I want to discuss and book a meeting. Name: ${data.get("bookingStudent")}. Mobile: ${data.get("bookingMobile")}. I am: ${data.get("bookingLevel")}. Need help with: ${data.get("bookingInterest")}. Preferred support: ${data.get("bookingMode")}. Please guide me with the next step.`
   );
+  await submitFutureHubLead(leadTypeForBooking(data.get("bookingLevel")), {
+    formType: "WhatsApp Meeting Request",
+    ...formDataToObject(data),
+  });
   window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank", "noopener,noreferrer");
 });
