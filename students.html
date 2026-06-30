@@ -12,10 +12,10 @@
   <body>
     <header class="site-header">
       <a class="brand" href="index.html" aria-label="Kidsverse FutureHub home"><span class="brand-mark">KF</span><span><strong>Kidsverse FutureHub</strong><small>by Kidsverse Private Limited</small></span></a>
-      <nav class="desktop-nav" aria-label="Primary navigation"><a href="index.html">Home</a><a href="students.html">Students</a><a href="parents.html">Parents</a><a href="business.html">Business</a><a href="institutions.html">Schools / Colleges</a><a href="faq.html">FAQ</a><a href="index.html#booking">Book Slot</a></nav>
+      <nav class="desktop-nav" aria-label="Primary navigation"><a href="index.html" data-profile-nav="all">Home</a><a href="students.html" data-profile-nav="student">Students</a><a href="parents.html" data-profile-nav="parent">Parents</a><a href="business.html" data-profile-nav="business">Business</a><a href="institutions.html" data-profile-nav="business">Schools / Colleges</a><a href="faq.html" data-profile-nav="all">FAQ</a><a href="index.html#booking" data-profile-nav="all">Book Slot</a></nav>
       <div class="header-actions"><a class="header-cta" href="index.html#booking">Book Your Slot</a><button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
     </header>
-    <nav class="mobile-menu" aria-label="Mobile navigation" hidden><a href="index.html">Home</a><a href="students.html">Students</a><a href="parents.html">Parents</a><a href="business.html">Business</a><a href="institutions.html">Schools / Colleges</a><a href="faq.html">FAQ</a><a href="index.html#booking">Book Slot</a></nav>
+    <nav class="mobile-menu" aria-label="Mobile navigation" hidden><a href="index.html" data-profile-nav="all">Home</a><a href="students.html" data-profile-nav="student">Students</a><a href="parents.html" data-profile-nav="parent">Parents</a><a href="business.html" data-profile-nav="business">Business</a><a href="institutions.html" data-profile-nav="business">Schools / Colleges</a><a href="faq.html" data-profile-nav="all">FAQ</a><a href="index.html#booking" data-profile-nav="all">Book Slot</a></nav>
 
     <main>
       <section class="page-hero student-page-hero">
@@ -62,6 +62,14 @@
             <label>
               Student name
               <input name="studentName" type="text" placeholder="Your name" required />
+            </label>
+            <label>
+              Mobile / WhatsApp
+              <input name="mobile" type="tel" placeholder="+91" required />
+            </label>
+            <label>
+              Email
+              <input name="email" type="email" placeholder="name@example.com" />
             </label>
             <label>
               College year
@@ -161,6 +169,8 @@
           <p>Students from Grade 3 onward can start with block-based coding, app building, Scratch, Scratch Jr, Python, JavaScript, C, C++, Java, websites, AI, agents, live projects, internships or portfolio building.</p>
         </div>
         <form class="guided-form" data-guided-form="student">
+          <label>Student name<input name="studentName" type="text" placeholder="Student name" required /></label>
+          <label>Mobile / WhatsApp<input name="mobile" type="tel" placeholder="+91" required /></label>
           <label>Current stage<select name="stage" required><option>Grade 3-5</option><option>Grade 6-8</option><option>Grade 9-12</option><option>College student</option></select></label>
           <label>Current skill level<select name="skill" required><option>Beginner</option><option>Knows basics</option><option>Has built small projects</option><option>Needs advanced project guidance</option></select></label>
           <label>Main interest<select name="interest" required><option>Block-based coding</option><option>Scratch / Scratch Jr</option><option>App building</option><option>Python</option><option>JavaScript</option><option>C programming</option><option>C++ programming</option><option>Java programming</option><option>Websites and apps</option><option>AI and chatbots</option><option>AI agents and automation</option><option>Final year project / internship</option></select></label>
@@ -204,7 +214,8 @@
       </section>
     </main>
 
-    <footer class="site-footer"><div><strong>Kidsverse FutureHub</strong><span>Student learning paths, live projects and career-ready support.</span></div><a href="https://wa.me/918826758881" target="_blank" rel="noopener noreferrer">WhatsApp: 8826758881</a></footer>
-    <script src="script.js?v=20260621-05"></script>
+    <footer class="site-footer"><div><strong>Kidsverse FutureHub</strong><span>Student learning paths, live projects and career-ready support.</span></div><a class="footer-whatsapp-icon" href="https://wa.me/918826758881" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">☎</a></footer>
+    <script src="lead-config.js?v=20260621-01"></script>
+    <script src="script.js?v=20260621-06"></script>
   </body>
 </html>
