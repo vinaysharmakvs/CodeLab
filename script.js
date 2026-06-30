@@ -227,10 +227,17 @@ function storeProfile(profile) {
 
 function inferProfileFromPage() {
   const page = window.location.pathname.split("/").pop();
-  if (page === "students.html") return "student";
-  if (page === "parents.html") return "parent";
-  if (page === "business.html" || page === "institutions.html") return "business";
+  if (page === "students.html" || page === "students.txt") return "student";
+  if (page === "parents.html" || page === "parents.txt") return "parent";
+  if (page === "business.html" || page === "business.txt" || page === "institutions.html" || page === "institutions.txt") return "business";
   return "";
+}
+
+function profileDestination(profile) {
+  if (profile === "student") return "students.html";
+  if (profile === "parent") return "parents.html";
+  if (profile === "business") return "business.html";
+  return "index.html";
 }
 
 function applyProfileNavigation(profile) {
@@ -282,8 +289,14 @@ profileTriggers.forEach((trigger) => {
   trigger.addEventListener("click", (event) => {
     event.preventDefault();
     const profile = trigger.dataset.profileSelect;
+    const hasHomeProfilePanel = Boolean(document.querySelector("#profile-content"));
+    const isHeaderToggle = trigger.closest(".top-profile-toggle");
     applyProfile(profile);
-    document.querySelector("#profile-content")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (hasHomeProfilePanel) {
+      document.querySelector("#profile-content")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else if (isHeaderToggle) {
+      window.location.href = profileDestination(profile);
+    }
   });
 });
 
