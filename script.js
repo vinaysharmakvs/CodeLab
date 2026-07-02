@@ -1691,7 +1691,7 @@ function updateWebsitePriceBuilder() {
               <span class="selected-addon-chip" title="${feature.name}">
                 <span>${feature.name}</span>
                 <strong>${formatIndianPrice(feature.price)}</strong>
-                <button type="button" data-remove-website-feature="${feature.id}" aria-label="Remove ${feature.name}">×</button>
+                <button type="button" data-remove-website-feature="${feature.id}" aria-label="Remove ${feature.name}">X</button>
               </span>
             `
           )
