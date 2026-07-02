@@ -36,17 +36,32 @@ const templateBudget = document.querySelector("[data-template-budget]");
 const templateCards = document.querySelectorAll("[data-template-card]");
 const healthForm = document.querySelector("[data-health-form]");
 const healthResult = document.querySelector("[data-health-result]");
+const websitePricingBuilder = document.querySelector("[data-website-pricing]");
+const websiteExtraPages = document.querySelector("[data-website-extra-pages]");
+const websiteFeatureInputs = document.querySelectorAll("[data-website-feature]");
+const websiteTotal = document.querySelector("[data-website-total]");
+const websiteSummary = document.querySelector("[data-website-summary]");
+const websiteBreakdown = document.querySelector("[data-website-breakdown]");
+const websitePricingWhatsapp = document.querySelector("[data-website-pricing-whatsapp]");
+const quotePresetButtons = document.querySelectorAll("[data-quote-preset]");
+const mapperTotal = document.querySelector("[data-mapper-total]");
+const mapperSummary = document.querySelector("[data-mapper-summary]");
+const mapperSelected = document.querySelector("[data-mapper-selected]");
 const roleMatcherForm = document.querySelector("[data-role-matcher]");
 const roleSkillPicker = document.querySelector(".role-skill-picker");
 const roleResult = document.querySelector("[data-role-result]");
 const ambassadorForm = document.querySelector("[data-ambassador-form]");
 const ambassadorResult = document.querySelector("[data-ambassador-result]");
+const decisionForms = document.querySelectorAll("[data-decision-form]");
 const profileTriggers = document.querySelectorAll("[data-profile-select]");
 const profileSections = document.querySelectorAll("[data-profile-section]");
 const profileNavLinks = document.querySelectorAll("[data-profile-nav]");
 const profileTitle = document.querySelector("[data-profile-title]");
 const profileText = document.querySelector("[data-profile-text]");
 const whatsappNumber = "918826758881";
+const profileStorageKey = "futureHubProfile";
+const profileQueryKey = "profile";
+let businessMapperTimer = null;
 const futureHubSheetEndpoints = {
   parent: "",
   child: "",
@@ -193,36 +208,86 @@ const pathData = {
 
 const profileCopy = {
   student: {
-    title: "Student journey unlocked",
+    title: "Your student decision journey is ready",
     text:
-      "You will now see student-focused learning paths: custom coding course, future role direction, project outcomes, AI Champions, campus ambassador and booking.",
+      "Start with Future Skill Mission Finder. FutureHub will recommend the right coding, AI, project, portfolio or internship path before you choose a course.",
   },
   parent: {
-    title: "Parent journey unlocked",
+    title: "Your parent decision journey is ready",
     text:
-      "You will now see parent-focused guidance: build your child's course, understand pricing, explore AI Champions and book a guidance slot without pressure.",
+      "Start with Child Growth Plan. FutureHub will understand your child’s age, need, learning style and time before recommending the right support.",
   },
   business: {
-    title: "Business journey unlocked",
+    title: "Your business decision journey is ready",
     text:
-      "You will now see business-focused tools: website readiness, website demos, digital growth consultation and booking for services.",
+      "Start with Business Growth Roadmap. FutureHub will map your business type, goal and stage to the right website, lead and automation direction.",
   },
 };
 
+function isValidProfile(profile) {
+  return Boolean(profileCopy[profile]);
+}
+
+function getProfileFromUrl() {
+  try {
+    const profile = new URLSearchParams(window.location.search).get(profileQueryKey) || "";
+    return isValidProfile(profile) ? profile : "";
+  } catch (error) {
+    return "";
+  }
+}
+
 function getStoredProfile() {
   try {
-    return localStorage.getItem("futureHubProfile") || "";
+    const profile = localStorage.getItem(profileStorageKey) || "";
+    return isValidProfile(profile) ? profile : "";
   } catch (error) {
     return "";
   }
 }
 
 function storeProfile(profile) {
+  if (!isValidProfile(profile)) return;
   try {
-    localStorage.setItem("futureHubProfile", profile);
+    localStorage.setItem(profileStorageKey, profile);
   } catch (error) {
     // Local storage can be unavailable in some private browser contexts.
   }
+}
+
+function isInternalProfileLink(link) {
+  if (!link || link.hasAttribute("download") || link.dataset.profileSelect) return false;
+  const rawHref = link.getAttribute("href") || "";
+  if (!rawHref || rawHref.startsWith("#")) return false;
+  if (/^(tel|mailto|sms|whatsapp):/i.test(rawHref)) return false;
+  try {
+    const url = new URL(rawHref, window.location.href);
+    if (!["file:", "http:", "https:"].includes(url.protocol)) return false;
+    if (url.protocol === "file:" && window.location.protocol === "file:") return true;
+    return url.origin === window.location.origin;
+  } catch (error) {
+    return false;
+  }
+}
+
+function buildProfileUrl(href, profile) {
+  if (!isValidProfile(profile)) return href;
+  try {
+    const url = new URL(href, window.location.href);
+    url.searchParams.set(profileQueryKey, profile);
+    if (url.protocol === "file:") return `${url.pathname}${url.search}${url.hash}`;
+    return url.href;
+  } catch (error) {
+    return href;
+  }
+}
+
+function syncProfileLinks(profile) {
+  if (!isValidProfile(profile)) return;
+  document.querySelectorAll("a[href]").forEach((link) => {
+    if (!isInternalProfileLink(link)) return;
+    link.href = buildProfileUrl(link.getAttribute("href") || link.href, profile);
+  });
 }
 
 function inferProfileFromPage() {
@@ -241,7 +306,7 @@ function profileDestination(profile) {
 }
 
 function applyProfileNavigation(profile) {
-  if (!profileCopy[profile]) return;
+  if (!isValidProfile(profile)) return;
   profileNavLinks.forEach((link) => {
     const allowed = (link.dataset.profileNav || "").split(/\s+/);
     link.hidden = !(allowed.includes("all") || allowed.includes(profile));
@@ -249,7 +314,7 @@ function applyProfileNavigation(profile) {
 }
 
 function applyProfile(profile) {
-  if (!profileCopy[profile]) return;
+  if (!isValidProfile(profile)) return;
   storeProfile(profile);
   document.body.dataset.activeProfile = profile;
 
@@ -258,6 +323,7 @@ function applyProfile(profile) {
   });
 
   applyProfileNavigation(profile);
+  syncProfileLinks(profile);
 
   profileSections.forEach((section) => {
     const allowed = (section.dataset.profileSection || "").split(/\s+/);
@@ -274,15 +340,9 @@ profileSections.forEach((section) => {
 });
 document.body.classList.add("profile-filter-ready");
 
-const activeProfile = inferProfileFromPage() || getStoredProfile();
+const activeProfile = getProfileFromUrl() || getStoredProfile() || inferProfileFromPage();
 if (activeProfile) {
-  storeProfile(activeProfile);
-  if (profileSections.length) {
-    applyProfile(activeProfile);
-  } else {
-    applyProfileNavigation(activeProfile);
-    document.body.dataset.activeProfile = activeProfile;
-  }
+  applyProfile(activeProfile);
 }
 
 profileTriggers.forEach((trigger) => {
@@ -295,9 +355,21 @@ profileTriggers.forEach((trigger) => {
     if (hasHomeProfilePanel) {
       document.querySelector("#profile-content")?.scrollIntoView({ behavior: "smooth", block: "start" });
     } else if (isHeaderToggle) {
-      window.location.href = profileDestination(profile);
+      window.location.href = buildProfileUrl(profileDestination(profile), profile);
     }
   });
+});
+
+document.addEventListener("click", (event) => {
+  const link = event.target.closest("a[href]");
+  if (!link || !isInternalProfileLink(link)) return;
+  if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target) return;
+  const profile = document.body.dataset.activeProfile || getStoredProfile() || getProfileFromUrl();
+  if (!isValidProfile(profile)) return;
+  const nextHref = buildProfileUrl(link.getAttribute("href") || link.href, profile);
+  if (nextHref === link.getAttribute("href")) return;
+  event.preventDefault();
+  window.location.href = nextHref;
 });
 
 const projectData = {
@@ -1005,6 +1077,10 @@ function renderCourseMapperResult(match, alternatives, needsMoreDetail) {
     return;
   }
 
+  const ctaText = encodeURIComponent(
+    `Hello Kidsverse FutureHub, I used the AI Course Finder. Recommended course: ${match.title}. Learner: ${match.stage}. Skills: ${match.skills.join(", ")}. Please help me finalize the best batch.`
+  );
+
   courseMatchResult.innerHTML = `
     <span>Recommended match</span>
     <h4>${match.title}</h4>
@@ -1015,6 +1091,7 @@ function renderCourseMapperResult(match, alternatives, needsMoreDetail) {
       <strong>${match.skills.join(" + ")}</strong>
     </div>
     ${alternatives.length ? `<div class="course-alternatives"><span>Also suitable</span>${alternatives.map((item) => `<button type="button" data-course-alt="${item.title}">${item.title}</button>`).join("")}</div>` : ""}
+    <a class="primary-button course-match-cta" href="https://wa.me/${whatsappNumber}?text=${ctaText}" target="_blank" rel="noopener noreferrer">Discuss This Course on WhatsApp</a>
   `;
   courseMatchResult.hidden = false;
 }
@@ -1057,6 +1134,109 @@ function matchCourseFromText(text, preferredTitle = "") {
   const confidence = Math.max(62, Math.min(96, best.score + 34));
   applyCourseMatch(best, safeStage);
   renderCourseMapperResult({ ...best, stage: safeStage, skills: safeSkills, confidence }, ranked.filter((item) => item.title !== best.title && (!safeStage || item.stages.includes(safeStage))).slice(0, 2), false);
+}
+
+function parentDecisionPlan(data) {
+  const age = data.get("age");
+  const need = data.get("need");
+  const style = data.get("style");
+  const time = data.get("time");
+  const budget = data.get("budget");
+  let path = "Foundation Growth Path";
+  let outcome = "confidence, routine and visible learning progress";
+  let projects = ["Confidence activity", "Weekly practice challenge", "Parent progress review"];
+
+  if (String(need).includes("Coding")) {
+    path = age === "3-5 years" || age === "6-10 years" ? "Creative Coding Starter" : "Python and AI Starter";
+    outcome = "technology confidence, logic and project presentation";
+    projects = ["Scratch or app mini project", "Logic challenge", "Demo presentation"];
+  } else if (String(need).includes("AI")) {
+    path = "AI Curiosity Path";
+    outcome = "safe AI awareness, prompt thinking and creative project confidence";
+    projects = ["AI idea board", "Chatbot concept", "Future skills demo"];
+  } else if (String(need).includes("English") || String(need).includes("Reading")) {
+    path = "Communication Confidence Path";
+    outcome = "reading comfort, speaking confidence and better expression";
+    projects = ["Reading habit tracker", "Speaking activity", "Story presentation"];
+  } else if (String(need).includes("Math")) {
+    path = "Academic Confidence Path";
+    outcome = "homework routine, concept clarity and exam confidence";
+    projects = ["Concept practice plan", "Weekly revision mission", "Doubt-clearing cycle"];
+  } else if (String(need).includes("Career")) {
+    path = "Future Direction Path";
+    outcome = "career awareness, skill choices and project roadmap";
+    projects = ["Interest map", "Career mini research", "Skill mission plan"];
+  }
+
+  const format = budget === "1:1 mentorship" || style === "Live mentor-led classes" ? "1:1 mentorship" : budget === "Group batch" ? "small group batch" : "guided discussion first";
+  return {
+    title: path,
+    subtitle: `${age} • ${format}`,
+    outcome: `Expected 6-month outcome: ${outcome}.`,
+    timeline: `${time} with ${style.toLowerCase()}.`,
+    projects,
+    next: "Review this plan with FutureHub before selecting the exact batch.",
+  };
+}
+
+function studentDecisionPlan(data) {
+  const stage = data.get("stage");
+  const interest = data.get("interest");
+  const goal = data.get("goal");
+  const time = data.get("time");
+  let title = "Future Skill Mission";
+  let missions = ["Mission 1: Build foundation", "Mission 2: Create mini project", "Mission 3: Present your work"];
+
+  if (String(interest).includes("Scratch")) {
+    title = "Game and Creative Coding Mission";
+    missions = ["Mission 1: Visual logic", "Mission 2: Game rules and scoring", "Mission 3: Demo your game"];
+  } else if (String(interest).includes("Python")) {
+    title = "Python Builder Mission";
+    missions = ["Mission 1: Python basics", "Mission 2: Mini automation or game", "Mission 3: Project presentation"];
+  } else if (String(interest).includes("AI")) {
+    title = "AI App Mission";
+    missions = ["Mission 1: Prompt engineering", "Mission 2: Python chatbot", "Mission 3: AI project demo"];
+  } else if (String(interest).includes("Websites")) {
+    title = "Web and App Builder Mission";
+    missions = ["Mission 1: Web basics", "Mission 2: Interactive page", "Mission 3: Portfolio launch"];
+  } else if (String(interest).includes("C / C++ / Java")) {
+    title = "Programming Foundation Mission";
+    missions = ["Mission 1: Syntax confidence", "Mission 2: Problem solving", "Mission 3: Coding practice routine"];
+  } else if (String(interest).includes("Internship")) {
+    title = "Live Project and Internship Mission";
+    missions = ["Mission 1: Project selection", "Mission 2: GitHub portfolio", "Mission 3: Interview explanation"];
+  }
+
+  return {
+    title,
+    subtitle: `${stage} • ${time}`,
+    outcome: `Goal: ${goal}.`,
+    timeline: "Recommended path: learn, build, present, then review with a mentor.",
+    projects: missions,
+    next: "Discuss this mission with FutureHub and finalize the right course mode.",
+  };
+}
+
+function renderDecisionResult(form, plan) {
+  const result = form.querySelector("[data-decision-result]");
+  if (!result) return;
+  const type = form.dataset.decisionForm;
+  const ctaText = encodeURIComponent(
+    `Hello Kidsverse FutureHub, I created a ${type === "parent" ? "Child Growth Plan" : "Future Skill Mission"}. Recommended path: ${plan.title}. ${plan.subtitle}. Please help me finalize the next step.`
+  );
+  result.innerHTML = `
+    <span>${type === "parent" ? "Child Growth Blueprint" : "Future Skill Mission"}</span>
+    <h3>${plan.title}</h3>
+    <p>${plan.subtitle}</p>
+    <div class="decision-result-grid">
+      <article><strong>Outcome</strong><p>${plan.outcome}</p></article>
+      <article><strong>Timeline</strong><p>${plan.timeline}</p></article>
+      <article><strong>What they will build</strong><p>${plan.projects.join(" • ")}</p></article>
+    </div>
+    <p>${plan.next}</p>
+    <a class="primary-button decision-cta" href="https://wa.me/${whatsappNumber}?text=${ctaText}" target="_blank" rel="noopener noreferrer">Schedule 15-Minute Confirmation Call</a>
+  `;
+  result.hidden = false;
 }
 
 function startTypingPlaceholder(field, fallbackText) {
@@ -1319,15 +1499,19 @@ function renderBusinessMapperResult(match, alternatives, needsMoreDetail) {
   );
 
   businessMatchResult.innerHTML = `
-    <span>Recommended direction</span>
+    <span>Business Growth Roadmap</span>
     <h4>${match.category} • ${match.budget}</h4>
     <p>${match.reason}</p>
     <div class="course-match-chips">
       <strong>${match.confidence}% match</strong>
       <strong>${businessSampleData[match.category]?.conversion || "Enquiry flow"}</strong>
     </div>
+    <p class="business-price-sync-note">Recommended website features are selected in the Price Builder. You can add or remove services before sending the estimate.</p>
     ${alternatives.length ? `<div class="course-alternatives"><span>Also suitable</span>${alternatives.map((item) => `<button type="button" data-business-alt="${item.category}">${item.category}</button>`).join("")}</div>` : ""}
-    <a class="primary-button business-match-cta" href="https://wa.me/${whatsappNumber}?text=${ctaText}" target="_blank" rel="noopener noreferrer">Connect With Us on WhatsApp</a>
+    <div class="business-match-actions">
+      <a class="secondary-button" href="#website-price-builder">Review Selected Price</a>
+      <a class="primary-button business-match-cta" href="https://wa.me/${whatsappNumber}?text=${ctaText}" target="_blank" rel="noopener noreferrer">Connect With Us on WhatsApp</a>
+    </div>
   `;
   businessMatchResult.hidden = false;
 }
@@ -1351,7 +1535,217 @@ function matchBusinessFromText(text, preferredCategory = "") {
   if (sampleCategory) sampleCategory.value = best.category;
   if (sampleBudget) sampleBudget.value = best.budget;
   renderBusinessSample();
+  applyWebsiteFeatureRecommendation(query, best);
   renderBusinessMapperResult({ ...best, confidence: Math.max(62, Math.min(96, best.score + 44)) }, ranked.filter((item) => item.category !== best.category).slice(0, 2), false);
+}
+
+function setWebsiteFeatureByName(name, checked = true) {
+  const input = [...websiteFeatureInputs].find((item) => item.dataset.featureName === name);
+  if (input) input.checked = checked;
+}
+
+function clearWebsiteFeatureSelection() {
+  websiteFeatureInputs.forEach((input) => {
+    input.checked = false;
+  });
+  if (websiteExtraPages) websiteExtraPages.value = "0";
+}
+
+function revealSelectedFeatureCategories() {
+  document.querySelectorAll(".feature-category-stack details").forEach((group) => {
+    group.open = Boolean(group.querySelector("[data-website-feature]:checked"));
+  });
+}
+
+function applyWebsiteFeatureRecommendation(query, match = {}) {
+  if (!websitePricingBuilder) return;
+  clearWebsiteFeatureSelection();
+  const selected = new Set();
+  const add = (name) => selected.add(name);
+  const category = match.category || "";
+  const budget = match.budget || "";
+
+  if (budget === "Growth Website") {
+    add("Services / pricing menu section");
+    add("Local SEO starter setup");
+    add("Analytics and enquiry tracking");
+  }
+  if (budget === "Premium System") {
+    add("Services / pricing menu section");
+    add("Local SEO starter setup");
+    add("Analytics and enquiry tracking");
+    add("Google Sheet integration");
+  }
+
+  if (/\b(gallery|portfolio|photo|image|images|work|projects|looks|listing|property|menu)\b/.test(query)) add("Advanced image gallery / portfolio");
+  if (/\b(service|services|pricing|price|menu|package|packages|product|products|course|courses|program|programs)\b/.test(query)) add("Services / pricing menu section");
+  if (/\b(faq|question|questions|admission|admissions|parent|parents|doubt|doubts)\b/.test(query)) add("FAQ section / FAQ page");
+  if (/\b(appointment|booking|book|slot|reserve|reservation|visit|consultation|demo)\b/.test(query)) add("Appointment or booking flow");
+  if (/\b(payment|pay|online payment|order|checkout|razorpay)\b/.test(query)) add("Payment collection setup");
+  if (/\b(blog|blogs|update|updates|news|article|articles|story|stories)\b/.test(query)) add("Blog or updates section");
+  if (/\b(seo|google|ranking|rank|search|local seo|near me|map|maps)\b/.test(query)) add("Local SEO starter setup");
+  if (/\b(analytics|tracking|track|report|reports|dashboard|insight|insights)\b/.test(query)) add("Analytics and enquiry tracking");
+  if (/\b(ai|bot|chatbot|assistant|faq bot)\b/.test(query)) add("AI Bot / AI FAQ chatbot");
+  if (/\b(sheet|sheets|excel|google sheet|google form|data|database|records)\b/.test(query)) add("Google Sheet integration");
+  if (/\b(lead|leads|enquiry|enquiries|funnel|customer|customers|ads|campaign)\b/.test(query)) add("Lead generation tools");
+  if (/\b(certificate|certificates)\b/.test(query)) add("Certificate generation");
+  if (/\b(pdf|download|report|brochure|invoice)\b/.test(query)) add("PDF generation");
+  if (/\b(whatsapp|automation|label|labels|follow up|followup)\b/.test(query)) add("WhatsApp automation / lead labels");
+  if (/\b(instagram|facebook|social|social media|reel|reels|post|posts)\b/.test(query)) add("Social media launch kit");
+
+  if (/School|College|Coaching/.test(category)) {
+    add("FAQ section / FAQ page");
+    add("Lead generation tools");
+    add("Google Sheet integration");
+    add("Blog or updates section");
+  }
+  if (/Salon|Clinic/.test(category)) {
+    add("Services / pricing menu section");
+    add("Appointment or booking flow");
+    add("Advanced image gallery / portfolio");
+    add("WhatsApp automation / lead labels");
+  }
+  if (/Cafe|Chai|Retail/.test(category)) {
+    add("Services / pricing menu section");
+    add("Advanced image gallery / portfolio");
+    add("Payment collection setup");
+    add("WhatsApp automation / lead labels");
+  }
+  if (/Real estate/.test(category)) {
+    add("Advanced image gallery / portfolio");
+    add("Lead generation tools");
+    add("Analytics and enquiry tracking");
+    add("Appointment or booking flow");
+  }
+  if (/NGO/.test(category)) {
+    add("Blog or updates section");
+    add("PDF generation");
+    add("Google Sheet integration");
+  }
+  if (/Startup|Creator/.test(category)) {
+    add("Analytics and enquiry tracking");
+    add("Lead generation tools");
+    add("Social media launch kit");
+  }
+
+  selected.forEach((name) => setWebsiteFeatureByName(name, true));
+
+  if (websiteExtraPages) {
+    let pages = budget === "Premium System" ? 5 : budget === "Growth Website" ? 3 : 1;
+    if (/School|College|Coaching|Real estate/.test(category)) pages = Math.max(pages, 4);
+    if (/Salon|Clinic|Cafe|Retail|NGO|Startup/.test(category)) pages = Math.max(pages, 2);
+    if (/\b(1 page|one page|single page|basic|starter)\b/.test(query)) pages = 0;
+    websiteExtraPages.value = String(Math.max(0, Math.min(20, pages)));
+  }
+
+  revealSelectedFeatureCategories();
+  updateWebsitePriceBuilder();
+}
+
+function formatIndianPrice(amount) {
+  return `₹${Number(amount).toLocaleString("en-IN")}`;
+}
+
+function selectedWebsiteFeatures() {
+  return [...websiteFeatureInputs]
+    .filter((input) => input.checked)
+    .map((input) => ({
+      id: input.dataset.featureName || "Selected feature",
+      name: input.dataset.featureName || "Selected feature",
+      price: Number(input.dataset.featurePrice || 0),
+    }));
+}
+
+function updateWebsitePriceBuilder() {
+  if (!websitePricingBuilder) return;
+  const basePrice = 7999;
+  const extraPages = Math.max(0, Math.min(20, Number(websiteExtraPages?.value || 0)));
+  if (websiteExtraPages && String(extraPages) !== websiteExtraPages.value) websiteExtraPages.value = String(extraPages);
+  const extraPagePrice = extraPages * 1000;
+  const features = selectedWebsiteFeatures();
+  const featureTotal = features.reduce((sum, item) => sum + item.price, 0);
+  const total = basePrice + extraPagePrice + featureTotal;
+
+  if (websiteTotal) websiteTotal.textContent = formatIndianPrice(total);
+  if (mapperTotal) mapperTotal.textContent = formatIndianPrice(total);
+  if (websiteSummary) {
+    const featureCount = features.length;
+    websiteSummary.textContent = `${featureCount ? `${featureCount} add-on${featureCount > 1 ? "s" : ""}` : "Base website"} selected${extraPages ? ` with ${extraPages} extra page${extraPages > 1 ? "s" : ""}` : ""}.`;
+  }
+  if (mapperSummary) {
+    const featureCount = features.length;
+    mapperSummary.textContent = featureCount || extraPages
+      ? `${featureCount} add-on${featureCount === 1 ? "" : "s"}${extraPages ? ` + ${extraPages} page${extraPages > 1 ? "s" : ""}` : ""} recommended.`
+      : "Base website selected. Type requirement to auto-select features.";
+  }
+  if (mapperSelected) {
+    mapperSelected.innerHTML = features.length
+      ? features.slice(0, 5).map((feature) => `<span>${feature.name}</span>`).join("") + (features.length > 5 ? `<strong>+${features.length - 5} more</strong>` : "")
+      : `<em>Base website selected</em>`;
+  }
+  if (websiteBreakdown) {
+    const addonChips = features.length
+      ? features
+          .map(
+            (feature) => `
+              <span class="selected-addon-chip" title="${feature.name}">
+                <span>${feature.name}</span>
+                <strong>${formatIndianPrice(feature.price)}</strong>
+                <button type="button" data-remove-website-feature="${feature.id}" aria-label="Remove ${feature.name}">×</button>
+              </span>
+            `
+          )
+          .join("")
+      : `<em>No add-ons selected yet</em>`;
+    websiteBreakdown.innerHTML = `
+      <div class="price-core-lines">
+        <article><span>Base website</span><strong>${formatIndianPrice(basePrice)}</strong></article>
+        ${extraPages ? `<article><span>${extraPages} extra page${extraPages > 1 ? "s" : ""}</span><strong>${formatIndianPrice(extraPagePrice)}</strong></article>` : ""}
+      </div>
+      <div class="selected-addon-cloud">
+        <small>Selected add-ons</small>
+        <div>${addonChips}</div>
+      </div>
+    `;
+  }
+  if (websitePricingWhatsapp) {
+    const featureText = features.length ? features.map((item) => `${item.name} (${formatIndianPrice(item.price)})`).join(", ") : "No add-ons selected";
+    const message = encodeURIComponent(
+      `Hello Kidsverse FutureHub, I used the Website Price Builder. Estimated cost: ${formatIndianPrice(total)}. Base: 1-page website with business details, Google Map, basic images and WhatsApp lead form. Extra pages: ${extraPages}. Selected add-ons: ${featureText}. Please review my selection and suggest the best deal / smartest cost-saving option.`
+    );
+    websitePricingWhatsapp.href = `https://wa.me/${whatsappNumber}?text=${message}`;
+  }
+}
+
+function applyWebsiteQuotePreset(preset) {
+  if (!websitePricingBuilder) return;
+  clearWebsiteFeatureSelection();
+  quotePresetButtons.forEach((button) => button.classList.toggle("is-active", button.dataset.quotePreset === preset));
+
+  const presetFeatures = {
+    starter: [],
+    leads: [
+      "Services / pricing menu section",
+      "Appointment or booking flow",
+      "Local SEO starter setup",
+      "Analytics and enquiry tracking",
+      "Lead generation tools",
+    ],
+    automation: [
+      "FAQ section / FAQ page",
+      "AI Bot / AI FAQ chatbot",
+      "Google Sheet integration",
+      "PDF generation",
+      "WhatsApp automation / lead labels",
+    ],
+  };
+
+  (presetFeatures[preset] || []).forEach((name) => setWebsiteFeatureByName(name, true));
+  if (websiteExtraPages) {
+    websiteExtraPages.value = preset === "leads" ? "2" : preset === "automation" ? "3" : "0";
+  }
+  revealSelectedFeatureCategories();
+  updateWebsitePriceBuilder();
 }
 
 function filterTemplateCards() {
@@ -1889,6 +2283,13 @@ courseMatchButton?.addEventListener("click", () => {
   matchCourseFromText(courseQuery?.value || "");
 });
 
+document.querySelectorAll("[data-course-prompt]").forEach((button) => {
+  button.addEventListener("click", () => {
+    if (courseQuery) courseQuery.value = button.dataset.coursePrompt || "";
+    matchCourseFromText(courseQuery?.value || "");
+  });
+});
+
 courseQuery?.addEventListener("keydown", (event) => {
   if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
     event.preventDefault();
@@ -1934,6 +2335,20 @@ ambassadorForm?.addEventListener("submit", async (event) => {
   await renderAmbassadorResult(new FormData(ambassadorForm));
 });
 
+decisionForms.forEach((form) => {
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const plan = form.dataset.decisionForm === "parent" ? parentDecisionPlan(data) : studentDecisionPlan(data);
+    renderDecisionResult(form, plan);
+    await submitFutureHubLead(form.dataset.decisionForm === "parent" ? "parent" : "child", {
+      formType: form.dataset.decisionForm === "parent" ? "Child Growth Plan" : "Future Skill Mission",
+      recommendation: plan.title,
+      ...formDataToObject(data),
+    });
+  });
+});
+
 [sampleCategory, sampleBudget].forEach((control) => {
   control?.addEventListener("change", renderBusinessSample);
 });
@@ -1951,18 +2366,71 @@ businessQuery?.addEventListener("keydown", (event) => {
   }
 });
 
+businessQuery?.addEventListener("input", () => {
+  window.clearTimeout(businessMapperTimer);
+  businessMapperTimer = window.setTimeout(() => {
+    const value = businessQuery.value.trim();
+    if (!value) {
+      clearWebsiteFeatureSelection();
+      document.querySelectorAll(".feature-category-stack details").forEach((group, index) => {
+        group.open = index === 0;
+      });
+      if (businessMatchResult) {
+        businessMatchResult.hidden = true;
+        businessMatchResult.innerHTML = "";
+      }
+      updateWebsitePriceBuilder();
+      return;
+    }
+    if (value.length >= 18) matchBusinessFromText(value);
+  }, 450);
+});
+
 businessClearButton?.addEventListener("click", () => {
   if (businessQuery) businessQuery.value = "";
   if (businessMatchResult) {
     businessMatchResult.hidden = true;
     businessMatchResult.innerHTML = "";
   }
+  clearWebsiteFeatureSelection();
+  document.querySelectorAll(".feature-category-stack details").forEach((group, index) => {
+    group.open = index === 0;
+  });
+  updateWebsitePriceBuilder();
 });
 
 businessMatchResult?.addEventListener("click", (event) => {
   const button = event.target.closest("[data-business-alt]");
   if (!button) return;
   matchBusinessFromText(businessQuery?.value || "", button.dataset.businessAlt);
+});
+
+websiteFeatureInputs.forEach((input) => {
+  input.addEventListener("change", updateWebsitePriceBuilder);
+});
+
+websiteBreakdown?.addEventListener("click", (event) => {
+  const removeButton = event.target.closest("[data-remove-website-feature]");
+  if (!removeButton) return;
+  const featureName = removeButton.dataset.removeWebsiteFeature;
+  const featureInput = [...websiteFeatureInputs].find((input) => input.dataset.featureName === featureName);
+  if (!featureInput) return;
+  featureInput.checked = false;
+  updateWebsitePriceBuilder();
+});
+
+quotePresetButtons.forEach((button) => {
+  button.addEventListener("click", () => applyWebsiteQuotePreset(button.dataset.quotePreset));
+});
+
+websiteExtraPages?.addEventListener("input", updateWebsitePriceBuilder);
+
+websitePricingBuilder?.addEventListener("click", (event) => {
+  const stepButton = event.target.closest("[data-page-step]");
+  if (!stepButton || !websiteExtraPages) return;
+  const nextValue = Number(websiteExtraPages.value || 0) + Number(stepButton.dataset.pageStep || 0);
+  websiteExtraPages.value = String(Math.max(0, Math.min(20, nextValue)));
+  updateWebsitePriceBuilder();
 });
 
 templateFilters.forEach((button) => {
@@ -2066,6 +2534,7 @@ renderBuilderPreview();
 startCoursePlaceholderTyping();
 startBusinessPlaceholderTyping();
 renderBusinessSample();
+updateWebsitePriceBuilder();
 filterTemplateCards();
 createFutureHubBot();
 
