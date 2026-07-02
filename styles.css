@@ -4586,10 +4586,14 @@ code {
 
 .price-base-card li::before {
   position: absolute;
+  top: 50%;
   left: 12px;
-  content: "âœ“";
-  color: var(--mint);
-  font-weight: 950;
+  width: 10px;
+  height: 6px;
+  content: "";
+  border-bottom: 2px solid var(--mint);
+  border-left: 2px solid var(--mint);
+  transform: translateY(-62%) rotate(-45deg);
 }
 
 .price-builder-steps {
@@ -4826,10 +4830,22 @@ code {
 }
 
 .feature-price-grid label:has(input:checked)::after {
-  content: "âœ“";
-  color: #ffffff;
+  content: "";
   border-color: transparent;
   background: linear-gradient(135deg, var(--blue), var(--mint));
+}
+
+.feature-price-grid label:has(input:checked)::before {
+  position: absolute;
+  top: 14px;
+  right: 15px;
+  z-index: 2;
+  width: 10px;
+  height: 6px;
+  content: "";
+  border-bottom: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  transform: rotate(-45deg);
 }
 
 .feature-price-grid input {
