@@ -23,15 +23,14 @@
       </a>
       <div class="top-profile-toggle" aria-label="Switch profile"><span>Profile</span><button type="button" data-profile-select="student">Student</button><button type="button" data-profile-select="parent">Parent</button><button type="button" data-profile-select="business">Business</button></div>
       <nav class="desktop-nav" aria-label="Primary navigation">
-        <a href="#top" data-profile-nav="all">Start Here</a>
+        <a href="ai-growth-partner.html#chat-card" data-profile-nav="all">CodeLab AI</a>
         <a href="about.html" data-profile-nav="all">About</a>
-        <a href="#profile-content" data-profile-nav="all">My Profile</a>
-        <a href="#batch-pricing" data-profile-nav="student parent">Pricing</a>
+        <a href="#manual-routes" data-profile-nav="all">Explore</a>
         <a href="faq.html" data-profile-nav="all">FAQ</a>
         <a href="#booking" data-profile-nav="all">Book Slot</a>
       </nav>
       <div class="header-actions">
-        <a class="header-cta" href="#booking">Book Your Slot</a>
+        <a class="header-cta" href="ai-growth-partner.html#chat-card">Start CodeLab AI</a>
         <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -39,65 +38,87 @@
     </header>
 
     <nav class="mobile-menu" aria-label="Mobile navigation" hidden>
-      <a href="#top" data-profile-nav="all">Start Here</a>
+      <a href="ai-growth-partner.html#chat-card" data-profile-nav="all">CodeLab AI</a>
       <a href="about.html" data-profile-nav="all">About</a>
-      <a href="#profile-content" data-profile-nav="all">My Profile</a>
-      <a href="#batch-pricing" data-profile-nav="student parent">Pricing</a>
+      <a href="#manual-routes" data-profile-nav="all">Explore</a>
       <a href="faq.html" data-profile-nav="all">FAQ</a>
       <a href="#booking" data-profile-nav="all">Book Slot</a>
     </nav>
 
     <main id="top">
-      <section class="hero profile-hero" aria-labelledby="profile-title">
-        <div class="profile-hero-copy">
-          <p class="eyebrow">Kidsverse FutureHub AI Advisor</p>
-          <h1 id="profile-title">Choose Your Growth Path</h1>
+      <section class="hero profile-hero codelab-home-hero" aria-labelledby="profile-title">
+        <div class="profile-hero-copy codelab-hero-copy">
+          <p class="eyebrow">CodeLab AI by Kidsverse FutureHub</p>
+          <h1 id="profile-title">Your AI Digital Growth Partner.</h1>
           <p class="hero-lead">
-            A smart platform for students, parents and businesses to choose the right digital path without confusion.
+            Get a personalized roadmap for learning, career direction, coding, websites or business growth in under 2 minutes.
           </p>
+          <div class="codelab-hero-actions">
+            <a class="primary-button" href="ai-growth-partner.html#chat-card">Start CodeLab AI</a>
+            <a class="secondary-button" href="#manual-routes">Explore manually</a>
+          </div>
         </div>
-        <div class="profile-selector" aria-label="Select your FutureHub profile">
-          <a class="profile-card profile-student" href="#profile-content" data-profile-select="student">
-            <figure>
-              <img src="assets/student-parent-card.gif" alt="Student learning coding and AI with FutureHub" onerror="this.src='assets/parent.png';" />
-            </figure>
-            <span>Student</span>
-            <strong>Discover my skill mission</strong>
-            <p>Find coding, AI, project, internship or career direction.</p>
-          </a>
-          <a class="profile-card profile-parent" href="#profile-content" data-profile-select="parent">
-            <figure>
-              <img src="assets/parent.png" alt="Parent choosing technology course guidance" onerror="this.src='assets/student-parent-path.png';" />
-            </figure>
-            <span>Parent</span>
-            <strong>Create my child's growth plan</strong>
-            <p>Understand the right path before choosing any course.</p>
-          </a>
-          <a class="profile-card profile-business" href="#profile-content" data-profile-select="business">
-            <figure>
-              <img src="assets/business-owner-card.gif" alt="Business owner digital growth profile" onerror="this.src='assets/business.png';" />
-            </figure>
-            <span>Business</span>
-            <strong>Plan my business growth roadmap</strong>
-            <p>Website, leads, trust, SEO, automation and AI systems.</p>
-          </a>
-        </div>
-        <div class="profile-quick-actions" aria-label="Popular FutureHub actions">
-          <a href="#profile-content" data-profile-select="student">I am a student</a>
-          <a href="#profile-content" data-profile-select="parent">I am a parent</a>
-          <a href="#profile-content" data-profile-select="business">I am a business owner</a>
+        <div class="codelab-ai-panel" aria-label="CodeLab AI preview">
+          <div class="codelab-ai-top"><span></span><span></span><span></span><strong>CodeLab AI</strong></div>
+          <div class="codelab-ai-chat">
+            <p>Hi, I will help you choose the right path.</p>
+            <p>Are you a student, parent or business owner?</p>
+          </div>
+          <div class="codelab-choice-grid" aria-label="Start CodeLab AI by profile">
+            <a href="ai-growth-partner.html?profile=student#chat-card" data-profile-fixed="true">
+              <img src="assets/student-parent-card.gif" alt="Student learning coding and AI" onerror="this.src='assets/parent.png';" />
+              <span>Student</span>
+              <strong>Find my skill mission</strong>
+            </a>
+            <a href="ai-growth-partner.html?profile=parent#chat-card" data-profile-fixed="true">
+              <img src="assets/parent.png" alt="Parent choosing a guided learning path" onerror="this.src='assets/student-parent-path.png';" />
+              <span>Parent</span>
+              <strong>Plan my child's growth</strong>
+            </a>
+            <a href="ai-growth-partner.html?profile=business#chat-card" data-profile-fixed="true">
+              <img src="assets/business-owner-card.gif" alt="Business owner planning digital growth" onerror="this.src='assets/business.png';" />
+              <span>Business</span>
+              <strong>Build my growth roadmap</strong>
+            </a>
+          </div>
         </div>
         <div class="trust-strip profile-trust-strip" aria-label="FutureHub highlights">
-          <span>Personalized advice</span>
-          <span>AI learning paths</span>
+          <span>Personalized roadmap</span>
+          <span>No forced packages</span>
           <span>Live projects</span>
-          <span>Business roadmaps</span>
-          <span>15-minute expert review</span>
-          <span>India, US, Singapore & Middle East</span>
+          <span>Business tools</span>
+          <span>WhatsApp review</span>
         </div>
       </section>
 
-      <section class="section futurehub-trust-section" data-profile-section="all">
+      <section class="section codelab-manual-routes" id="manual-routes" aria-label="Explore FutureHub manually">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Explore without AI</p>
+            <h2>Know what you need? Go directly.</h2>
+          </div>
+          <p>CodeLab AI is the fastest path. These links are for visitors who already know where they want to go.</p>
+        </div>
+        <div class="codelab-route-grid">
+          <a href="students.html?profile=student" data-profile-fixed="true">
+            <span>Students</span>
+            <strong>Coding, AI, internships and future roles</strong>
+            <p>For Grade 3 onward, teens and college students.</p>
+          </a>
+          <a href="parents.html?profile=parent" data-profile-fixed="true">
+            <span>Parents</span>
+            <strong>Course guidance for your child</strong>
+            <p>Understand the right path before selecting any program.</p>
+          </a>
+          <a href="business.html?profile=business" data-profile-fixed="true">
+            <span>Business</span>
+            <strong>Websites, leads and automation</strong>
+            <p>Build only the digital tools your business needs.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="section futurehub-trust-section">
         <div>
           <p class="eyebrow">Trusted foundation</p>
           <h2>Powered by Kidsverse Private Limited, Rehan.</h2>
@@ -113,655 +134,7 @@
         </div>
       </section>
 
-      <section class="section profile-selected-panel" id="profile-content" data-profile-section="all">
-        <div>
-          <p class="eyebrow">Selected profile</p>
-          <h2 data-profile-title>Choose a profile to continue.</h2>
-          <p data-profile-text>Pick Student, Parent or Business above. FutureHub will show only the relevant journey here.</p>
-        </div>
-        <div class="profile-switcher" aria-label="Switch FutureHub profile">
-          <button type="button" data-profile-select="student">Student</button>
-          <button type="button" data-profile-select="parent">Parent</button>
-          <button type="button" data-profile-select="business">Business</button>
-        </div>
-      </section>
-
-      <section class="section how-it-works-section" data-profile-section="all">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">How it works</p>
-            <h2>One simple journey. No confusion.</h2>
-          </div>
-          <p>FutureHub is designed to help you decide first, then speak with us only when the direction feels right.</p>
-        </div>
-        <div class="how-it-works-grid">
-          <article><span>01</span><strong>Choose profile</strong><p>Student, Parent or Business.</p></article>
-          <article><span>02</span><strong>Answer questions</strong><p>Tell us your goal or requirement.</p></article>
-          <article><span>03</span><strong>Get plan</strong><p>See a recommended path, pricing or roadmap.</p></article>
-          <article><span>04</span><strong>Book final call</strong><p>Confirm details on WhatsApp without pressure.</p></article>
-        </div>
-      </section>
-
-      <section class="section decision-advisor-section" data-profile-section="parent">
-        <div class="decision-advisor-copy">
-          <p class="eyebrow">Parent journey</p>
-          <h2>Create your Child Growth Plan.</h2>
-          <p>Answer a few simple questions. FutureHub will suggest a learning path, expected outcome, timeline and next step without pressure.</p>
-        </div>
-        <form class="decision-form" data-decision-form="parent">
-          <label>Child age group<select name="age" required><option>3-5 years</option><option>6-10 years</option><option>11-14 years</option><option>15-18 years</option></select></label>
-          <label>What do you want to improve?<select name="need" required><option>Reading and communication</option><option>Coding and technology confidence</option><option>AI and future skills</option><option>English speaking and personality</option><option>Math, homework and exam support</option><option>Career direction</option></select></label>
-          <label>Learning style<select name="style" required><option>Hands-on activities</option><option>Games and visual learning</option><option>Live mentor-led classes</option><option>Project-based learning</option><option>Not sure yet</option></select></label>
-          <label>Weekly time available<select name="time" required><option>2 hours</option><option>4 hours</option><option>Weekend only</option><option>Daily small practice</option></select></label>
-          <label>Budget comfort<select name="budget" required><option>Need guidance first</option><option>Group batch</option><option>1:1 mentorship</option><option>Custom plan</option></select></label>
-          <button class="primary-button" type="submit">Create Child Growth Plan</button>
-          <article class="decision-result" data-decision-result hidden></article>
-        </form>
-      </section>
-
-      <section class="section decision-advisor-section" data-profile-section="student">
-        <div class="decision-advisor-copy">
-          <p class="eyebrow">Student journey</p>
-          <h2>Unlock your Future Skill Mission.</h2>
-          <p>Tell us your grade, interest and goal. We will recommend a mission path with projects, skills and a clear next step.</p>
-        </div>
-        <form class="decision-form" data-decision-form="student">
-          <label>Current stage<select name="stage" required><option>Grade 3-5</option><option>Grade 6-8</option><option>Grade 9-12</option><option>College student</option></select></label>
-          <label>Main interest<select name="interest" required><option>Games / Scratch</option><option>Python</option><option>AI and chatbots</option><option>Websites and apps</option><option>C / C++ / Java</option><option>Internship and live project</option></select></label>
-          <label>Dream outcome<select name="goal" required><option>Build confidence</option><option>Create school projects</option><option>Build portfolio</option><option>Prepare for interviews</option><option>Start freelancing or startup idea</option></select></label>
-          <label>Weekly time<select name="time" required><option>2 hours</option><option>4 hours</option><option>Weekend only</option><option>Intensive project mode</option></select></label>
-          <button class="primary-button" type="submit">Unlock My Skill Mission</button>
-          <article class="decision-result" data-decision-result hidden></article>
-        </form>
-      </section>
-
-      <section class="section audience-switch" id="student-parent-path" data-profile-section="none">
-        <a href="#course-builder"><strong>AI Course Finder</strong><span>Type your goal and get a recommended path</span></a>
-        <a href="students.html#future-role-finder"><strong>Find Future Role</strong><span>College students can discover practical career directions</span></a>
-        <a href="#campus-ambassador"><strong>Campus Ambassador</strong><span>Apply with a short challenge and leadership check</span></a>
-      </section>
-
-      <section class="section audience-switch" data-profile-section="none">
-        <a href="#course-builder"><strong>Find Child's Course</strong><span>Use AI Course Finder after your growth plan</span></a>
-        <a href="#batch-pricing"><strong>See Batch Pricing</strong><span>Understand 1:1 and group class options clearly</span></a>
-        <a href="parents.html"><strong>Parent Guidance</strong><span>Choose the right path without pressure</span></a>
-      </section>
-
-      <section class="section home-tools-section" id="business-owner-path" data-profile-section="business">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Business journey</p>
-            <h2>Create your Business Growth Roadmap.</h2>
-          </div>
-          <p>Type your business idea. FutureHub will recommend the right website, lead system, automation direction and next step.</p>
-        </div>
-        <div class="business-home-mapper">
-          <div class="smart-business-mapper business-mapper-hero">
-            <label>
-              Business requirement
-              <textarea data-business-query rows="5" data-typing-placeholder="I run a salon and want a premium website with appointment enquiries.|We need a school website for admissions, FAQs and campus visits.|I have a local service business and want calls, WhatsApp leads and Google trust." placeholder="Start typing your business requirement..."></textarea>
-            </label>
-            <div class="mapper-actions">
-              <button class="primary-button" type="button" data-business-match>Create Growth Roadmap</button>
-              <button class="secondary-button" type="button" data-business-clear>Clear</button>
-            </div>
-            <div class="business-match-result" data-business-result hidden></div>
-          </div>
-          <section class="business-visual-samples" aria-label="Business website sample categories">
-            <div>
-              <p class="eyebrow">Visual samples</p>
-              <h2>See what your website direction can look like.</h2>
-            </div>
-            <div class="business-visual-grid">
-              <a href="business.html#demo-gallery">
-                <img src="assets/computer-lab.png" alt="School website sample" />
-                <strong>School Website</strong>
-                <span>Admissions, facilities, parent FAQs and visit enquiries.</span>
-              </a>
-              <a href="business.html#demo-gallery">
-                <img src="assets/salon.png" alt="Salon website sample" />
-                <strong>Salon Website</strong>
-                <span>Services, gallery, offers and appointment enquiries.</span>
-              </a>
-              <a href="business.html#demo-gallery">
-                <img src="assets/cafe.png" alt="Cafe website sample" />
-                <strong>Cafe Website</strong>
-                <span>Menu, ambience, WhatsApp orders and table bookings.</span>
-              </a>
-              <a href="business.html#demo-gallery">
-                <img src="assets/clinic.png" alt="Clinic website sample" />
-                <strong>Clinic Website</strong>
-                <span>Doctor profile, timings, services and appointment flow.</span>
-              </a>
-            </div>
-          </section>
-          <section class="choice-pricing-section home-choice-pricing" aria-label="Choose only required website services">
-            <div class="choice-pricing-copy">
-              <p class="eyebrow">No forced packages</p>
-              <h2>Why pay for features your website does not need?</h2>
-              <p>
-                Start with a clear base website, then choose only the tools that help your business: booking, FAQ, gallery, SEO, AI Bot, PDF, Google Sheet or lead generation.
-              </p>
-            </div>
-            <div class="choice-pricing-grid">
-              <article>
-                <span>01</span>
-                <strong>Base first</strong>
-                <p>Clean one-page website with business details, location and WhatsApp enquiry.</p>
-              </article>
-              <article>
-                <span>02</span>
-                <strong>Choose services</strong>
-                <p>Add only the features your business actually needs right now.</p>
-              </article>
-              <article>
-                <span>03</span>
-                <strong>Edit anytime</strong>
-                <p>Remove add-ons from the estimate before sending it to us for review.</p>
-              </article>
-            </div>
-          </section>
-          <section class="website-price-builder-section home-price-builder" id="website-price-builder">
-            <div class="section-heading">
-              <div>
-                <p class="eyebrow">Build your website quote</p>
-                <h2>Pick what you need. Watch your estimate build live.</h2>
-              </div>
-              <p>Start with the base website, add only the features your business needs, and send the final estimate to us for review.</p>
-            </div>
-
-            <div class="quote-preset-strip" aria-label="Quick website quote presets">
-              <div>
-                <span>Try a starting direction</span>
-                <strong>Select a preset, then remove anything you do not want.</strong>
-              </div>
-              <button type="button" data-quote-preset="starter">Starter only</button>
-              <button type="button" data-quote-preset="leads">Lead focused</button>
-              <button type="button" data-quote-preset="automation">Automation ready</button>
-            </div>
-
-            <div class="website-price-builder" data-website-pricing>
-              <aside class="price-base-card">
-                <span>Base website</span>
-                <strong>₹7,999</strong>
-                <p>Included by default for any business:</p>
-                <ul>
-                  <li>1-page responsive website</li>
-                  <li>Basic business information</li>
-                  <li>Google Map / location section</li>
-                  <li>Basic images about business</li>
-                  <li>Lead form details sent to WhatsApp</li>
-                </ul>
-              </aside>
-
-              <div class="price-builder-panel">
-                <div class="price-builder-steps" aria-label="Website quote builder steps">
-                  <article><span>1</span><strong>Start base</strong><p>₹7,999 one-page website is already selected.</p></article>
-                  <article><span>2</span><strong>Add pages</strong><p>Increase pages only when your business needs more sections.</p></article>
-                  <article><span>3</span><strong>Tap add-ons</strong><p>Every selected feature appears in the live bill.</p></article>
-                </div>
-
-                <div class="extra-page-control">
-                  <div>
-                    <span>Need more pages?</span>
-                    <strong>Extra page: ₹1,000 each</strong>
-                  </div>
-                  <div class="page-stepper" aria-label="Extra pages">
-                    <button type="button" data-page-step="-1">-</button>
-                    <input data-website-extra-pages type="number" min="0" max="20" value="0" aria-label="Number of extra pages" />
-                    <button type="button" data-page-step="1">+</button>
-                  </div>
-                </div>
-
-                <div class="feature-category-stack">
-                  <details open>
-                    <summary><span>Design & content</span><strong>Pages, gallery, FAQ and content blocks</strong></summary>
-                    <div class="feature-price-grid">
-                      <label><input type="checkbox" data-website-feature data-feature-name="Advanced image gallery / portfolio" data-feature-price="1500" /> <span><strong>Advanced gallery</strong><em>₹1,500</em></span></label>
-                      <label><input type="checkbox" data-website-feature data-feature-name="Services / pricing menu section" data-feature-price="1500" /> <span><strong>Services or menu section</strong><em>₹1,500</em></span></label>
-                      <label><input type="checkbox" data-website-feature data-feature-name="FAQ section / FAQ page" data-feature-price="1000" /> <span><strong>FAQ section / page</strong><em>₹1,000</em></span></label>
-                      <label><input type="checkbox" data-website-feature data-feature-name="Blog or updates section" data-feature-price="3000" /> <span><strong>Blog / updates</strong><em>₹3,000</em></span></label>
-                    </div>
-                  </details>
-                  <details>
-                    <summary><span>Leads & growth</span><strong>Booking, SEO, payments and tracking</strong></summary>
-                    <div class="feature-price-grid">
-                      <label><input type="checkbox" data-website-feature data-feature-name="Appointment or booking flow" data-feature-price="3000" /> <span><strong>Booking flow</strong><em>₹3,000</em></span></label>
-                      <label><input type="checkbox" data-website-feature data-feature-name="Payment collection setup" data-feature-price="4000" /> <span><strong>Payment setup</strong><em>₹4,000</em></span></label>
-                      <label><input type="checkbox" data-website-feature data-feature-name="Local SEO starter setup" data-feature-price="2500" /> <span><strong>Local SEO starter</strong><em>₹2,500</em></span></label>
-                      <label><input type="checkbox" data-website-feature data-feature-name="Analytics and enquiry tracking" data-feature-price="1500" /> <span><strong>Analytics tracking</strong><em>₹1,500</em></span></label>
-                      <label><input type="checkbox" data-website-feature data-feature-name="Lead generation tools" data-feature-price="5000" /> <span><strong>Lead generation tools</strong><em>₹5,000 onwards</em></span></label>
-                      <label><input type="checkbox" data-website-feature data-feature-name="Social media launch kit" data-feature-price="2500" /> <span><strong>Social launch kit</strong><em>₹2,500</em></span></label>
-                    </div>
-                  </details>
-                  <details>
-                    <summary><span>Automation & documents</span><strong>AI, sheets, certificates and PDFs</strong></summary>
-                    <div class="feature-price-grid">
-                      <label><input type="checkbox" data-website-feature data-feature-name="AI Bot / AI FAQ chatbot" data-feature-price="5000" /> <span><strong>AI Bot</strong><em>₹5,000</em></span></label>
-                      <label><input type="checkbox" data-website-feature data-feature-name="Google Sheet integration" data-feature-price="2000" /> <span><strong>Google Sheet integration</strong><em>₹2,000</em></span></label>
-                      <label><input type="checkbox" data-website-feature data-feature-name="Certificate generation" data-feature-price="1000" /> <span><strong>Certificate generation</strong><em>₹1,000</em></span></label>
-                      <label><input type="checkbox" data-website-feature data-feature-name="PDF generation" data-feature-price="3000" /> <span><strong>PDF generation</strong><em>₹3,000</em></span></label>
-                      <label><input type="checkbox" data-website-feature data-feature-name="WhatsApp automation / lead labels" data-feature-price="4000" /> <span><strong>WhatsApp automation</strong><em>₹4,000</em></span></label>
-                    </div>
-                  </details>
-                </div>
-              </div>
-
-              <aside class="price-summary-card">
-                <span>Live estimate</span>
-                <strong data-website-total>₹7,999</strong>
-                <p data-website-summary>Base 1-page website selected. Add features to update the estimate.</p>
-                <div class="price-breakdown" data-website-breakdown></div>
-                <div class="best-deal-callout">
-                  <strong>Want the best deal?</strong>
-                  <span>Send this estimate on WhatsApp. We will review your selected features and suggest the smartest cost-saving option.</span>
-                </div>
-                <a class="primary-button" data-website-pricing-whatsapp href="https://wa.me/918826758881" target="_blank" rel="noopener noreferrer">WhatsApp for Best Deal</a>
-                <small>Final quote is confirmed after content, design style and exact scope are reviewed.</small>
-              </aside>
-            </div>
-          </section>
-          <div class="business-sample-studio">
-            <aside class="sample-controls">
-              <label>
-                Business category
-                <select data-sample-category>
-                  <option>School</option>
-                  <option>College</option>
-                  <option>Coaching institute</option>
-                  <option>Salon</option>
-                  <option>Retail store</option>
-                  <option>Clinic</option>
-                  <option>Cafe / restaurant</option>
-                  <option>Chai stall / food stall</option>
-                  <option>Tutor</option>
-                  <option>Real estate</option>
-                  <option>NGO / trust</option>
-                  <option>Creator / personal brand</option>
-                  <option>Startup</option>
-                  <option>Local service business</option>
-                </select>
-              </label>
-              <label>
-                Budget level
-                <select data-sample-budget>
-                  <option>Starter Website</option>
-                  <option>Growth Website</option>
-                  <option>Premium System</option>
-                </select>
-              </label>
-              <button class="primary-button" type="button" data-sample-whatsapp>Request This Sample</button>
-            </aside>
-            <article class="sample-preview" data-sample-preview aria-live="polite"></article>
-          </div>
-        </div>
-        <div class="home-tool-grid">
-          <a class="home-tool-card is-featured" href="#website-price-builder">
-            <span>Price builder</span>
-            <strong>Website Cost Calculator</strong>
-            <p>Select website features and see the estimated cost update instantly.</p>
-            <em>Build my estimate</em>
-          </a>
-          <a class="home-tool-card" href="business.html#website-health">
-            <span>Website scan</span>
-            <strong>Website Readiness Checker</strong>
-            <p>Get mobile, speed, SEO, security, Google Business and missing feature insights.</p>
-            <em>Run website scan</em>
-          </a>
-          <a class="home-tool-card" href="business.html#business-samples">
-            <span>For businesses</span>
-            <strong>Website Sample Studio</strong>
-            <p>Select your business type and budget to preview a website direction.</p>
-            <em>Preview samples</em>
-          </a>
-          <a class="home-tool-card" href="business.html#demo-gallery">
-            <span>Demo gallery</span>
-            <strong>Industry Website Demos</strong>
-            <p>Explore sample directions for salon, cafe, clinic, retail, real estate and more.</p>
-            <em>View business demos</em>
-          </a>
-          <a class="home-tool-card" href="#booking">
-            <span>Consultation</span>
-            <strong>Discuss My Business Growth</strong>
-            <p>Book a practical discussion for website, branding, social media or automation.</p>
-            <em>Book business slot</em>
-          </a>
-        </div>
-      </section>
-
-      <section class="section interactive-lab-section" id="interactive-lab" data-profile-section="none">
-        <div class="interactive-lab-copy">
-          <p class="eyebrow">Interactive FutureHub</p>
-          <h2>Pick a visitor type and see what we can build together.</h2>
-          <p>
-            Tap a category to preview the learning path, project outcome and support style. It gives visitors a quick feel of FutureHub before they book a slot.
-          </p>
-          <div class="mini-metrics" aria-label="FutureHub experience highlights">
-            <span><strong data-count-target="5">5</strong> learning stages</span>
-            <span><strong data-count-target="20">20+</strong> project ideas</span>
-            <span><strong data-count-target="4">4</strong> support modes</span>
-          </div>
-        </div>
-        <div class="path-playground">
-          <div class="path-buttons" role="tablist" aria-label="FutureHub path selector">
-            <button class="is-active" type="button" data-path="young">Grade 3-5</button>
-            <button type="button" data-path="teen">Grade 6-12</button>
-            <button type="button" data-path="college">College</button>
-            <button type="button" data-path="business">Business</button>
-          </div>
-          <article class="path-result" data-path-result>
-            <span>Recommended path</span>
-            <h3>Scratch, Scratch Jr & App Starter</h3>
-            <p>Start with block-based coding, creative logic, simple app thinking and a fun demo project.</p>
-            <div class="path-tags"><strong>Scratch Jr</strong><strong>Scratch</strong><strong>App building</strong></div>
-          </article>
-        </div>
-      </section>
-
-      <section class="section course-builder-section" id="course-builder" data-profile-section="student parent">
-        <div class="course-builder-copy">
-          <p class="eyebrow">Build your own coding course</p>
-          <h2>No fixed syllabus. Design a learning path around your child.</h2>
-          <p>
-            Most coding companies sell predefined curriculum. FutureHub lets parents and students combine skills, pace, class mode and outcomes to create a course plan that feels personal.
-          </p>
-          <div class="builder-promise">
-            <span>Choose skills</span>
-            <span>Set pace</span>
-            <span>Pick class style</span>
-            <span>Get instant plan</span>
-          </div>
-        </div>
-        <div class="course-builder" aria-label="Build your own coding course">
-          <div class="smart-course-mapper course-search-hero">
-            <div>
-              <span>AI course finder</span>
-              <h3>Tell us what you want to learn.</h3>
-              <p>Write one line about grade, interest, or goal. We will suggest a safe starting path.</p>
-            </div>
-            <label>
-              Course requirement
-              <textarea data-course-query rows="5" data-typing-placeholder="My son is in Grade 6 and wants to learn Python, AI and app building.|My daughter is in Class 4 and likes games, Scratch and animation.|I am a college student and need live project plus internship support." placeholder="Start typing your course requirement..."></textarea>
-            </label>
-            <div class="course-prompt-chips" aria-label="Quick course examples">
-              <button type="button" data-course-prompt="My child is in Grade 3 and likes games, Scratch and animation.">Grade 3-5</button>
-              <button type="button" data-course-prompt="My child is in Grade 7 and wants Python, AI and app building.">Grade 6-8</button>
-              <button type="button" data-course-prompt="My child is in Grade 10 and wants AI, websites and portfolio projects.">Grade 9-12</button>
-              <button type="button" data-course-prompt="I am a college student and need live project, GitHub and internship support.">College</button>
-            </div>
-            <div class="mapper-actions">
-              <button class="primary-button" type="button" data-course-match>Find Best Course</button>
-              <button class="secondary-button" type="button" data-course-clear>Clear</button>
-            </div>
-            <div class="course-match-result" data-course-result hidden></div>
-          </div>
-          <details class="course-manual-tune">
-            <summary>Fine-tune manually</summary>
-            <div class="builder-controls">
-              <label>
-                Who is this for?
-                <select data-builder-stage>
-                  <option>Grade 3-5 student</option>
-                  <option>Grade 6-8 student</option>
-                  <option>Grade 9-12 student</option>
-                  <option>College student</option>
-                </select>
-              </label>
-              <label>
-                Main goal
-                <select data-builder-goal>
-                  <option>Build confidence with technology</option>
-                  <option>Reduce random screen time</option>
-                  <option>Build school-ready projects</option>
-                  <option>Create portfolio projects</option>
-                  <option>Prepare for internship / interviews</option>
-                </select>
-              </label>
-              <label>
-                Class style
-                <select data-builder-mode>
-                  <option>1:1 live class</option>
-                  <option>Small group class</option>
-                  <option>Weekend bootcamp</option>
-                  <option>Project mentorship</option>
-                </select>
-              </label>
-              <label>
-                Learning pace
-                <select data-builder-pace>
-                  <option>Light pace</option>
-                  <option>Balanced pace</option>
-                  <option>Intensive pace</option>
-                </select>
-              </label>
-            </div>
-            <div class="skill-picker" aria-label="Skill selector">
-              <button class="is-selected" type="button" data-builder-skill="Scratch Jr">Scratch Jr</button>
-              <button class="is-selected" type="button" data-builder-skill="Scratch">Scratch</button>
-              <button type="button" data-builder-skill="Block-based coding">Block-based coding</button>
-              <button type="button" data-builder-skill="App building basics">App building basics</button>
-              <button type="button" data-builder-skill="Logic games">Logic games</button>
-              <button type="button" data-builder-skill="Creative coding">Creative coding</button>
-            </div>
-          </details>
-          <article class="builder-preview" data-builder-preview>
-            <span>Your custom course plan</span>
-            <h3>Scratch + Scratch Jr Confidence Track</h3>
-            <p>A friendly starter course for Grade 3-5 student focused on Build confidence with technology.</p>
-            <div class="builder-plan-grid">
-              <strong>6-8 weeks</strong>
-              <strong>1:1 live class</strong>
-              <strong>Light pace</strong>
-            </div>
-            <ul>
-              <li>Logic games and visual coding activities</li>
-              <li>Mini project with demo presentation</li>
-              <li>Parent-friendly progress discussion</li>
-            </ul>
-          </article>
-          <button class="primary-button builder-whatsapp" type="button" data-builder-whatsapp>Send My Custom Plan on WhatsApp</button>
-        </div>
-      </section>
-
-      <section class="section batch-pricing-section" id="batch-pricing" data-profile-section="student parent">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Batch-wise pricing</p>
-            <h2>Simple batches. Clear learning rhythm.</h2>
-          </div>
-          <p>Every batch is planned around live guidance, hands-on tasks, and a short challenge activity so students stay active throughout the session.</p>
-        </div>
-        <div class="pricing-card-grid">
-          <article class="learning-price-card is-premium">
-            <span>Personal mentorship</span>
-            <h3>1:1 Classes</h3>
-            <strong>₹4,000</strong>
-            <p>For 8 live sessions with focused attention, personalized pace and direct mentor support.</p>
-            <a class="primary-button" href="#booking">Book 1:1 Slot</a>
-          </article>
-          <article class="learning-price-card">
-            <span>Small group learning</span>
-            <h3>Group Classes</h3>
-            <strong>₹2,000-₹3,000</strong>
-            <p>For 8 live sessions in a guided group batch with peer learning and project practice.</p>
-            <a class="secondary-button" href="#booking">Book Group Slot</a>
-          </article>
-        </div>
-        <div class="batch-structure-grid" aria-label="Program structure">
-          <article><span>8</span><strong>sessions per batch</strong><p>A compact batch format with visible learning outcomes.</p></article>
-          <article><span>2</span><strong>sessions per week</strong><p>A steady rhythm that works well with school and college routines.</p></article>
-          <article><span>45</span><strong>minutes per session</strong><p>Focused learning time with live explanation and hands-on work.</p></article>
-          <article><span>15</span><strong>minute challenge included</strong><p>Every learning cycle includes a short challenge, activity or mini task.</p></article>
-        </div>
-      </section>
-
-      <section class="section finder-section" id="finder" data-profile-section="none">
-        <div class="finder-copy">
-          <p class="eyebrow">Smart solution finder</p>
-          <h2>Answer a few questions. We suggest the right path.</h2>
-          <p>
-            FutureHub works like a guided consultant. Select who you are, your stage and your goal. If the answer is not clear, the planner will recommend a counselling call.
-          </p>
-        </div>
-        <form class="solution-finder">
-          <div class="finder-tabs" role="tablist" aria-label="Audience selector">
-            <button class="is-active" type="button" data-audience="student">Student</button>
-            <button type="button" data-audience="parent">Parent</button>
-            <button type="button" data-audience="business">Business</button>
-            <button type="button" data-audience="institution">School / College</button>
-          </div>
-          <div class="finder-fields">
-            <label>
-              Stage / category
-              <select name="stage" data-finder-stage>
-                <option>Grade 3-5</option>
-                <option>Grade 6-8</option>
-                <option>Grade 9-12</option>
-                <option>College student</option>
-              </select>
-            </label>
-            <label>
-              Main goal
-              <select name="goal" data-finder-goal>
-                <option>Block coding / Scratch</option>
-                <option>App building</option>
-                <option>Python</option>
-                <option>JavaScript</option>
-                <option>C / C++ / Java</option>
-                <option>Learn AI</option>
-                <option>Build websites</option>
-                <option>Live project training</option>
-                <option>Internship / career support</option>
-              </select>
-            </label>
-            <label>
-              Preferred support
-              <select name="support">
-                <option>1:1 guidance</option>
-                <option>Small group program</option>
-                <option>Project-based service</option>
-                <option>Not sure, arrange call</option>
-              </select>
-            </label>
-          </div>
-          <button class="primary-button" type="submit">Suggest My Path</button>
-          <article class="finder-result" data-finder-result hidden></article>
-        </form>
-      </section>
-
-      <section class="section project-showcase-section" data-profile-section="none">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Tap a project</p>
-            <h2>See the kind of outcomes students can create.</h2>
-          </div>
-          <p>These are example outcomes. We adjust the difficulty based on age, confidence and current skill level.</p>
-        </div>
-        <div class="project-showcase">
-          <div class="project-card-grid">
-            <button class="project-card is-active" type="button" data-project="scratch"><strong>Game Builder</strong><span>Scratch / Scratch Jr</span></button>
-            <button class="project-card" type="button" data-project="app"><strong>Mini App</strong><span>App building</span></button>
-            <button class="project-card" type="button" data-project="web"><strong>Portfolio Website</strong><span>HTML, CSS, JavaScript</span></button>
-            <button class="project-card" type="button" data-project="ai"><strong>AI Chatbot</strong><span>Python + prompt engineering</span></button>
-          </div>
-          <article class="project-preview" data-project-preview>
-            <span>Project preview</span>
-            <h3>Game Builder</h3>
-            <p>Students design a simple game, add rules, scoring, characters and a short demo presentation.</p>
-            <div class="preview-bars" aria-hidden="true"><i></i><i></i><i></i></div>
-          </article>
-        </div>
-      </section>
-
-      <section class="section flagship-section" data-profile-section="none">
-        <div class="flagship-copy">
-          <p class="eyebrow">Flagship live program</p>
-          <h2>AI Champions Program</h2>
-          <p>
-            A 5-session live program for teens where students learn Python, prompt engineering, memory chatbots, real-world data connections, AI agents and present their own app on Demo Day.
-          </p>
-          <div class="program-meta">
-            <span>5 live sessions</span>
-            <span>2 hours each</span>
-            <span>Ages 12-16</span>
-            <span>4 working AI projects</span>
-          </div>
-        </div>
-        <div class="session-roadmap">
-          <article><span>01</span><strong>First AI Program</strong><p>Students write their first AI program in a few lines of code.</p></article>
-          <article><span>02</span><strong>Personality Chatbot</strong><p>They create a chatbot with a unique voice and role.</p></article>
-          <article><span>03</span><strong>Memory Bot</strong><p>Their AI remembers context and continues better conversations.</p></article>
-          <article><span>04</span><strong>AI Agent</strong><p>They connect tools like weather, news and knowledge sources.</p></article>
-          <article><span>05</span><strong>Demo Day</strong><p>They build, polish and present a live AI app.</p></article>
-        </div>
-      </section>
-
-      <section class="section ambassador-section" id="campus-ambassador" data-profile-section="none">
-        <div class="ambassador-copy">
-          <p class="eyebrow">Campus Ambassador Program</p>
-          <h2>Apply with a 15-minute FutureHub challenge.</h2>
-          <p>
-            This quick assessment helps us understand initiative, communication, digital confidence and leadership mindset before selecting campus ambassadors.
-          </p>
-          <div class="ambassador-highlights">
-            <span>15-minute challenge</span>
-            <span>Leadership score</span>
-            <span>Communication check</span>
-            <span>Selection guidance</span>
-          </div>
-        </div>
-        <form class="ambassador-challenge" data-ambassador-form>
-          <div class="ambassador-form-grid">
-            <label>Applicant name<input name="applicantName" type="text" placeholder="Your full name" required /></label>
-            <label>College / school<input name="campusName" type="text" placeholder="Institution name" required /></label>
-            <label>Mobile / WhatsApp<input name="mobile" type="tel" placeholder="+91" required /></label>
-            <label>Current stage<select name="stage" required><option>Grade 9-12 student</option><option>College student</option><option>Passed out / job seeker</option></select></label>
-            <label>Why do you want to become an ambassador?<select name="motivation" required><option>I want to build leadership experience</option><option>I want to help students learn future skills</option><option>I want internship and project exposure</option><option>I want to grow my personal brand</option></select></label>
-            <label>If your friend is confused about coding, you will<select name="communication" required><option>Listen first, then suggest a simple starting path</option><option>Send them every course link</option><option>Ask them to decide later</option><option>Tell them coding is only for experts</option></select></label>
-            <label>You have 7 days to promote a workshop. Your first action?<select name="initiative" required><option>Create a student list and plan outreach</option><option>Wait for someone to tell me what to do</option><option>Post once and stop</option><option>Only invite close friends</option></select></label>
-            <label>Best ambassador quality<select name="quality" required><option>Trustworthy communication</option><option>Only social media followers</option><option>Speaking loudly</option><option>Working without updates</option></select></label>
-            <label>Digital confidence<select name="digital" required><option>I can use Canva, forms, WhatsApp and basic social tools</option><option>I use WhatsApp only</option><option>I avoid digital tools</option><option>I need support but can learn fast</option></select></label>
-            <label>Challenge task<select name="task" required><option>Explain FutureHub to 5 students and collect genuine feedback</option><option>Forward one message randomly</option><option>Ask someone else to promote</option><option>Only share if someone pays first</option></select></label>
-          </div>
-          <button class="primary-button" type="submit">Generate Ambassador Assessment</button>
-          <article class="ambassador-result" data-ambassador-result hidden></article>
-        </form>
-      </section>
-
-      <section class="section faq-preview-section" data-profile-section="none">
-        <div class="faq-preview-copy">
-          <p class="eyebrow">Questions before you decide</p>
-          <h2>Read the FutureHub FAQ or ask us directly.</h2>
-          <p>
-            Parents, students, college learners and business owners can understand how our decision-first approach works before choosing any course, internship, website or digital service.
-          </p>
-          <a class="primary-button" href="faq.html">Open FAQ Page</a>
-        </div>
-        <div class="faq-preview-grid">
-          <article>
-            <span>01</span>
-            <strong>Parents</strong>
-            <p>Course fit, age readiness, batch format, updates and child confidence.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <strong>Students</strong>
-            <p>Coding paths, AI projects, certificates, portfolio and future roles.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <strong>College</strong>
-            <p>Live projects, internships, interviews, GitHub and startup guidance.</p>
-          </article>
-          <article>
-            <span>04</span>
-            <strong>Business</strong>
-            <p>Websites, branding, WhatsApp leads, social media and AI automation.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section booking-section" id="booking" data-profile-section="all">
+      <section class="section booking-section" id="booking">
         <div class="booking-copy">
           <p class="eyebrow">Book your slot</p>
           <h2>Start a counselling or service discussion on WhatsApp.</h2>
