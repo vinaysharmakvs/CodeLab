@@ -1665,10 +1665,11 @@ code {
 }
 
 .recommended-path-actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, max-content));
   gap: 9px;
   justify-content: flex-start;
+  justify-items: stretch;
   min-width: 0;
   max-width: 100%;
 }
@@ -1676,7 +1677,9 @@ code {
 .recommended-path-actions .primary-button,
 .recommended-path-actions .secondary-button {
   min-height: 46px;
+  min-width: 0;
   max-width: 100%;
+  padding-inline: 14px;
   border-radius: 16px;
   box-shadow: 0 12px 28px rgba(54, 124, 255, 0.14);
   white-space: normal;
@@ -7443,15 +7446,21 @@ h1 {
   }
 
   .recommended-path-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     justify-content: stretch;
   }
 
   .course-match-chips strong,
-  .course-alternatives button,
+  .course-alternatives button {
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+  }
+
   .recommended-path-actions .primary-button,
   .recommended-path-actions .secondary-button {
     justify-content: center;
-    width: 100%;
+    width: auto;
     text-align: center;
   }
 
@@ -8982,6 +8991,50 @@ body:not(.profile-filter-ready) [data-profile-section] {
   font-size: 0.8rem;
 }
 
+.ai-journey-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(19, 34, 56, 0.08);
+  background:
+    radial-gradient(circle at 96% 10%, rgba(255, 212, 95, 0.22), transparent 26%),
+    linear-gradient(135deg, #ffffff, #f6fbff);
+}
+
+.ai-journey-switch span {
+  margin-right: 2px;
+  color: #17469f;
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ai-journey-switch button {
+  min-height: 34px;
+  padding: 7px 11px;
+  color: var(--ink);
+  border: 1px solid rgba(54, 124, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 8px 18px rgba(19, 34, 56, 0.06);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 950;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.ai-journey-switch button:hover,
+.ai-journey-switch button:focus-visible,
+.ai-journey-switch button.is-active {
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  box-shadow: 0 12px 26px rgba(54, 124, 255, 0.2);
+  transform: translateY(-1px);
+}
+
 .ai-chat-messages {
   display: grid;
   gap: 10px;
@@ -9343,10 +9396,11 @@ body:not(.profile-filter-ready) [data-profile-section] {
 }
 
 .ai-result-next-actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, max-content));
   gap: 10px;
   justify-content: flex-start;
+  justify-items: stretch;
   min-width: 0;
   max-width: 100%;
 }
@@ -9354,7 +9408,9 @@ body:not(.profile-filter-ready) [data-profile-section] {
 .ai-result-next-actions .primary-button,
 .ai-result-next-actions .secondary-button {
   min-height: 46px;
+  min-width: 0;
   max-width: 100%;
+  padding-inline: 14px;
   border-radius: 16px;
   box-shadow: 0 12px 28px rgba(54, 124, 255, 0.14);
   white-space: normal;
@@ -9403,11 +9459,34 @@ body:not(.profile-filter-ready) [data-profile-section] {
     min-height: 320px;
   }
 
+  .ai-journey-switch {
+    display: grid;
+    grid-template-columns: 1fr repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    padding: 9px;
+  }
+
+  .ai-journey-switch span {
+    align-self: center;
+    margin: 0;
+    font-size: 0.66rem;
+  }
+
+  .ai-journey-switch button {
+    min-height: 36px;
+    padding: 7px 8px;
+    font-size: 0.76rem;
+  }
+
   .ai-chat-options,
   .ai-result-next,
   .ai-report-actions {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .ai-result-next {
+    grid-template-columns: 1fr;
   }
 
   .ai-chat-options.is-profile-grid {
@@ -9427,15 +9506,38 @@ body:not(.profile-filter-ready) [data-profile-section] {
   }
 
   .ai-chat-options button,
-  .ai-result-next-actions,
-  .ai-result-next-actions .primary-button,
-  .ai-result-next-actions .secondary-button,
   .ai-report-actions .primary-button,
   .ai-report-actions .secondary-button {
     width: 100%;
   }
 
   .ai-result-next-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     justify-content: stretch;
+  }
+
+  .ai-result-next-actions .primary-button,
+  .ai-result-next-actions .secondary-button {
+    justify-content: center;
+    width: auto;
+  }
+}
+
+@media (max-width: 430px) {
+  .ai-journey-switch,
+  .recommended-path-actions,
+  .ai-result-next-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-journey-switch span {
+    text-align: center;
+  }
+
+  .recommended-path-actions .primary-button,
+  .recommended-path-actions .secondary-button,
+  .ai-result-next-actions .primary-button,
+  .ai-result-next-actions .secondary-button {
+    width: 100%;
   }
 }
