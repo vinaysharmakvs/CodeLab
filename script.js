@@ -69,6 +69,22 @@ const futureHubSheetEndpoints = {
   ...(window.futureHubSheetEndpoints || {}),
 };
 
+function recommendedPathBlock({ title, copy, whatsappHref, detailHref, detailText }) {
+  return `
+    <div class="recommended-path-card">
+      <div>
+        <span>Recommended Path</span>
+        <strong>${title || "Your path is ready. Choose the next step that feels right."}</strong>
+        <p>${copy || "For personal guidance, move to WhatsApp. If you want to understand the options first, explore the detailed page."}</p>
+      </div>
+      <div class="recommended-path-actions">
+        <a class="primary-button" href="${whatsappHref}" target="_blank" rel="noopener noreferrer">Move to WhatsApp</a>
+        <a class="secondary-button" href="${detailHref || "index.html"}">${detailText || "Explore Programs"}</a>
+      </div>
+    </div>
+  `;
+}
+
 function formDataToObject(data) {
   return [...data.entries()].reduce((payload, [key, value]) => {
     payload[key] = value;
@@ -111,41 +127,39 @@ function leadTypeForBooking(level) {
 }
 
 const futureHubBotQuickQuestions = [
-  "Which course is right for my child?",
-  "I am a college student. What should I learn?",
-  "Can you build my business website?",
-  "How does the website checker work?",
-  "Do you provide internships?",
-  "Can schools or colleges invite FutureHub?",
-  "What are the batch prices?",
-  "How can I apply as campus ambassador?",
+  "Start CodeLab AI",
+  "I am a parent",
+  "I am a student",
+  "I am a business owner",
+  "Show detailed pages",
+  "Talk on WhatsApp",
 ];
 
 const futureHubBotAnswers = [
   {
     keywords: ["child", "parent", "kid", "grade", "school", "course", "coding", "scratch", "python", "app"],
     answer:
-      "For students and parents, FutureHub starts by understanding grade, confidence, interest and goal. Grade 3-5 can begin with Scratch, Scratch Jr, logic and app basics. Grade 6-8 can move into Python, JavaScript and apps. Grade 9-12 can explore AI, web apps and programming languages. Use Build My Coding Course on the homepage for a custom path.",
+      "For parents, the cleanest start is CodeLab AI. It asks a few calm questions and suggests whether your child should begin with Scratch, Python, AI, web apps, projects or guidance. You can also open the Parents page for the detailed course finder.",
   },
   {
-    keywords: ["ai champions", "teen", "chatbot", "agent", "prompt", "gemini", "python"],
+    keywords: ["start codelab", "codelab", "ai guide", "ai advisor", "where should i start", "not sure", "confused"],
     answer:
-      "The AI Champions Program is a live teen program where students learn Python basics, prompt engineering, chatbot personality, memory ideas, real-world data connections, AI agents and present a working AI app on Demo Day.",
+      "Start with CodeLab AI. It is the fastest way to choose between Student, Parent and Business paths, then it gives a personalized recommendation with two clear next steps: move to WhatsApp or explore the detailed page.",
   },
   {
-    keywords: ["college", "internship", "project", "final year", "fyp", "resume", "interview", "career", "role"],
+    keywords: ["student", "college", "internship", "project", "final year", "fyp", "resume", "interview", "career", "role", "python", "ai champions", "teen", "chatbot", "agent", "prompt", "gemini"],
     answer:
-      "For college students, FutureHub can help with live project training, final year project direction, GitHub/portfolio building, resume improvement, interview preparation and entrepreneurship support. Try the Future Role Finder on the Students page to discover roles like AI App Developer, Web Developer, Data Analyst, UI/UX Designer or Business Analyst.",
+      "For students, CodeLab AI can suggest the right skill mission. The detailed Students page covers coding, AI, Python, JavaScript, C/C++/Java, live projects, internships, Future Role Finder and interview support.",
   },
   {
     keywords: ["business", "website", "site", "salon", "clinic", "store", "restaurant", "cafe", "real estate", "ngo", "startup"],
     answer:
-      "For business owners, FutureHub can create websites, landing pages, branding, WhatsApp enquiry flows, Google-ready content, social media support, booking systems, dashboards and automation plans. The Business page has website demos for salons, clinics, schools, cafes, retail stores, real estate, NGOs, startups and local services.",
+      "For business owners, CodeLab AI can map your need first. The detailed Business page has the smart website mapper, website quote builder, demos, website readiness checker, WhatsApp lead ideas, SEO and automation options.",
   },
   {
     keywords: ["website checker", "readiness", "seo", "meta", "audit", "health", "score", "scan"],
     answer:
-      "The Website Readiness Checker is our own FutureHub checker. It reviews live website HTML for meta tags, structured data, headings, image alt text, mobile basics, contact signals, maps, forms and SEO recommendations. It works best after deployment because the Vercel API fetches the public website securely.",
+      "The Website Readiness Checker is on the Business page. It reviews a live website for SEO basics, headings, images, mobile signals, trust signals and missing growth features.",
   },
   {
     keywords: ["social", "instagram", "facebook", "marketing", "lead", "whatsapp", "ads", "growth"],
@@ -155,17 +169,17 @@ const futureHubBotAnswers = [
   {
     keywords: ["school", "college", "institution", "workshop", "camp", "hackathon", "club"],
     answer:
-      "For schools and colleges, FutureHub can run AI clubs, coding workshops, hackathons, summer camps, project sprints, teacher/team upskilling and digital admission systems with FAQ, forms, chatbot ideas and lead tracking.",
+      "For schools and colleges, open the Institutions page. FutureHub can support AI clubs, coding workshops, hackathons, camps, project sprints, teacher/team upskilling and digital admission systems.",
   },
   {
     keywords: ["price", "pricing", "cost", "budget", "package", "fee"],
     answer:
-      "For learning batches, 1:1 classes are ₹4,000 for 8 sessions. Group classes are ₹2,000-₹3,000 for 8 sessions. Each batch has 2 sessions per week, 45 minutes per session and a 15-minute challenge/activity experience. Website projects vary by starter website, growth website or premium system.",
+      "For learning batches, 1:1 classes are ₹4,000 for 8 sessions. Group classes are ₹2,000-₹3,000 for 8 sessions. Website pricing is handled on the Business page with a feature-based quote builder, so you pay only for selected features.",
   },
   {
     keywords: ["campus", "ambassador", "apply", "applicant", "challenge"],
     answer:
-      "The Campus Ambassador Program has a 15-minute assessment on the homepage. It checks initiative, communication, leadership mindset, digital confidence and whether the applicant can explain FutureHub responsibly to students.",
+      "Campus Ambassador information is part of the student journey. Start with CodeLab AI or open the Students page so we can guide the right next step.",
   },
   {
     keywords: ["book", "call", "slot", "counselling", "guidance", "talk", "contact", "whatsapp"],
@@ -256,7 +270,7 @@ function storeProfile(profile) {
 }
 
 function isInternalProfileLink(link) {
-  if (!link || link.hasAttribute("download") || link.dataset.profileSelect) return false;
+  if (!link || link.hasAttribute("download") || link.dataset.profileSelect || link.dataset.profileFixed) return false;
   const rawHref = link.getAttribute("href") || "";
   if (!rawHref || rawHref.startsWith("#")) return false;
   if (/^(tel|mailto|sms|whatsapp):/i.test(rawHref)) return false;
@@ -1080,6 +1094,7 @@ function renderCourseMapperResult(match, alternatives, needsMoreDetail) {
   const ctaText = encodeURIComponent(
     `Hello Kidsverse FutureHub, I used the AI Course Finder. Recommended course: ${match.title}. Learner: ${match.stage}. Skills: ${match.skills.join(", ")}. Please help me finalize the best batch.`
   );
+  const courseWhatsapp = `https://wa.me/${whatsappNumber}?text=${ctaText}`;
 
   courseMatchResult.innerHTML = `
     <span>Recommended match</span>
@@ -1091,7 +1106,13 @@ function renderCourseMapperResult(match, alternatives, needsMoreDetail) {
       <strong>${match.skills.join(" + ")}</strong>
     </div>
     ${alternatives.length ? `<div class="course-alternatives"><span>Also suitable</span>${alternatives.map((item) => `<button type="button" data-course-alt="${item.title}">${item.title}</button>`).join("")}</div>` : ""}
-    <a class="primary-button course-match-cta" href="https://wa.me/${whatsappNumber}?text=${ctaText}" target="_blank" rel="noopener noreferrer">Discuss This Course on WhatsApp</a>
+    ${recommendedPathBlock({
+      title: "Your learning path is ready. Choose the next step that feels right.",
+      copy: "For personal guidance, move to WhatsApp. If you want to compare age-wise programs first, explore the student programs page.",
+      whatsappHref: courseWhatsapp,
+      detailHref: "students.html?profile=student",
+      detailText: "Explore Student Programs",
+    })}
   `;
   courseMatchResult.hidden = false;
 }
@@ -1224,8 +1245,10 @@ function renderDecisionResult(form, plan) {
   const ctaText = encodeURIComponent(
     `Hello Kidsverse FutureHub, I created a ${type === "parent" ? "Child Growth Plan" : "Future Skill Mission"}. Recommended path: ${plan.title}. ${plan.subtitle}. Please help me finalize the next step.`
   );
+  const decisionWhatsapp = `https://wa.me/${whatsappNumber}?text=${ctaText}`;
+  const isParent = type === "parent";
   result.innerHTML = `
-    <span>${type === "parent" ? "Child Growth Blueprint" : "Future Skill Mission"}</span>
+    <span>${isParent ? "Child Growth Blueprint" : "Future Skill Mission"}</span>
     <h3>${plan.title}</h3>
     <p>${plan.subtitle}</p>
     <div class="decision-result-grid">
@@ -1233,8 +1256,15 @@ function renderDecisionResult(form, plan) {
       <article><strong>Timeline</strong><p>${plan.timeline}</p></article>
       <article><strong>What they will build</strong><p>${plan.projects.join(" • ")}</p></article>
     </div>
-    <p>${plan.next}</p>
-    <a class="primary-button decision-cta" href="https://wa.me/${whatsappNumber}?text=${ctaText}" target="_blank" rel="noopener noreferrer">Schedule 15-Minute Confirmation Call</a>
+    ${recommendedPathBlock({
+      title: "Your suggested path is ready. Choose the next step that feels comfortable.",
+      copy: isParent
+        ? "Move to WhatsApp if you want us to understand your child personally. Or explore parent guidance first at your own pace."
+        : "Move to WhatsApp if you want a mentor to confirm the path. Or explore student programs before deciding.",
+      whatsappHref: decisionWhatsapp,
+      detailHref: isParent ? "parents.html?profile=parent" : "students.html?profile=student",
+      detailText: isParent ? "Explore Parent Guidance" : "Explore Student Programs",
+    })}
   `;
   result.hidden = false;
 }
@@ -1497,6 +1527,7 @@ function renderBusinessMapperResult(match, alternatives, needsMoreDetail) {
   const ctaText = encodeURIComponent(
     `Hello Kidsverse FutureHub, I used the Smart Website Mapper. Recommended direction: ${match.category} - ${match.budget}. Reason: ${match.reason}. Please connect with me and guide the next step.`
   );
+  const businessWhatsapp = `https://wa.me/${whatsappNumber}?text=${ctaText}`;
 
   businessMatchResult.innerHTML = `
     <span>Business Growth Roadmap</span>
@@ -1508,10 +1539,13 @@ function renderBusinessMapperResult(match, alternatives, needsMoreDetail) {
     </div>
     <p class="business-price-sync-note">Recommended website features are selected in the Price Builder. You can add or remove services before sending the estimate.</p>
     ${alternatives.length ? `<div class="course-alternatives"><span>Also suitable</span>${alternatives.map((item) => `<button type="button" data-business-alt="${item.category}">${item.category}</button>`).join("")}</div>` : ""}
-    <div class="business-match-actions">
-      <a class="secondary-button" href="#website-price-builder">Review Selected Price</a>
-      <a class="primary-button business-match-cta" href="https://wa.me/${whatsappNumber}?text=${ctaText}" target="_blank" rel="noopener noreferrer">Connect With Us on WhatsApp</a>
-    </div>
+    ${recommendedPathBlock({
+      title: "Your business direction is ready. Choose the next step that feels right.",
+      copy: "Move to WhatsApp if you want us to review your requirement personally. Or review the selected website price and features first.",
+      whatsappHref: businessWhatsapp,
+      detailHref: "#website-price-builder",
+      detailText: "Review Selected Price",
+    })}
   `;
   businessMatchResult.hidden = false;
 }
@@ -1916,9 +1950,15 @@ function renderHealthResult(audit, rawUrl) {
       <div><strong>Step 2</strong><p>Improve trust and enquiry flow with WhatsApp, phone, map, form, reviews and visible call-to-action buttons.</p></div>
       <div><strong>Step 3</strong><p>Add structured data, local service pages and social sharing tags so the website becomes easier to understand and share.</p></div>
     </div>
-    <a class="primary-button health-whatsapp" href="https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-      `Hello Kidsverse FutureHub, I checked my website readiness. Website: ${rawUrl}. Source: ${audit.source || "FutureHub Website Readiness Checker"}. Scores - Mobile: ${audit.mobile}, Speed: ${audit.speed}, SEO: ${audit.seo}, Trust: ${audit.security}. Google Business: ${audit.googleStatus}. Please suggest improvements.`
-    )}" target="_blank" rel="noopener noreferrer">Get Improvement Plan on WhatsApp</a>
+    ${recommendedPathBlock({
+      title: "Your website improvement path is ready. Choose the next step that feels right.",
+      copy: "Move to WhatsApp if you want us to review the website personally. Or explore business services and pricing before deciding.",
+      whatsappHref: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+        `Hello Kidsverse FutureHub, I checked my website readiness. Website: ${rawUrl}. Source: ${audit.source || "FutureHub Website Readiness Checker"}. Scores - Mobile: ${audit.mobile}, Speed: ${audit.speed}, SEO: ${audit.seo}, Trust: ${audit.security}. Google Business: ${audit.googleStatus}. Please suggest improvements.`
+      )}`,
+      detailHref: "business.html?profile=business#website-price-builder",
+      detailText: "Explore Business Services",
+    })}
   `;
   healthResult.hidden = false;
 }
@@ -1983,21 +2023,21 @@ function createFutureHubBot() {
   bot.innerHTML = `
     <button class="futurehub-bot-toggle" type="button" aria-expanded="false">
       <span class="futurehub-bot-icon" aria-hidden="true">AI</span>
-      <span class="futurehub-bot-copy"><strong>Navi AI</strong><small>FutureHub guide</small></span>
+      <span class="futurehub-bot-copy"><strong>CodeLab AI</strong><small>Need direction?</small></span>
       <span class="futurehub-bot-ping" aria-hidden="true"></span>
     </button>
-    <section class="futurehub-bot-panel" hidden aria-label="FutureHub Navi AI assistant">
+    <section class="futurehub-bot-panel" hidden aria-label="CodeLab AI assistant">
       <div class="futurehub-bot-head">
-        <div><span>FutureHub Navi AI</span><strong>Ask about courses, projects or business growth</strong></div>
-        <button type="button" aria-label="Close Navi AI">X</button>
+        <div><span>CodeLab AI Guide</span><strong>Start with AI, then explore only what fits.</strong></div>
+        <button type="button" aria-label="Close CodeLab AI">X</button>
       </div>
       <div class="futurehub-bot-messages" aria-live="polite"></div>
       <div class="futurehub-bot-quick" aria-label="Quick FutureHub questions"></div>
       <form class="futurehub-bot-form">
-        <input type="text" placeholder="Ask about courses, websites, internships..." aria-label="Ask FutureHub Navi AI a question" />
+        <input type="text" placeholder="Ask: parent, student or business..." aria-label="Ask CodeLab AI a question" />
         <button type="submit">Ask</button>
       </form>
-      <a class="futurehub-bot-whatsapp" href="https://wa.me/${whatsappNumber}?text=Hello%20Kidsverse%20FutureHub%2C%20I%20need%20guidance%20for%20courses%2C%20projects%20or%20business%20services" target="_blank" rel="noopener noreferrer">Talk to FutureHub on WhatsApp</a>
+      <a class="futurehub-bot-whatsapp" href="https://wa.me/${whatsappNumber}?text=Hello%20Kidsverse%20FutureHub%2C%20I%20want%20help%20choosing%20the%20right%20CodeLab%20AI%20path." target="_blank" rel="noopener noreferrer">Talk to FutureHub on WhatsApp</a>
     </section>
   `;
   document.body.appendChild(bot);
@@ -2023,6 +2063,26 @@ function createFutureHubBot() {
     if (!cleanQuestion) return;
     addMessage(cleanQuestion, "user");
     const query = cleanQuestion.toLowerCase();
+    if (query.includes("start codelab") || query === "i am a parent" || query === "i am a student" || query === "i am a business owner" || query.includes("show detailed")) {
+      if (query.includes("parent")) {
+        addMessage("Best next step: open CodeLab AI in Parent mode for a quick recommendation, or use the Parents page if you already want the detailed course finder.", "bot");
+        return;
+      }
+      if (query.includes("student")) {
+        addMessage("Best next step: open CodeLab AI in Student mode for a skill mission, or use the Students page for coding, AI, projects, internships and Future Role Finder.", "bot");
+        return;
+      }
+      if (query.includes("business")) {
+        addMessage("Best next step: open CodeLab AI in Business mode for a growth roadmap, or use the Business page for website pricing, demos, checker and automation options.", "bot");
+        return;
+      }
+      addMessage("Start with the CodeLab AI button on the homepage. It gives the shortest path: choose Student, Parent or Business, answer a few questions, then move to WhatsApp or the detailed page.", "bot");
+      return;
+    }
+    if (query.includes("whatsapp") || query.includes("talk")) {
+      addMessage("You can use the WhatsApp button below. We will understand your need first and guide only if the service genuinely fits.", "bot");
+      return;
+    }
     const ranked = futureHubBotAnswers
       .map((item) => ({
         item,
@@ -2033,7 +2093,7 @@ function createFutureHubBot() {
     addMessage(
       best?.score
         ? best.item.answer
-        : "I can help with student courses, parent guidance, college internships, Future Role Finder, AI Champions, business websites, website readiness checks, social media, workshops and booking a slot. For a personal discussion, use WhatsApp.",
+        : "The cleanest path is to start with CodeLab AI. It will ask whether you are a student, parent or business owner, then create a simple roadmap. You can also use the Explore links on the homepage for detailed pages.",
       "bot"
     );
   }
@@ -2045,7 +2105,7 @@ function createFutureHubBot() {
     if (open) input.focus({ preventScroll: true });
   }
 
-  addMessage("Hi, I am Navi AI. I can help you choose a student path, college role, business website direction, workshop idea or the right FutureHub next step.");
+  addMessage("Hi, I am CodeLab AI. I can help you choose the right path without browsing the full website.");
 
   futureHubBotQuickQuestions.forEach((question) => {
     const button = document.createElement("button");
@@ -2195,6 +2255,7 @@ function renderRoleMatcherResult(data) {
   const whatsappText = encodeURIComponent(
     `Hello Kidsverse FutureHub, I used Future Role Finder. Name: ${answers.studentName}. Year: ${answers.year}. Branch: ${answers.branch}. Suggested role: ${top.title}. Goal: ${answers.goal}. Please guide me for the next step.`
   );
+  const roleWhatsapp = `https://wa.me/${whatsappNumber}?text=${whatsappText}`;
 
   roleResult.innerHTML = `
     <div class="role-result-head">
@@ -2214,7 +2275,13 @@ function renderRoleMatcherResult(data) {
       <article class="role-mission-card"><span>30-day mission</span><p>${top.action}</p></article>
       <article><span>How FutureHub can help</span><p>${top.support}</p></article>
     </div>
-    <a class="primary-button role-whatsapp" href="https://wa.me/${whatsappNumber}?text=${whatsappText}" target="_blank" rel="noopener noreferrer">Discuss My Career Path on WhatsApp</a>
+    ${recommendedPathBlock({
+      title: "Your career direction is ready. Choose the next step that feels right.",
+      copy: "Move to WhatsApp if you want a mentor to review your role direction. Or explore student programs and project support first.",
+      whatsappHref: roleWhatsapp,
+      detailHref: "students.html?profile=student",
+      detailText: "Explore Student Programs",
+    })}
   `;
   roleResult.hidden = false;
 }
@@ -2505,7 +2572,24 @@ guidedForms.forEach((form) => {
     const [title, description] = guidedRecommendation(form.dataset.guidedForm, data);
     const result = form.querySelector("[data-guided-result]");
     if (!result) return;
-    result.innerHTML = `<strong>${title}</strong><span>Recommended next step</span><p>${description}</p><p>Book a slot if you want us to confirm the course, service scope, timeline and mode.</p>`;
+    const isBusinessGuided = form.dataset.guidedForm === "business";
+    const guidedWhatsapp = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+      `Hello Kidsverse FutureHub, I used the guided finder. Recommended path: ${title}. ${description}. Please help me confirm the next step.`
+    )}`;
+    result.innerHTML = `
+      <strong>${title}</strong>
+      <span>Recommended next step</span>
+      <p>${description}</p>
+      ${recommendedPathBlock({
+        title: "Your recommendation is ready. Choose the next step that feels right.",
+        copy: isBusinessGuided
+          ? "Move to WhatsApp if you want us to review the business requirement personally. Or explore business services first."
+          : "Move to WhatsApp if you want us to guide the learner personally. Or explore student programs first.",
+        whatsappHref: guidedWhatsapp,
+        detailHref: isBusinessGuided ? "business.html?profile=business" : "students.html?profile=student",
+        detailText: isBusinessGuided ? "Explore Business Services" : "Explore Student Programs",
+      })}
+    `;
     result.hidden = false;
     await submitFutureHubLead(leadTypeForGuidedForm(form.dataset.guidedForm), {
       formType: `${form.dataset.guidedForm} Guided Finder`,
