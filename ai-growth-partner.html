@@ -37,6 +37,12 @@
             <strong>CodeLab AI</strong>
             <em data-chat-step>Step 1 of 4</em>
           </div>
+          <div class="ai-journey-switch" aria-label="Switch CodeLab AI journey">
+            <span>Switch path</span>
+            <button type="button" data-ai-switch-profile="parent">Parent</button>
+            <button type="button" data-ai-switch-profile="student">Student</button>
+            <button type="button" data-ai-switch-profile="business">Business</button>
+          </div>
           <div class="ai-chat-messages" data-chat-messages></div>
           <div class="ai-chat-options" data-chat-options></div>
         </article>
@@ -161,6 +167,7 @@
         const messages = document.querySelector("[data-chat-messages]");
         const options = document.querySelector("[data-chat-options]");
         const report = document.querySelector("[data-ai-report]");
+        const switchButtons = document.querySelectorAll("[data-ai-switch-profile]");
         const state = { profile: null, step: -1, answers: [] };
         const initialProfile = new URLSearchParams(window.location.search).get("profile");
 
@@ -188,6 +195,24 @@
           document.querySelector("[data-live-estimate-label]").textContent = flow.estimateLabel;
           document.querySelector("[data-live-estimate]").textContent = estimate(flow);
           document.querySelector("[data-live-features]").innerHTML = flow.features.map((item) => `<span>${item}</span>`).join("");
+        }
+
+        function setSwitchState(profile) {
+          switchButtons.forEach((button) => {
+            const isActive = button.dataset.aiSwitchProfile === profile;
+            button.classList.toggle("is-active", isActive);
+            button.setAttribute("aria-pressed", isActive ? "true" : "false");
+          });
+        }
+
+        function rememberProfile(profile) {
+          if (!flows[profile]) return;
+          document.body.dataset.activeProfile = profile;
+          try {
+            localStorage.setItem("futureHubProfile", profile);
+          } catch (error) {
+            // Local storage can be unavailable in some privacy modes.
+          }
         }
 
         function estimate(flow) {
@@ -273,10 +298,13 @@
           showProfileCards((choice) => {
             state.profile = choice.toLowerCase();
             state.step = 0;
+            rememberProfile(state.profile);
+            setSwitchState(state.profile);
             addMessage(choice, "user");
             addMessage(flows[state.profile].intro);
             askQuestion();
           });
+          setSwitchState(null);
           updatePreview();
         }
 
@@ -287,6 +315,8 @@
           state.profile = profile;
           state.step = 0;
           state.answers = [];
+          rememberProfile(profile);
+          setSwitchState(profile);
           const label = flows[profile].label;
           addMessage("Hi, I am CodeLab AI.");
           addMessage(`I can continue with the ${label} journey.`);
@@ -340,6 +370,9 @@
 
         document.querySelector("[data-ai-restart]").addEventListener("click", askProfile);
         document.querySelector("[data-ai-print]").addEventListener("click", () => window.print());
+        switchButtons.forEach((button) => {
+          button.addEventListener("click", () => startProfile(button.dataset.aiSwitchProfile));
+        });
         startProfile(initialProfile);
       })();
     </script>
