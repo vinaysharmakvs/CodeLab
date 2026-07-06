@@ -36,6 +36,8 @@ const templateBudget = document.querySelector("[data-template-budget]");
 const templateCards = document.querySelectorAll("[data-template-card]");
 const healthForm = document.querySelector("[data-health-form]");
 const healthResult = document.querySelector("[data-health-result]");
+const trustForm = document.querySelector("[data-trust-form]");
+const trustResult = document.querySelector("[data-trust-result]");
 const websitePricingBuilder = document.querySelector("[data-website-pricing]");
 const websiteExtraPages = document.querySelector("[data-website-extra-pages]");
 const websiteFeatureInputs = document.querySelectorAll("[data-website-feature]");
@@ -59,14 +61,14 @@ const profileNavLinks = document.querySelectorAll("[data-profile-nav]");
 const profileTitle = document.querySelector("[data-profile-title]");
 const profileText = document.querySelector("[data-profile-text]");
 const whatsappNumber = "918826758881";
-const profileStorageKey = "futureHubProfile";
+const profileStorageKey = "tivoroProfile";
 const profileQueryKey = "profile";
 let businessMapperTimer = null;
-const futureHubSheetEndpoints = {
+const tivoroSheetEndpoints = {
   parent: "",
   child: "",
   business: "",
-  ...(window.futureHubSheetEndpoints || {}),
+  ...(window.tivoroSheetEndpoints || {}),
 };
 
 function recommendedPathBlock({ title, copy, whatsappHref, detailHref, detailText }) {
@@ -92,8 +94,8 @@ function formDataToObject(data) {
   }, {});
 }
 
-async function submitFutureHubLead(type, payload) {
-  const endpoint = futureHubSheetEndpoints[type];
+async function submitTivoroLead(type, payload) {
+  const endpoint = tivoroSheetEndpoints[type];
   if (!endpoint) return false;
   try {
     await fetch(endpoint, {
@@ -109,7 +111,7 @@ async function submitFutureHubLead(type, payload) {
     });
     return true;
   } catch (error) {
-    console.warn("FutureHub lead submission failed", error);
+    console.warn("Tivoro lead submission failed", error);
     return false;
   }
 }
@@ -126,8 +128,8 @@ function leadTypeForBooking(level) {
   return "child";
 }
 
-const futureHubBotQuickQuestions = [
-  "Start CodeLab AI",
+const tivoroBotQuickQuestions = [
+  "Start Tivoro AI",
   "I am a parent",
   "I am a student",
   "I am a business owner",
@@ -135,26 +137,26 @@ const futureHubBotQuickQuestions = [
   "Talk on WhatsApp",
 ];
 
-const futureHubBotAnswers = [
+const tivoroBotAnswers = [
   {
     keywords: ["child", "parent", "kid", "grade", "school", "course", "coding", "scratch", "python", "app"],
     answer:
-      "For parents, the cleanest start is CodeLab AI. It asks a few calm questions and suggests whether your child should begin with Scratch, Python, AI, web apps, projects or guidance. You can also open the Parents page for the detailed course finder.",
+      "For parents, the cleanest start is Tivoro AI. It asks a few calm questions and suggests whether your child should begin with Scratch, Python, AI, web apps, projects or guidance. You can also open the Parents page for the detailed course finder.",
   },
   {
-    keywords: ["start codelab", "codelab", "ai guide", "ai advisor", "where should i start", "not sure", "confused"],
+    keywords: ["start tivoro", "tivoro", "ai guide", "ai advisor", "where should i start", "not sure", "confused"],
     answer:
-      "Start with CodeLab AI. It is the fastest way to choose between Student, Parent and Business paths, then it gives a personalized recommendation with two clear next steps: move to WhatsApp or explore the detailed page.",
+      "Start with Tivoro AI. It is the fastest way to choose between Student, Parent and Business paths, then it gives a personalized recommendation with two clear next steps: move to WhatsApp or explore the detailed page.",
   },
   {
     keywords: ["student", "college", "internship", "project", "final year", "fyp", "resume", "interview", "career", "role", "python", "ai champions", "teen", "chatbot", "agent", "prompt", "gemini"],
     answer:
-      "For students, CodeLab AI can suggest the right skill mission. The detailed Students page covers coding, AI, Python, JavaScript, C/C++/Java, live projects, internships, Future Role Finder and interview support.",
+      "For students, Tivoro AI can suggest the right skill mission. The detailed Students page covers coding, AI, Python, JavaScript, C/C++/Java, live projects, internships, Future Role Finder and interview support.",
   },
   {
     keywords: ["business", "website", "site", "salon", "clinic", "store", "restaurant", "cafe", "real estate", "ngo", "startup"],
     answer:
-      "For business owners, CodeLab AI can map your need first. The detailed Business page has the smart website mapper, website quote builder, demos, website readiness checker, WhatsApp lead ideas, SEO and automation options.",
+      "For business owners, Tivoro AI can map your need first. The detailed Business page has the smart website mapper, website quote builder, demos, website readiness checker, WhatsApp lead ideas, SEO and automation options.",
   },
   {
     keywords: ["website checker", "readiness", "seo", "meta", "audit", "health", "score", "scan"],
@@ -169,7 +171,7 @@ const futureHubBotAnswers = [
   {
     keywords: ["school", "college", "institution", "workshop", "camp", "hackathon", "club"],
     answer:
-      "For schools and colleges, open the Institutions page. FutureHub can support AI clubs, coding workshops, hackathons, camps, project sprints, teacher/team upskilling and digital admission systems.",
+      "For schools and colleges, open the Institutions page. Tivoro can support AI clubs, coding workshops, hackathons, camps, project sprints, teacher/team upskilling and digital admission systems.",
   },
   {
     keywords: ["price", "pricing", "cost", "budget", "package", "fee"],
@@ -179,7 +181,7 @@ const futureHubBotAnswers = [
   {
     keywords: ["campus", "ambassador", "apply", "applicant", "challenge"],
     answer:
-      "Campus Ambassador information is part of the student journey. Start with CodeLab AI or open the Students page so we can guide the right next step.",
+      "Campus Ambassador information is part of the student journey. Start with Tivoro AI or open the Students page so we can guide the right next step.",
   },
   {
     keywords: ["book", "call", "slot", "counselling", "guidance", "talk", "contact", "whatsapp"],
@@ -189,7 +191,7 @@ const futureHubBotAnswers = [
   {
     keywords: ["india", "usa", "singapore", "middle east", "online", "location", "rehan"],
     answer:
-      "FutureHub is by Kidsverse Private Limited, Rehan, Himachal Pradesh, and we already teach learners across India, the US, Singapore and the Middle East through online guidance, live classes and project support.",
+      "Tivoro is powered by Kidsverse Private Limited, Rehan, Himachal Pradesh, and we already teach learners across India, the US, Singapore and the Middle East through online guidance, live classes and project support.",
   },
 ];
 
@@ -224,17 +226,17 @@ const profileCopy = {
   student: {
     title: "Your student decision journey is ready",
     text:
-      "Start with Future Skill Mission Finder. FutureHub will recommend the right coding, AI, project, portfolio or internship path before you choose a course.",
+      "Start with Future Skill Mission Finder. Tivoro will recommend the right coding, AI, project, portfolio or internship path before you choose a course.",
   },
   parent: {
     title: "Your parent decision journey is ready",
     text:
-      "Start with Child Growth Plan. FutureHub will understand your child’s age, need, learning style and time before recommending the right support.",
+      "Start with Child Growth Plan. Tivoro will understand your child’s age, need, learning style and time before recommending the right support.",
   },
   business: {
     title: "Your business decision journey is ready",
     text:
-      "Start with Business Growth Roadmap. FutureHub will map your business type, goal and stage to the right website, lead and automation direction.",
+      "Start with Business Growth Roadmap. Tivoro will map your business type, goal and stage to the right website, lead and automation direction.",
   },
 };
 
@@ -869,7 +871,7 @@ const careerRoleData = [
     project: "Build an AI chatbot or assistant that answers college, business or customer questions.",
     skills: ["Python basics", "Prompt engineering", "API usage", "Project documentation"],
     action: "30-day mission: Week 1 learn AI prompts and Python basics, Week 2 build a working chatbot, Week 3 add memory or real data, Week 4 record a demo and present it like an internship project.",
-    support: "FutureHub can guide you through an AI app project, GitHub portfolio and demo presentation.",
+    support: "Tivoro can guide you through an AI app project, GitHub portfolio and demo presentation.",
   },
   {
     title: "Web Developer",
@@ -878,7 +880,7 @@ const careerRoleData = [
     project: "Build a responsive business website with enquiry form, WhatsApp action and admin-ready content.",
     skills: ["HTML/CSS", "JavaScript", "Responsive design", "Deployment"],
     action: "30-day mission: Week 1 design a homepage, Week 2 build mobile-first pages, Week 3 add forms and interactions, Week 4 deploy the website and turn it into a portfolio case study.",
-    support: "FutureHub can help you build live websites, polish your portfolio and prepare for developer interviews.",
+    support: "Tivoro can help you build live websites, polish your portfolio and prepare for developer interviews.",
   },
   {
     title: "Data Analyst",
@@ -887,7 +889,7 @@ const careerRoleData = [
     project: "Create a dashboard from sales, admission, attendance or social media data with clear insights.",
     skills: ["Excel/Sheets", "SQL basics", "Python data basics", "Dashboard storytelling"],
     action: "30-day mission: Week 1 clean real data, Week 2 create charts and insights, Week 3 build a dashboard, Week 4 explain findings like a business analyst in a mock interview.",
-    support: "FutureHub can train you on practical dashboards, data projects and interview explanation.",
+    support: "Tivoro can train you on practical dashboards, data projects and interview explanation.",
   },
   {
     title: "UI/UX Designer",
@@ -896,7 +898,7 @@ const careerRoleData = [
     project: "Design a mobile app prototype for salon booking, school enquiry or student study planning.",
     skills: ["User research", "Wireframes", "Figma basics", "Presentation"],
     action: "30-day mission: Week 1 research users, Week 2 create wireframes, Week 3 design a polished app prototype, Week 4 present the user journey as a UI/UX case study.",
-    support: "FutureHub can help you create a UI case study and present your design like a professional portfolio.",
+    support: "Tivoro can help you create a UI case study and present your design like a professional portfolio.",
   },
   {
     title: "Digital Growth Specialist",
@@ -905,7 +907,7 @@ const careerRoleData = [
     project: "Create a growth plan for a local business with landing page, Instagram content and WhatsApp enquiry flow.",
     skills: ["Content planning", "SEO basics", "Ads basics", "WhatsApp funnel thinking"],
     action: "30-day mission: Week 1 choose a real business, Week 2 plan content and offers, Week 3 build a landing page funnel, Week 4 present a growth report with next campaign ideas.",
-    support: "FutureHub can train you on real digital campaigns, website funnels and client-ready reporting.",
+    support: "Tivoro can train you on real digital campaigns, website funnels and client-ready reporting.",
   },
   {
     title: "Business Analyst / Product Associate",
@@ -914,7 +916,7 @@ const careerRoleData = [
     project: "Plan a product or service app with problem statement, features, user journey and launch plan.",
     skills: ["Requirement gathering", "User stories", "Market research", "Presentation"],
     action: "30-day mission: Week 1 identify a real problem, Week 2 map users and features, Week 3 create product screens and requirements, Week 4 pitch the product with a launch plan.",
-    support: "FutureHub can help you convert business thinking into product documents, prototypes and startup planning.",
+    support: "Tivoro can help you convert business thinking into product documents, prototypes and startup planning.",
   },
   {
     title: "QA Tester / Automation Starter",
@@ -923,7 +925,7 @@ const careerRoleData = [
     project: "Test a website or app, create bug reports and automate simple checks for important pages.",
     skills: ["Manual testing", "Bug reporting", "Basic automation", "Quality mindset"],
     action: "30-day mission: Week 1 learn testing mindset, Week 2 test a real website, Week 3 prepare bug reports and checklists, Week 4 add basic automation and explain your QA process.",
-    support: "FutureHub can guide you from testing basics to project-based QA practice and interview preparation.",
+    support: "Tivoro can guide you from testing basics to project-based QA practice and interview preparation.",
   },
   {
     title: "Startup Builder",
@@ -932,7 +934,7 @@ const careerRoleData = [
     project: "Create a simple MVP plan with landing page, customer problem, first offer and launch checklist.",
     skills: ["Idea validation", "No-code/AI tools", "Landing page", "Customer discovery"],
     action: "30-day mission: Week 1 select one idea, Week 2 validate it with target users, Week 3 build a landing page or prototype, Week 4 pitch the MVP with pricing and launch steps.",
-    support: "FutureHub can help you shape the idea, build the first digital presence and prepare a pitch.",
+    support: "Tivoro can help you shape the idea, build the first digital presence and prepare a pitch.",
   },
 ];
 
@@ -980,7 +982,7 @@ const finderData = {
       if (goal.includes("project")) return ["College Project Sprint", "Mini project, final year project, GitHub portfolio and viva preparation support."];
       if (goal.includes("admission")) return ["Digital Admission System", "Admission page, enquiry forms, FAQ, chatbot and lead tracking."];
       if (goal.includes("Hackathon")) return ["Hackathon or Build Day", "A structured challenge format with mentoring, demo and certificates."];
-      return ["FutureHub Workshop Program", `${goal} for ${stage} with live sessions, practical activities and certificate options.`];
+      return ["Tivoro Workshop Program", `${goal} for ${stage} with live sessions, practical activities and certificate options.`];
     },
   },
 };
@@ -1092,7 +1094,7 @@ function renderCourseMapperResult(match, alternatives, needsMoreDetail) {
   }
 
   const ctaText = encodeURIComponent(
-    `Hello Kidsverse FutureHub, I used the AI Course Finder. Recommended course: ${match.title}. Learner: ${match.stage}. Skills: ${match.skills.join(", ")}. Please help me finalize the best batch.`
+    `Hello Tivoro, I used the AI Course Finder. Recommended course: ${match.title}. Learner: ${match.stage}. Skills: ${match.skills.join(", ")}. Please help me finalize the best batch.`
   );
   const courseWhatsapp = `https://wa.me/${whatsappNumber}?text=${ctaText}`;
 
@@ -1196,7 +1198,7 @@ function parentDecisionPlan(data) {
     outcome: `Expected 6-month outcome: ${outcome}.`,
     timeline: `${time} with ${style.toLowerCase()}.`,
     projects,
-    next: "Review this plan with FutureHub before selecting the exact batch.",
+    next: "Review this plan with Tivoro before selecting the exact batch.",
   };
 }
 
@@ -1234,7 +1236,7 @@ function studentDecisionPlan(data) {
     outcome: `Goal: ${goal}.`,
     timeline: "Recommended path: learn, build, present, then review with a mentor.",
     projects: missions,
-    next: "Discuss this mission with FutureHub and finalize the right course mode.",
+    next: "Discuss this mission with Tivoro and finalize the right course mode.",
   };
 }
 
@@ -1243,7 +1245,7 @@ function renderDecisionResult(form, plan) {
   if (!result) return;
   const type = form.dataset.decisionForm;
   const ctaText = encodeURIComponent(
-    `Hello Kidsverse FutureHub, I created a ${type === "parent" ? "Child Growth Plan" : "Future Skill Mission"}. Recommended path: ${plan.title}. ${plan.subtitle}. Please help me finalize the next step.`
+    `Hello Tivoro, I created a ${type === "parent" ? "Child Growth Plan" : "Future Skill Mission"}. Recommended path: ${plan.title}. ${plan.subtitle}. Please help me finalize the next step.`
   );
   const decisionWhatsapp = `https://wa.me/${whatsappNumber}?text=${ctaText}`;
   const isParent = type === "parent";
@@ -1415,7 +1417,7 @@ function sendBuilderPlan() {
   const title = builderCourseName(safeSkills);
   const duration = builderDurations[pace] || "8-10 weeks";
   const message = encodeURIComponent(
-    `Hello Kidsverse FutureHub, I created a custom coding course plan. Plan: ${title}. Learner: ${stage}. Skills: ${safeSkills.join(", ")}. Goal: ${goal}. Class style: ${mode}. Pace: ${pace}. Suggested duration: ${duration}. Please help me finalize this course.`
+    `Hello Tivoro, I created a custom coding course plan. Plan: ${title}. Learner: ${stage}. Skills: ${safeSkills.join(", ")}. Goal: ${goal}. Class style: ${mode}. Pace: ${pace}. Suggested duration: ${duration}. Please help me finalize this course.`
   );
   window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank", "noopener,noreferrer");
 }
@@ -1494,7 +1496,7 @@ function sendBusinessSampleRequest() {
   const sample = businessSampleData[category] || businessSampleData.School;
   const budgetPlan = businessBudgetSamples[budget] || businessBudgetSamples["Starter Website"];
   const message = encodeURIComponent(
-    `Hello Kidsverse FutureHub, I selected a business website sample. Category: ${category}. Budget level: ${budget}. Sample direction: ${sample.name}. Main conversion: ${sample.conversion}. Suggested scope: ${budgetPlan.scope}. Please guide me with the next step.`
+    `Hello Tivoro, I selected a business website sample. Category: ${category}. Budget level: ${budget}. Sample direction: ${sample.name}. Main conversion: ${sample.conversion}. Suggested scope: ${budgetPlan.scope}. Please guide me with the next step.`
   );
   window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank", "noopener,noreferrer");
 }
@@ -1525,7 +1527,7 @@ function renderBusinessMapperResult(match, alternatives, needsMoreDetail) {
   }
 
   const ctaText = encodeURIComponent(
-    `Hello Kidsverse FutureHub, I used the Smart Website Mapper. Recommended direction: ${match.category} - ${match.budget}. Reason: ${match.reason}. Please connect with me and guide the next step.`
+    `Hello Tivoro, I used the Smart Website Mapper. Recommended direction: ${match.category} - ${match.budget}. Reason: ${match.reason}. Please connect with me and guide the next step.`
   );
   const businessWhatsapp = `https://wa.me/${whatsappNumber}?text=${ctaText}`;
 
@@ -1745,7 +1747,7 @@ function updateWebsitePriceBuilder() {
   if (websitePricingWhatsapp) {
     const featureText = features.length ? features.map((item) => `${item.name} (${formatIndianPrice(item.price)})`).join(", ") : "No add-ons selected";
     const message = encodeURIComponent(
-      `Hello Kidsverse FutureHub, I used the Website Price Builder. Estimated cost: ${formatIndianPrice(total)}. Base: 1-page website with business details, Google Map, basic images and WhatsApp lead form. Extra pages: ${extraPages}. Selected add-ons: ${featureText}. Please review my selection and suggest the best deal / smartest cost-saving option.`
+      `Hello Tivoro, I used the Website Price Builder. Estimated cost: ${formatIndianPrice(total)}. Base: 1-page website with business details, Google Map, basic images and WhatsApp lead form. Extra pages: ${extraPages}. Selected add-ons: ${featureText}. Please review my selection and suggest the best deal / smartest cost-saving option.`
     );
     websitePricingWhatsapp.href = `https://wa.me/${whatsappNumber}?text=${message}`;
   }
@@ -1835,6 +1837,42 @@ function renderHealthError(title, message) {
   healthResult.hidden = false;
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function renderTrustError(title, message) {
+  if (!trustResult) return;
+  trustResult.innerHTML = `<div class="health-error trust-error"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(message)}</span></div>`;
+  trustResult.hidden = false;
+}
+
+function prefillTrustFormFromUrl() {
+  if (!trustForm) return;
+  const params = new URLSearchParams(window.location.search);
+  ["businessName", "city", "state"].forEach((name) => {
+    const value = params.get(name);
+    const input = trustForm.querySelector(`[name="${name}"]`);
+    if (value && input && !input.value) input.value = value;
+  });
+}
+
+function correctTrustScoreAnchorOffset() {
+  if (window.location.hash !== "#digital-trust-score") return;
+  const section = document.querySelector("#digital-trust-score");
+  if (!section) return;
+  window.setTimeout(() => {
+    const headerHeight = document.querySelector(".site-header")?.getBoundingClientRect().height || 0;
+    const y = window.scrollY + section.getBoundingClientRect().top - headerHeight - 14;
+    window.scrollTo({ top: Math.max(0, y), behavior: "auto" });
+  }, 80);
+}
+
 function clampScore(score) {
   return Math.max(0, Math.min(100, Math.round(Number(score) || 0)));
 }
@@ -1875,8 +1913,8 @@ function renderHealthScanning(domain) {
       <div class="scan-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
       <div>
         <span>Checking ${domain}</span>
-        <h3>Running FutureHub website readiness check...</h3>
-        <p>This may take a little time because FutureHub is inspecting live website HTML, SEO basics, headings, images and enquiry-readiness signals.</p>
+        <h3>Running Tivoro website readiness check...</h3>
+        <p>This may take a little time because Tivoro is inspecting live website HTML, SEO basics, headings, images and enquiry-readiness signals.</p>
       </div>
       <div class="scan-step-list">
         <span>Live website check</span>
@@ -1945,7 +1983,7 @@ function renderHealthResult(audit, rawUrl) {
       <ul>${(audit.recommendations || []).map((item) => `<li>${item}</li>`).join("")}</ul>
     </div>
     <div class="health-action-plan">
-      <span>Suggested FutureHub action plan</span>
+      <span>Suggested Tivoro action plan</span>
       <div><strong>Step 1</strong><p>Fix SEO foundation: title, description, robots, canonical, heading order and image alt text.</p></div>
       <div><strong>Step 2</strong><p>Improve trust and enquiry flow with WhatsApp, phone, map, form, reviews and visible call-to-action buttons.</p></div>
       <div><strong>Step 3</strong><p>Add structured data, local service pages and social sharing tags so the website becomes easier to understand and share.</p></div>
@@ -1954,13 +1992,120 @@ function renderHealthResult(audit, rawUrl) {
       title: "Your website improvement path is ready. Choose the next step that feels right.",
       copy: "Move to WhatsApp if you want us to review the website personally. Or explore business services and pricing before deciding.",
       whatsappHref: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-        `Hello Kidsverse FutureHub, I checked my website readiness. Website: ${rawUrl}. Source: ${audit.source || "FutureHub Website Readiness Checker"}. Scores - Mobile: ${audit.mobile}, Speed: ${audit.speed}, SEO: ${audit.seo}, Trust: ${audit.security}. Google Business: ${audit.googleStatus}. Please suggest improvements.`
+        `Hello Tivoro, I checked my website readiness. Website: ${rawUrl}. Source: ${audit.source || "Tivoro Website Readiness Checker"}. Scores - Mobile: ${audit.mobile}, Speed: ${audit.speed}, SEO: ${audit.seo}, Trust: ${audit.security}. Google Business: ${audit.googleStatus}. Please suggest improvements.`
       )}`,
       detailHref: "business.html?profile=business#website-price-builder",
       detailText: "Explore Business Services",
     })}
   `;
   healthResult.hidden = false;
+}
+
+function renderTrustScanning(name, city, state) {
+  if (!trustResult) return;
+  trustResult.innerHTML = `
+    <div class="health-scanning trust-scanning">
+      <div class="scan-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div>
+        <span>Checking ${escapeHtml(name)} in ${escapeHtml(city)}, ${escapeHtml(state)}</span>
+        <h3>Generating live Digital Trust Score...</h3>
+        <p>Tivoro is checking public business profile signals and website trust signals where available.</p>
+      </div>
+      <div class="scan-step-list">
+        <span>Business profile lookup</span>
+        <span>Rating and reviews</span>
+        <span>Website presence</span>
+        <span>Social proof signals</span>
+        <span>Trust recommendations</span>
+      </div>
+      <div class="scan-progress"><i></i></div>
+    </div>
+  `;
+  trustResult.hidden = false;
+}
+
+async function runServerTrustScore({ businessName, city, state }) {
+  if (window.location.protocol === "file:") {
+    throw new Error("local-server-required");
+  }
+  const endpoint = new URL("/api/trust-score", window.location.origin);
+  endpoint.searchParams.set("businessName", businessName);
+  endpoint.searchParams.set("city", city);
+  endpoint.searchParams.set("state", state);
+  const request = withTimeout((signal) => fetch(endpoint, { cache: "no-store", signal }), 60000);
+  const response = await request.run;
+  const data = await response.json().catch(() => null);
+  if (!response.ok || data?.error) {
+    const error = new Error(data?.message || "Live Trust Score could not be generated.");
+    error.code = data?.error || "trust-score-error";
+    throw error;
+  }
+  return data;
+}
+
+function renderTrustScoreReport(report, formValues) {
+  if (!trustResult) return;
+  const factors = report.factors || [];
+  const business = report.business || {};
+  const overall = clampScore(report.overall);
+  trustResult.innerHTML = `
+    <div class="trust-score-meter trust-live-meter">
+      <div class="trust-score-ring" style="--score-angle: ${overall * 3.6}deg">
+        <strong>${overall}</strong>
+        <span>/100</span>
+      </div>
+      <div>
+        <span>Live report</span>
+        <h3>${escapeHtml(business.name || formValues.businessName)}</h3>
+        <p>${escapeHtml(report.summary || "Digital Trust Score generated from public signals.")}</p>
+        <div class="trust-business-facts">
+          ${business.address ? `<strong>${escapeHtml(business.address)}</strong>` : ""}
+          ${business.rating ? `<span>${escapeHtml(business.rating)} star rating</span>` : ""}
+          ${Number.isFinite(Number(business.reviews)) ? `<span>${escapeHtml(business.reviews)} reviews</span>` : ""}
+          ${business.website ? `<a href="${escapeHtml(business.website)}" target="_blank" rel="noopener noreferrer">Website</a>` : ""}
+          ${business.googleUrl ? `<a href="${escapeHtml(business.googleUrl)}" target="_blank" rel="noopener noreferrer">Google Profile</a>` : ""}
+        </div>
+      </div>
+    </div>
+    <div class="trust-factor-table" role="table" aria-label="Live Digital Trust Score breakdown">
+      <div class="trust-factor-head" role="row">
+        <span role="columnheader">Trust factor</span>
+        <span role="columnheader">Weight</span>
+        <span role="columnheader">Score</span>
+        <span role="columnheader">Observation</span>
+      </div>
+      ${factors
+        .map(
+          (factor) => `
+            <div role="row">
+              <strong>${escapeHtml(factor.label)}</strong>
+              <span>${escapeHtml(factor.weight)}</span>
+              <b>${escapeHtml(factor.score)}/${escapeHtml(factor.weight)}</b>
+              <p>${escapeHtml(factor.observation)}</p>
+            </div>
+          `
+        )
+        .join("")}
+    </div>
+    <div class="health-missing-card health-recommend-card">
+      <span>Recommendations</span>
+      <ul>${(report.recommendations || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("") || "<li>Maintain your current digital trust signals and keep improving proof content.</li>"}</ul>
+    </div>
+    <div class="trust-score-services">
+      <span>Natural next steps</span>
+      ${(report.services || ["Website development", "Branding", "SEO", "AI automation", "CRM", "Digital marketing"]).map((item) => `<strong>${escapeHtml(item)}</strong>`).join("")}
+    </div>
+    ${recommendedPathBlock({
+      title: "Your Digital Trust Score is ready. Choose the next step that feels right.",
+      copy: "Move to WhatsApp if you want us to review this report personally. Or explore website pricing if you already know what you want to improve.",
+      whatsappHref: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+        `Hello Tivoro, I generated my Digital Trust Score. Business: ${business.name || formValues.businessName}, Location: ${formValues.city}, ${formValues.state}, Score: ${overall}/100. Please review and suggest improvements.`
+      )}`,
+      detailHref: "business.html?profile=business#website-price-builder",
+      detailText: "Explore Website Pricing",
+    })}
+  `;
+  trustResult.hidden = false;
 }
 
 function guidedRecommendation(type, data) {
@@ -2010,49 +2155,49 @@ function guidedRecommendation(type, data) {
     if (goal.includes("project")) return ["College Project Sprint", "Final year project, GitHub, portfolio, viva preparation and internship readiness support."];
     if (goal.includes("admission")) return ["Digital Admission System", "Admission page, enquiry form, FAQ, chatbot, WhatsApp flow and lead tracking."];
     if (goal.includes("Hackathon")) return ["Hackathon / Build Day", `A practical event format for ${category} with mentoring, demo day and certificates.`];
-    if (goal.includes("Coding club")) return ["FutureHub Coding Club", `Monthly coding, AI and project sessions for ${size}.`];
+    if (goal.includes("Coding club")) return ["Tivoro Coding Club", `Monthly coding, AI and project sessions for ${size}.`];
     return ["Institution Workshop Program", `${goal} for ${category}, planned as a practical program with activities, certificates and follow-up guidance.`];
   }
 
   return ["Book a Guidance Slot", "We will understand the requirement and suggest the right plan."];
 }
 
-function createFutureHubBot() {
+function createTivoroBot() {
   const bot = document.createElement("div");
-  bot.className = "futurehub-bot";
+  bot.className = "tivoro-bot";
   bot.innerHTML = `
-    <button class="futurehub-bot-toggle" type="button" aria-expanded="false">
-      <span class="futurehub-bot-icon" aria-hidden="true">AI</span>
-      <span class="futurehub-bot-copy"><strong>CodeLab AI</strong><small>Need direction?</small></span>
-      <span class="futurehub-bot-ping" aria-hidden="true"></span>
+    <button class="tivoro-bot-toggle" type="button" aria-expanded="false">
+      <span class="tivoro-bot-icon" aria-hidden="true">AI</span>
+      <span class="tivoro-bot-copy"><strong>Tivoro AI</strong><small>Need direction?</small></span>
+      <span class="tivoro-bot-ping" aria-hidden="true"></span>
     </button>
-    <section class="futurehub-bot-panel" hidden aria-label="CodeLab AI assistant">
-      <div class="futurehub-bot-head">
-        <div><span>CodeLab AI Guide</span><strong>Start with AI, then explore only what fits.</strong></div>
-        <button type="button" aria-label="Close CodeLab AI">X</button>
+    <section class="tivoro-bot-panel" hidden aria-label="Tivoro AI assistant">
+      <div class="tivoro-bot-head">
+        <div><span>Tivoro AI Guide</span><strong>Start with AI, then explore only what fits.</strong></div>
+        <button type="button" aria-label="Close Tivoro AI">X</button>
       </div>
-      <div class="futurehub-bot-messages" aria-live="polite"></div>
-      <div class="futurehub-bot-quick" aria-label="Quick FutureHub questions"></div>
-      <form class="futurehub-bot-form">
-        <input type="text" placeholder="Ask: parent, student or business..." aria-label="Ask CodeLab AI a question" />
+      <div class="tivoro-bot-messages" aria-live="polite"></div>
+      <div class="tivoro-bot-quick" aria-label="Quick Tivoro questions"></div>
+      <form class="tivoro-bot-form">
+        <input type="text" placeholder="Ask: parent, student or business..." aria-label="Ask Tivoro AI a question" />
         <button type="submit">Ask</button>
       </form>
-      <a class="futurehub-bot-whatsapp" href="https://wa.me/${whatsappNumber}?text=Hello%20Kidsverse%20FutureHub%2C%20I%20want%20help%20choosing%20the%20right%20CodeLab%20AI%20path." target="_blank" rel="noopener noreferrer">Talk to FutureHub on WhatsApp</a>
+      <a class="tivoro-bot-whatsapp" href="https://wa.me/${whatsappNumber}?text=Hello%20Tivoro%2C%20I%20want%20help%20choosing%20the%20right%20Tivoro%20AI%20path." target="_blank" rel="noopener noreferrer">Talk to Tivoro on WhatsApp</a>
     </section>
   `;
   document.body.appendChild(bot);
 
-  const toggle = bot.querySelector(".futurehub-bot-toggle");
-  const panel = bot.querySelector(".futurehub-bot-panel");
-  const closeButton = bot.querySelector(".futurehub-bot-head button");
-  const messages = bot.querySelector(".futurehub-bot-messages");
-  const quick = bot.querySelector(".futurehub-bot-quick");
-  const form = bot.querySelector(".futurehub-bot-form");
-  const input = bot.querySelector(".futurehub-bot-form input");
+  const toggle = bot.querySelector(".tivoro-bot-toggle");
+  const panel = bot.querySelector(".tivoro-bot-panel");
+  const closeButton = bot.querySelector(".tivoro-bot-head button");
+  const messages = bot.querySelector(".tivoro-bot-messages");
+  const quick = bot.querySelector(".tivoro-bot-quick");
+  const form = bot.querySelector(".tivoro-bot-form");
+  const input = bot.querySelector(".tivoro-bot-form input");
 
   function addMessage(text, type = "bot") {
     const message = document.createElement("div");
-    message.className = `futurehub-bot-message is-${type}`;
+    message.className = `tivoro-bot-message is-${type}`;
     message.textContent = text;
     messages.appendChild(message);
     messages.scrollTop = messages.scrollHeight;
@@ -2063,27 +2208,27 @@ function createFutureHubBot() {
     if (!cleanQuestion) return;
     addMessage(cleanQuestion, "user");
     const query = cleanQuestion.toLowerCase();
-    if (query.includes("start codelab") || query === "i am a parent" || query === "i am a student" || query === "i am a business owner" || query.includes("show detailed")) {
+    if (query.includes("start tivoro") || query === "i am a parent" || query === "i am a student" || query === "i am a business owner" || query.includes("show detailed")) {
       if (query.includes("parent")) {
-        addMessage("Best next step: open CodeLab AI in Parent mode for a quick recommendation, or use the Parents page if you already want the detailed course finder.", "bot");
+        addMessage("Best next step: open Tivoro AI in Parent mode for a quick recommendation, or use the Parents page if you already want the detailed course finder.", "bot");
         return;
       }
       if (query.includes("student")) {
-        addMessage("Best next step: open CodeLab AI in Student mode for a skill mission, or use the Students page for coding, AI, projects, internships and Future Role Finder.", "bot");
+        addMessage("Best next step: open Tivoro AI in Student mode for a skill mission, or use the Students page for coding, AI, projects, internships and Future Role Finder.", "bot");
         return;
       }
       if (query.includes("business")) {
-        addMessage("Best next step: open CodeLab AI in Business mode for a growth roadmap, or use the Business page for website pricing, demos, checker and automation options.", "bot");
+        addMessage("Best next step: open Tivoro AI in Business mode for a growth roadmap, or use the Business page for website pricing, demos, checker and automation options.", "bot");
         return;
       }
-      addMessage("Start with the CodeLab AI button on the homepage. It gives the shortest path: choose Student, Parent or Business, answer a few questions, then move to WhatsApp or the detailed page.", "bot");
+      addMessage("Start with the Tivoro AI button on the homepage. It gives the shortest path: choose Student, Parent or Business, answer a few questions, then move to WhatsApp or the detailed page.", "bot");
       return;
     }
     if (query.includes("whatsapp") || query.includes("talk")) {
       addMessage("You can use the WhatsApp button below. We will understand your need first and guide only if the service genuinely fits.", "bot");
       return;
     }
-    const ranked = futureHubBotAnswers
+    const ranked = tivoroBotAnswers
       .map((item) => ({
         item,
         score: item.keywords.reduce((score, keyword) => score + (query.includes(keyword) ? 1 : 0), 0),
@@ -2093,7 +2238,7 @@ function createFutureHubBot() {
     addMessage(
       best?.score
         ? best.item.answer
-        : "The cleanest path is to start with CodeLab AI. It will ask whether you are a student, parent or business owner, then create a simple roadmap. You can also use the Explore links on the homepage for detailed pages.",
+        : "The cleanest path is to start with Tivoro AI. It will ask whether you are a student, parent or business owner, then create a simple roadmap. You can also use the Explore links on the homepage for detailed pages.",
       "bot"
     );
   }
@@ -2105,9 +2250,9 @@ function createFutureHubBot() {
     if (open) input.focus({ preventScroll: true });
   }
 
-  addMessage("Hi, I am CodeLab AI. I can help you choose the right path without browsing the full website.");
+  addMessage("Hi, I am Tivoro AI. I can help you choose the right path without browsing the full website.");
 
-  futureHubBotQuickQuestions.forEach((question) => {
+  tivoroBotQuickQuestions.forEach((question) => {
     const button = document.createElement("button");
     button.type = "button";
     button.textContent = question;
@@ -2160,7 +2305,7 @@ function scoreAmbassadorChallenge(data) {
       "I need support but can learn fast": 14,
     },
     task: {
-      "Explain FutureHub to 5 students and collect genuine feedback": 20,
+      "Explain Tivoro to 5 students and collect genuine feedback": 20,
       "Forward one message randomly": 5,
       "Ask someone else to promote": 2,
       "Only share if someone pays first": 0,
@@ -2174,7 +2319,7 @@ function ambassadorBand(score) {
   if (score >= 86) return ["Strong ambassador profile", "You show strong initiative, communication maturity and campus leadership potential."];
   if (score >= 72) return ["Promising applicant", "You have a good starting profile. A short interview can help us understand your campus reach and confidence."];
   if (score >= 58) return ["Needs guided onboarding", "You may be suitable after a short training task focused on communication, planning and reporting."];
-  return ["Training recommended first", "Start with a guided FutureHub task before applying for an active ambassador role."];
+  return ["Training recommended first", "Start with a guided Tivoro task before applying for an active ambassador role."];
 }
 
 async function renderAmbassadorResult(data) {
@@ -2184,7 +2329,7 @@ async function renderAmbassadorResult(data) {
   const applicantName = String(data.get("applicantName") || "Applicant").trim();
   const task = data.get("task");
   const whatsappText = encodeURIComponent(
-    `Hello Kidsverse FutureHub, I completed the Campus Ambassador assessment. Name: ${applicantName}. Institution: ${data.get("campusName")}. Mobile: ${data.get("mobile")}. Score: ${score}%. Result: ${title}. Please guide me for the next step.`
+    `Hello Tivoro, I completed the Campus Ambassador assessment. Name: ${applicantName}. Institution: ${data.get("campusName")}. Mobile: ${data.get("mobile")}. Score: ${score}%. Result: ${title}. Please guide me for the next step.`
   );
   ambassadorResult.innerHTML = `
     <div class="ambassador-result-head">
@@ -2201,7 +2346,7 @@ async function renderAmbassadorResult(data) {
     <a class="primary-button role-whatsapp" href="https://wa.me/${whatsappNumber}?text=${whatsappText}" target="_blank" rel="noopener noreferrer">Send Ambassador Result on WhatsApp</a>
   `;
   ambassadorResult.hidden = false;
-  await submitFutureHubLead("child", {
+  await submitTivoroLead("child", {
     formType: "Campus Ambassador Challenge",
     score,
     result: title,
@@ -2253,7 +2398,7 @@ function renderRoleMatcherResult(data) {
   const alternates = ranked.slice(0, 3);
   const skillFocus = top.skills.slice(0, 3);
   const whatsappText = encodeURIComponent(
-    `Hello Kidsverse FutureHub, I used Future Role Finder. Name: ${answers.studentName}. Year: ${answers.year}. Branch: ${answers.branch}. Suggested role: ${top.title}. Goal: ${answers.goal}. Please guide me for the next step.`
+    `Hello Tivoro, I used Future Role Finder. Name: ${answers.studentName}. Year: ${answers.year}. Branch: ${answers.branch}. Suggested role: ${top.title}. Goal: ${answers.goal}. Please guide me for the next step.`
   );
   const roleWhatsapp = `https://wa.me/${whatsappNumber}?text=${whatsappText}`;
 
@@ -2273,7 +2418,7 @@ function renderRoleMatcherResult(data) {
       <article><span>Suggested project</span><p>${top.project}</p></article>
       <article><span>Skill focus</span><p>${skillFocus.join(", ")}</p></article>
       <article class="role-mission-card"><span>30-day mission</span><p>${top.action}</p></article>
-      <article><span>How FutureHub can help</span><p>${top.support}</p></article>
+      <article><span>How Tivoro can help</span><p>${top.support}</p></article>
     </div>
     ${recommendedPathBlock({
       title: "Your career direction is ready. Choose the next step that feels right.",
@@ -2390,7 +2535,7 @@ roleMatcherForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
   const data = new FormData(roleMatcherForm);
   renderRoleMatcherResult(data);
-  await submitFutureHubLead("child", {
+  await submitTivoroLead("child", {
     formType: "Future Role Finder",
     selectedSkills: selectedRoleSkills().join(", "),
     ...formDataToObject(data),
@@ -2408,7 +2553,7 @@ decisionForms.forEach((form) => {
     const data = new FormData(form);
     const plan = form.dataset.decisionForm === "parent" ? parentDecisionPlan(data) : studentDecisionPlan(data);
     renderDecisionResult(form, plan);
-    await submitFutureHubLead(form.dataset.decisionForm === "parent" ? "parent" : "child", {
+    await submitTivoroLead(form.dataset.decisionForm === "parent" ? "parent" : "child", {
       formType: form.dataset.decisionForm === "parent" ? "Child Growth Plan" : "Future Skill Mission",
       recommendation: plan.title,
       ...formDataToObject(data),
@@ -2509,6 +2654,64 @@ templateFilters.forEach((button) => {
 
 templateBudget?.addEventListener("change", filterTemplateCards);
 
+prefillTrustFormFromUrl();
+correctTrustScoreAnchorOffset();
+
+trustForm?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const formData = new FormData(trustForm);
+  const businessName = String(formData.get("businessName") || "").trim();
+  const city = String(formData.get("city") || "").trim();
+  const state = String(formData.get("state") || "").trim();
+  const submitButton = trustForm.querySelector('button[type="submit"]');
+
+  if (!businessName || !city || !state) {
+    renderTrustError("Please complete business details", "Enter business name, city and state to generate a live Digital Trust Score.");
+    return;
+  }
+
+  try {
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Generating Trust Score...";
+    }
+    renderTrustScanning(businessName, city, state);
+    const report = await runServerTrustScore({ businessName, city, state });
+    renderTrustScoreReport(report, { businessName, city, state });
+    await submitTivoroLead("business", {
+      formType: "Digital Trust Score",
+      enteredBusinessName: businessName,
+      city,
+      state,
+      matchedBusinessName: report.business?.name || "",
+      matchedAddress: report.business?.address || "",
+      googleRating: report.business?.rating || "",
+      googleReviews: report.business?.reviews || "",
+      website: report.business?.website || "",
+      trustScore: report.overall,
+      recommendations: (report.recommendations || []).join(" | "),
+      source: report.source || "",
+    });
+  } catch (error) {
+    const code = error?.code || "";
+    const message = error instanceof Error ? error.message : "";
+    if (message === "local-server-required") {
+      renderTrustError("Open the deployed website to run this check", "Live Trust Score needs the Tivoro server because browser-only pages cannot safely read public business profile data.");
+    } else if (code === "missing-google-places-key") {
+      renderTrustError("Live lookup is not connected yet", "The Tivoro live business lookup needs to be connected on the server before this score can be generated.");
+    } else if (code === "business-not-found") {
+      renderTrustError("Business not found", "No matching public business profile was found. Please check the business name, city and state.");
+    } else {
+      renderTrustError("Trust Score could not be generated", message || "Please try again, or send the business name and location to us on WhatsApp for manual review.");
+    }
+  } finally {
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.textContent = "Generate Live Trust Score";
+    }
+  }
+});
+
 healthForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
   const formData = new FormData(healthForm);
@@ -2523,7 +2726,7 @@ healthForm?.addEventListener("submit", async (event) => {
     renderHealthScanning(url.hostname.replace(/^www\./, ""));
     const audit = await runServerWebsiteCheck(url);
     renderHealthResult(audit, audit.finalUrl || url.href);
-    await submitFutureHubLead("business", {
+    await submitTivoroLead("business", {
       formType: "Website Readiness Checker",
       website: audit.finalUrl || url.href,
       domain: audit.domain,
@@ -2540,9 +2743,9 @@ healthForm?.addEventListener("submit", async (event) => {
   } catch (error) {
     const message = error instanceof Error ? error.message : "";
     if (message === "local-server-required") {
-      renderHealthError("Open the deployed website to run this check", "This checker fetches another website's HTML through the FutureHub server. It will work after deployment on Vercel. Local file preview cannot inspect external websites because browsers block cross-site HTML access.");
+      renderHealthError("Open the deployed website to run this check", "This checker fetches another website's HTML through the Tivoro server. It will work after deployment on Vercel. Local file preview cannot inspect external websites because browsers block cross-site HTML access.");
     } else if (message === "website-not-reachable" || message.includes("could not be reached") || message.includes("could not audit")) {
-      renderHealthError("Website is not reachable", "FutureHub could not reach this website. Please try the full URL with https:// or check if the website is live.");
+      renderHealthError("Website is not reachable", "Tivoro could not reach this website. Please try the full URL with https:// or check if the website is live.");
     } else if (message === "not-html" || message.includes("normal HTML")) {
       renderHealthError("This URL is not a normal website page", "Please enter a public website page that returns HTML content, not an image, PDF, file download or app-only endpoint.");
     } else {
@@ -2574,7 +2777,7 @@ guidedForms.forEach((form) => {
     if (!result) return;
     const isBusinessGuided = form.dataset.guidedForm === "business";
     const guidedWhatsapp = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-      `Hello Kidsverse FutureHub, I used the guided finder. Recommended path: ${title}. ${description}. Please help me confirm the next step.`
+      `Hello Tivoro, I used the guided finder. Recommended path: ${title}. ${description}. Please help me confirm the next step.`
     )}`;
     result.innerHTML = `
       <strong>${title}</strong>
@@ -2591,7 +2794,7 @@ guidedForms.forEach((form) => {
       })}
     `;
     result.hidden = false;
-    await submitFutureHubLead(leadTypeForGuidedForm(form.dataset.guidedForm), {
+    await submitTivoroLead(leadTypeForGuidedForm(form.dataset.guidedForm), {
       formType: `${form.dataset.guidedForm} Guided Finder`,
       recommendation: title,
       recommendationDetails: description,
@@ -2620,7 +2823,7 @@ startBusinessPlaceholderTyping();
 renderBusinessSample();
 updateWebsitePriceBuilder();
 filterTemplateCards();
-createFutureHubBot();
+createTivoroBot();
 
 bookingForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -2628,9 +2831,9 @@ bookingForm?.addEventListener("submit", async (event) => {
   setBookingError("");
 
   const message = encodeURIComponent(
-    `Hello Kidsverse FutureHub, I want to discuss and book a meeting. Name: ${data.get("bookingStudent")}. Mobile: ${data.get("bookingMobile")}. I am: ${data.get("bookingLevel")}. Need help with: ${data.get("bookingInterest")}. Preferred support: ${data.get("bookingMode")}. Please guide me with the next step.`
+    `Hello Tivoro, I want to discuss and book a meeting. Name: ${data.get("bookingStudent")}. Mobile: ${data.get("bookingMobile")}. I am: ${data.get("bookingLevel")}. Need help with: ${data.get("bookingInterest")}. Preferred support: ${data.get("bookingMode")}. Please guide me with the next step.`
   );
-  await submitFutureHubLead(leadTypeForBooking(data.get("bookingLevel")), {
+  await submitTivoroLead(leadTypeForBooking(data.get("bookingLevel")), {
     formType: "WhatsApp Meeting Request",
     ...formDataToObject(data),
   });
