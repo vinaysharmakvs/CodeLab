@@ -1,4 +1,4 @@
-window.futureHubSheetEndpoints = {
+window.tivoroSheetEndpoints = {
   parent: "",
   child: "",
   business: "",
