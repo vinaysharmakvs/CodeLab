@@ -175,7 +175,7 @@ function analyzeHtml(url, html, responseMs, finalUrl) {
   }
 
   return {
-    source: "FutureHub Website Readiness Checker",
+    source: "Tivoro Website Readiness Checker",
     requestedUrl: url.href,
     finalUrl,
     domain: url.hostname.replace(/^www\./, ""),
@@ -223,7 +223,7 @@ async function fetchWebsite(url) {
   const response = await fetch(url.href, {
     redirect: "follow",
     headers: {
-      "user-agent": "KidsverseFutureHub-WebsiteChecker/1.0",
+      "user-agent": "Tivoro-WebsiteChecker/1.0",
       accept: "text/html,application/xhtml+xml",
     },
   });
