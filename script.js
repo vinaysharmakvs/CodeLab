@@ -1846,10 +1846,20 @@ function escapeHtml(value) {
     .replace(/'/g, "&#039;");
 }
 
-function renderTrustError(title, message) {
+function renderTrustError(title, message, action = null) {
   if (!trustResult) return;
-  trustResult.innerHTML = `<div class="health-error trust-error"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(message)}</span></div>`;
+  const actionMarkup = action?.href
+    ? `<a class="primary-button trust-error-action" href="${escapeHtml(action.href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(action.label || "Continue on WhatsApp")}</a>`
+    : "";
+  trustResult.innerHTML = `<div class="health-error trust-error"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(message)}</span>${actionMarkup}</div>`;
   trustResult.hidden = false;
+}
+
+function trustManualReviewLink({ businessName, city, state }) {
+  const text = encodeURIComponent(
+    `Hello Tivoro, I tried the Digital Trust Score. Please review my business manually. Business: ${businessName}. Location: ${city}, ${state}.`
+  );
+  return `https://wa.me/${whatsappNumber}?text=${text}`;
 }
 
 function prefillTrustFormFromUrl() {
@@ -2009,11 +2019,11 @@ function renderTrustScanning(name, city, state) {
       <div>
         <span>Checking ${escapeHtml(name)} in ${escapeHtml(city)}, ${escapeHtml(state)}</span>
         <h3>Generating live Digital Trust Score...</h3>
-        <p>Tivoro is checking public business profile signals and website trust signals where available.</p>
+        <p>Tivoro is inspecting matching live website signals from the server, just like Website Checker.</p>
       </div>
       <div class="scan-step-list">
-        <span>Business profile lookup</span>
-        <span>Rating and reviews</span>
+        <span>Website lookup</span>
+        <span>Brand and location match</span>
         <span>Website presence</span>
         <span>Social proof signals</span>
         <span>Trust recommendations</span>
@@ -2685,8 +2695,6 @@ trustForm?.addEventListener("submit", async (event) => {
       state,
       matchedBusinessName: report.business?.name || "",
       matchedAddress: report.business?.address || "",
-      googleRating: report.business?.rating || "",
-      googleReviews: report.business?.reviews || "",
       website: report.business?.website || "",
       trustScore: report.overall,
       recommendations: (report.recommendations || []).join(" | "),
@@ -2696,13 +2704,29 @@ trustForm?.addEventListener("submit", async (event) => {
     const code = error?.code || "";
     const message = error instanceof Error ? error.message : "";
     if (message === "local-server-required") {
-      renderTrustError("Open the deployed website to run this check", "Live Trust Score needs the Tivoro server because browser-only pages cannot safely read public business profile data.");
-    } else if (code === "missing-google-places-key") {
-      renderTrustError("Live lookup is not connected yet", "The Tivoro live business lookup needs to be connected on the server before this score can be generated.");
-    } else if (code === "business-not-found") {
-      renderTrustError("Business not found", "No matching public business profile was found. Please check the business name, city and state.");
+      renderTrustError(
+        "Open the deployed website to run this check",
+        "Digital Trust Score needs the Tivoro server because browser-only pages cannot safely inspect live website data.",
+        { href: trustManualReviewLink({ businessName, city, state }), label: "Send for Manual Review" }
+      );
+    } else if (code === "website-not-found") {
+      renderTrustError(
+        "Matching website could not be found automatically",
+        "Tivoro could not confidently find matching live website signals from the business name and location. Send the details for manual review and we will check it properly.",
+        { href: trustManualReviewLink({ businessName, city, state }), label: "Send for Manual Review" }
+      );
+    } else if (code === "invalid-url") {
+      renderTrustError(
+        "Trust Score could not be generated",
+        "Tivoro could not inspect matching live website signals from the business details. Send the details for manual review.",
+        { href: trustManualReviewLink({ businessName, city, state }), label: "Send for Manual Review" }
+      );
     } else {
-      renderTrustError("Trust Score could not be generated", message || "Please try again, or send the business name and location to us on WhatsApp for manual review.");
+      renderTrustError(
+        "Trust Score could not be generated",
+        message || "Please try again, or send the business name and location to us on WhatsApp for manual review.",
+        { href: trustManualReviewLink({ businessName, city, state }), label: "Send for Manual Review" }
+      );
     }
   } finally {
     if (submitButton) {
