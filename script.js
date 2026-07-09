@@ -2045,6 +2045,11 @@ async function runServerTrustScore({ businessName, city, state }) {
   const request = withTimeout((signal) => fetch(endpoint, { cache: "no-store", signal }), 60000);
   const response = await request.run;
   const data = await response.json().catch(() => null);
+  if (data?.error === "missing-google-places-key") {
+    const error = new Error("The local preview is still serving the older Google lookup response.");
+    error.code = "stale-google-endpoint";
+    throw error;
+  }
   if (!response.ok || data?.error) {
     const error = new Error(data?.message || "Live Trust Score could not be generated.");
     error.code = data?.error || "trust-score-error";
@@ -2713,6 +2718,12 @@ trustForm?.addEventListener("submit", async (event) => {
       renderTrustError(
         "Matching website could not be found automatically",
         "Tivoro could not confidently find matching live website signals from the business name and location. Send the details for manual review and we will check it properly.",
+        { href: trustManualReviewLink({ businessName, city, state }), label: "Send for Manual Review" }
+      );
+    } else if (code === "stale-google-endpoint" || code === "missing-google-places-key") {
+      renderTrustError(
+        "Trust Score now works without Google API",
+        "This preview is still serving an older lookup response. Refresh the page or restart the local preview server, then try again. Tivoro now checks live website signals from the business name and location.",
         { href: trustManualReviewLink({ businessName, city, state }), label: "Send for Manual Review" }
       );
     } else if (code === "invalid-url") {
