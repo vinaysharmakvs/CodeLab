@@ -70,6 +70,25 @@ const tivoroSheetEndpoints = {
   business: "",
   ...(window.tivoroSheetEndpoints || {}),
 };
+const defaultBookingGoogleForm = {
+  endpoint: "",
+  pendingKey: "tivoroPendingBookingLead",
+  entries: {
+    name: "",
+    mobile: "",
+    userType: "",
+    requirement: "",
+    support: "",
+  },
+};
+const tivoroBookingGoogleForm = {
+  ...defaultBookingGoogleForm,
+  ...(window.tivoroGoogleForms?.booking || {}),
+  entries: {
+    ...defaultBookingGoogleForm.entries,
+    ...(window.tivoroGoogleForms?.booking?.entries || {}),
+  },
+};
 
 function recommendedPathBlock({ title, copy, whatsappHref, detailHref, detailText }) {
   return `
@@ -114,6 +133,61 @@ async function submitTivoroLead(type, payload) {
     console.warn("Tivoro lead submission failed", error);
     return false;
   }
+}
+
+async function submitBookingToGoogleForm(data) {
+  if (!tivoroBookingGoogleForm.endpoint) return false;
+
+  const payload = new URLSearchParams();
+  const entryValues = {
+    name: data.get("bookingStudent"),
+    mobile: data.get("bookingMobile"),
+    userType: data.get("bookingLevel"),
+    requirement: data.get("bookingInterest"),
+    support: data.get("bookingMode"),
+  };
+
+  Object.entries(tivoroBookingGoogleForm.entries).forEach(([key, entryId]) => {
+    if (!entryId) return;
+    payload.set(entryId, String(entryValues[key] || "").trim());
+  });
+
+  if (window.location.protocol === "file:") {
+    try {
+      localStorage.setItem(tivoroBookingGoogleForm.pendingKey, payload.toString());
+    } catch (error) {
+      console.warn("Tivoro booking lead could not be saved for later submission.", error);
+    }
+    return false;
+  }
+
+  try {
+    await fetch(tivoroBookingGoogleForm.endpoint, {
+      method: "POST",
+      mode: "no-cors",
+      body: payload,
+    });
+    return true;
+  } catch (error) {
+    console.warn("Tivoro booking Google Form submission failed", error);
+    return false;
+  }
+}
+
+function submitPendingBookingGoogleForm() {
+  if (!tivoroBookingGoogleForm.endpoint || window.location.protocol === "file:") return;
+  const pendingPayload = localStorage.getItem(tivoroBookingGoogleForm.pendingKey);
+  if (!pendingPayload) return;
+
+  fetch(tivoroBookingGoogleForm.endpoint, {
+    method: "POST",
+    mode: "no-cors",
+    body: new URLSearchParams(pendingPayload),
+  })
+    .then(() => localStorage.removeItem(tivoroBookingGoogleForm.pendingKey))
+    .catch((error) => {
+      console.warn("Pending Tivoro booking lead could not be submitted.", error);
+    });
 }
 
 function leadTypeForGuidedForm(type) {
@@ -2075,8 +2149,6 @@ function renderTrustScoreReport(report, formValues) {
         <p>${escapeHtml(report.summary || "Digital Trust Score generated from public signals.")}</p>
         <div class="trust-business-facts">
           ${business.address ? `<strong>${escapeHtml(business.address)}</strong>` : ""}
-          ${business.rating ? `<span>${escapeHtml(business.rating)} star rating</span>` : ""}
-          ${Number.isFinite(Number(business.reviews)) ? `<span>${escapeHtml(business.reviews)} reviews</span>` : ""}
           ${business.website ? `<a href="${escapeHtml(business.website)}" target="_blank" rel="noopener noreferrer">Website</a>` : ""}
           ${business.googleUrl ? `<a href="${escapeHtml(business.googleUrl)}" target="_blank" rel="noopener noreferrer">Google Profile</a>` : ""}
         </div>
@@ -2859,6 +2931,7 @@ renderBusinessSample();
 updateWebsitePriceBuilder();
 filterTemplateCards();
 createTivoroBot();
+submitPendingBookingGoogleForm();
 
 bookingForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -2868,9 +2941,10 @@ bookingForm?.addEventListener("submit", async (event) => {
   const message = encodeURIComponent(
     `Hello Tivoro, I want to discuss and book a meeting. Name: ${data.get("bookingStudent")}. Mobile: ${data.get("bookingMobile")}. I am: ${data.get("bookingLevel")}. Need help with: ${data.get("bookingInterest")}. Preferred support: ${data.get("bookingMode")}. Please guide me with the next step.`
   );
-  await submitTivoroLead(leadTypeForBooking(data.get("bookingLevel")), {
+  submitTivoroLead(leadTypeForBooking(data.get("bookingLevel")), {
     formType: "WhatsApp Meeting Request",
     ...formDataToObject(data),
   });
+  submitBookingToGoogleForm(data);
   window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank", "noopener,noreferrer");
 });
