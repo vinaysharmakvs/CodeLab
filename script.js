@@ -110,6 +110,27 @@ const tivoroParentCourseGoogleForm = {
     ...(window.tivoroGoogleForms?.parentCourseFinder?.entries || {}),
   },
 };
+const defaultStudentCourseGoogleForm = {
+  endpoint: "",
+  pendingKey: "tivoroPendingStudentCourseLead",
+  entries: {
+    studentName: "",
+    mobile: "",
+    stage: "",
+    skill: "",
+    interest: "",
+    goal: "",
+    support: "",
+  },
+};
+const tivoroStudentCourseGoogleForm = {
+  ...defaultStudentCourseGoogleForm,
+  ...(window.tivoroGoogleForms?.studentCourseFinder || {}),
+  entries: {
+    ...defaultStudentCourseGoogleForm.entries,
+    ...(window.tivoroGoogleForms?.studentCourseFinder?.entries || {}),
+  },
+};
 
 function recommendedPathBlock({ title, copy, whatsappHref, detailHref, detailText }) {
   return `
@@ -255,6 +276,53 @@ function submitPendingParentCourseGoogleForm() {
     .then(() => localStorage.removeItem(tivoroParentCourseGoogleForm.pendingKey))
     .catch((error) => {
       console.warn("Pending Tivoro parent course lead could not be submitted.", error);
+    });
+}
+
+async function submitStudentCourseToGoogleForm(data) {
+  if (!tivoroStudentCourseGoogleForm.endpoint) return false;
+
+  const payload = new URLSearchParams();
+  Object.entries(tivoroStudentCourseGoogleForm.entries).forEach(([key, entryId]) => {
+    if (!entryId) return;
+    payload.set(entryId, String(data.get(key) || "").trim());
+  });
+
+  if (window.location.protocol === "file:") {
+    try {
+      localStorage.setItem(tivoroStudentCourseGoogleForm.pendingKey, payload.toString());
+    } catch (error) {
+      console.warn("Tivoro student course lead could not be saved for later submission.", error);
+    }
+    return false;
+  }
+
+  try {
+    await fetch(tivoroStudentCourseGoogleForm.endpoint, {
+      method: "POST",
+      mode: "no-cors",
+      body: payload,
+    });
+    return true;
+  } catch (error) {
+    console.warn("Tivoro student course Google Form submission failed", error);
+    return false;
+  }
+}
+
+function submitPendingStudentCourseGoogleForm() {
+  if (!tivoroStudentCourseGoogleForm.endpoint || window.location.protocol === "file:") return;
+  const pendingPayload = localStorage.getItem(tivoroStudentCourseGoogleForm.pendingKey);
+  if (!pendingPayload) return;
+
+  fetch(tivoroStudentCourseGoogleForm.endpoint, {
+    method: "POST",
+    mode: "no-cors",
+    body: new URLSearchParams(pendingPayload),
+  })
+    .then(() => localStorage.removeItem(tivoroStudentCourseGoogleForm.pendingKey))
+    .catch((error) => {
+      console.warn("Pending Tivoro student course lead could not be submitted.", error);
     });
 }
 
@@ -2977,6 +3045,8 @@ guidedForms.forEach((form) => {
     });
     if (form.dataset.guidedForm === "parent") {
       submitParentCourseToGoogleForm(data);
+    } else if (form.dataset.guidedForm === "student") {
+      submitStudentCourseToGoogleForm(data);
     }
   });
 });
@@ -3004,6 +3074,7 @@ filterTemplateCards();
 createTivoroBot();
 submitPendingBookingGoogleForm();
 submitPendingParentCourseGoogleForm();
+submitPendingStudentCourseGoogleForm();
 
 bookingForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
