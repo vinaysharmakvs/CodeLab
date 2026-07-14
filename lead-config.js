@@ -42,4 +42,22 @@ window.tivoroGoogleForms = {
       support: "entry.1989377159",
     },
   },
+  collegeCareerMatcher: {
+    endpoint: "https://docs.google.com/forms/d/e/1FAIpQLSeHPb8pc2k3ntiznOwHxp8TQoZCTew7NgtsrFjD9s68y5Ghhg/formResponse",
+    pendingKey: "tivoroPendingCollegeCareerLead",
+    entries: {
+      studentName: "entry.1797137218",
+      mobile: "entry.884614161",
+      email: "entry.1908884117",
+      year: "entry.891807963",
+      branch: "entry.479253871",
+      confidence: "entry.534299722",
+      interest: "entry.814722309",
+      workStyle: "entry.2110954081",
+      strength: "entry.62441459",
+      goal: "entry.37453035",
+      selectedSkills: "entry.1431097176",
+      recommendedRole: "entry.584976130",
+    },
+  },
 };
