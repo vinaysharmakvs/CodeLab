@@ -29,4 +29,17 @@ window.tivoroGoogleForms = {
       support: "entry.890482539",
     },
   },
+  studentCourseFinder: {
+    endpoint: "https://docs.google.com/forms/d/e/1FAIpQLScnchwDw_6DhT-xnYMCp9pjJhuCTBWsuUWsijakJxcSEvA6Eg/formResponse",
+    pendingKey: "tivoroPendingStudentCourseLead",
+    entries: {
+      studentName: "entry.21255406",
+      mobile: "entry.91921572",
+      stage: "entry.689351597",
+      skill: "entry.769816598",
+      interest: "entry.1563008121",
+      goal: "entry.1551540805",
+      support: "entry.1989377159",
+    },
+  },
 };
