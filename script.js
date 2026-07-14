@@ -131,6 +131,32 @@ const tivoroStudentCourseGoogleForm = {
     ...(window.tivoroGoogleForms?.studentCourseFinder?.entries || {}),
   },
 };
+const defaultCollegeCareerGoogleForm = {
+  endpoint: "",
+  pendingKey: "tivoroPendingCollegeCareerLead",
+  entries: {
+    studentName: "",
+    mobile: "",
+    email: "",
+    year: "",
+    branch: "",
+    confidence: "",
+    interest: "",
+    workStyle: "",
+    strength: "",
+    goal: "",
+    selectedSkills: "",
+    recommendedRole: "",
+  },
+};
+const tivoroCollegeCareerGoogleForm = {
+  ...defaultCollegeCareerGoogleForm,
+  ...(window.tivoroGoogleForms?.collegeCareerMatcher || {}),
+  entries: {
+    ...defaultCollegeCareerGoogleForm.entries,
+    ...(window.tivoroGoogleForms?.collegeCareerMatcher?.entries || {}),
+  },
+};
 
 function recommendedPathBlock({ title, copy, whatsappHref, detailHref, detailText }) {
   return `
@@ -323,6 +349,75 @@ function submitPendingStudentCourseGoogleForm() {
     .then(() => localStorage.removeItem(tivoroStudentCourseGoogleForm.pendingKey))
     .catch((error) => {
       console.warn("Pending Tivoro student course lead could not be submitted.", error);
+    });
+}
+
+function careerRoleRecommendationForGoogleForm(data) {
+  if (!Array.isArray(careerRoleData)) return "";
+  const answers = {
+    branch: String(data.get("branch") || ""),
+    confidence: String(data.get("confidence") || ""),
+    interest: String(data.get("interest") || ""),
+    workStyle: String(data.get("workStyle") || ""),
+    strength: String(data.get("strength") || ""),
+    goal: String(data.get("goal") || ""),
+  };
+  const skills = selectedRoleSkills();
+  const top = careerRoleData
+    .map((role) => ({ ...role, score: scoreCareerRole(role, answers, skills) }))
+    .sort((a, b) => b.score - a.score)[0];
+  return top ? `${top.title} (${top.score}%)` : "";
+}
+
+async function submitCollegeCareerToGoogleForm(data) {
+  if (!tivoroCollegeCareerGoogleForm.endpoint) return false;
+
+  const entryValues = {
+    ...formDataToObject(data),
+    selectedSkills: selectedRoleSkills().join(", "),
+    recommendedRole: careerRoleRecommendationForGoogleForm(data),
+  };
+  const payload = new URLSearchParams();
+  Object.entries(tivoroCollegeCareerGoogleForm.entries).forEach(([key, entryId]) => {
+    if (!entryId) return;
+    payload.set(entryId, String(entryValues[key] || "").trim());
+  });
+
+  if (window.location.protocol === "file:") {
+    try {
+      localStorage.setItem(tivoroCollegeCareerGoogleForm.pendingKey, payload.toString());
+    } catch (error) {
+      console.warn("Tivoro college career lead could not be saved for later submission.", error);
+    }
+    return false;
+  }
+
+  try {
+    await fetch(tivoroCollegeCareerGoogleForm.endpoint, {
+      method: "POST",
+      mode: "no-cors",
+      body: payload,
+    });
+    return true;
+  } catch (error) {
+    console.warn("Tivoro college career Google Form submission failed", error);
+    return false;
+  }
+}
+
+function submitPendingCollegeCareerGoogleForm() {
+  if (!tivoroCollegeCareerGoogleForm.endpoint || window.location.protocol === "file:") return;
+  const pendingPayload = localStorage.getItem(tivoroCollegeCareerGoogleForm.pendingKey);
+  if (!pendingPayload) return;
+
+  fetch(tivoroCollegeCareerGoogleForm.endpoint, {
+    method: "POST",
+    mode: "no-cors",
+    body: new URLSearchParams(pendingPayload),
+  })
+    .then(() => localStorage.removeItem(tivoroCollegeCareerGoogleForm.pendingKey))
+    .catch((error) => {
+      console.warn("Pending Tivoro college career lead could not be submitted.", error);
     });
 }
 
@@ -2758,11 +2853,12 @@ roleMatcherForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
   const data = new FormData(roleMatcherForm);
   renderRoleMatcherResult(data);
-  await submitTivoroLead("child", {
+  submitTivoroLead("child", {
     formType: "Future Role Finder",
     selectedSkills: selectedRoleSkills().join(", "),
     ...formDataToObject(data),
   });
+  submitCollegeCareerToGoogleForm(data);
 });
 
 ambassadorForm?.addEventListener("submit", async (event) => {
@@ -3075,6 +3171,7 @@ createTivoroBot();
 submitPendingBookingGoogleForm();
 submitPendingParentCourseGoogleForm();
 submitPendingStudentCourseGoogleForm();
+submitPendingCollegeCareerGoogleForm();
 
 bookingForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
