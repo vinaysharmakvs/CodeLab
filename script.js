@@ -438,6 +438,8 @@ const tivoroBotQuickQuestions = [
   "I am a parent",
   "I am a student",
   "I am a business owner",
+  "Campus ambassador",
+  "Website pricing",
   "Show detailed pages",
   "Talk on WhatsApp",
 ];
@@ -446,27 +448,32 @@ const tivoroBotAnswers = [
   {
     keywords: ["child", "parent", "kid", "grade", "school", "course", "coding", "scratch", "python", "app"],
     answer:
-      "For parents, the cleanest start is Tivoro AI. It asks a few calm questions and suggests whether your child should begin with Scratch, Python, AI, web apps, projects or guidance. You can also open the Parents page for the detailed course finder.",
+      "For parents, the cleanest start is Tivoro AI or the Parent Course Finder on the Parents page. It asks about the child, grade, confidence, priority and preferred class style, then suggests whether to start with Scratch, Python, AI, web apps, projects or counselling first.",
   },
   {
     keywords: ["start tivoro", "tivoro", "ai guide", "ai advisor", "where should i start", "not sure", "confused"],
     answer:
-      "Start with Tivoro AI. It is the fastest way to choose between Student, Parent and Business paths, then it gives a personalized recommendation with two clear next steps: move to WhatsApp or explore the detailed page.",
+      "Start with Tivoro AI. It is the fastest route for parents, students and businesses: answer a few questions, get a personalized recommendation, then choose WhatsApp guidance or the detailed page.",
   },
   {
     keywords: ["student", "college", "internship", "project", "final year", "fyp", "resume", "interview", "career", "role", "python", "ai champions", "teen", "chatbot", "agent", "prompt", "gemini"],
     answer:
-      "For students, Tivoro AI can suggest the right skill mission. The detailed Students page covers coding, AI, Python, JavaScript, C/C++/Java, live projects, internships, Future Role Finder and interview support.",
+      "For students, use the Students page for coding, AI, Python, JavaScript, C/C++/Java, live projects, Future Role Finder and interview support. College students should open the Career page for AI-Powered Live Product Development Internships, campus ambassador roles, project internships and portfolio-building tracks.",
+  },
+  {
+    keywords: ["career", "future leaders", "campus", "ambassador", "apply", "applicant", "challenge", "college captain", "student partner", "growth partner", "creator intern", "project intern", "business development intern"],
+    answer:
+      "Open the Career page for Tivoro Future Leaders Network. College students can apply as Campus Ambassador, Student Growth Partner, Workshop Coordinator, Content Creator Intern, Tech Project Intern or Business Development Intern. The page includes a 15-minute ambassador readiness challenge and a WhatsApp result flow.",
   },
   {
     keywords: ["business", "website", "site", "salon", "clinic", "store", "restaurant", "cafe", "real estate", "ngo", "startup"],
     answer:
-      "For business owners, Tivoro AI can map your need first. The detailed Business page has the smart website mapper, website quote builder, demos, website readiness checker, WhatsApp lead ideas, SEO and automation options.",
+      "For business owners, use Tivoro AI or the Business page. You can describe your business need, see recommended website features, build a live price estimate, view sample website categories, check website readiness and explore Digital Trust Score, SEO, WhatsApp leads and automation.",
   },
   {
-    keywords: ["website checker", "readiness", "seo", "meta", "audit", "health", "score", "scan"],
+    keywords: ["website checker", "readiness", "seo", "meta", "audit", "health", "score", "scan", "digital trust score", "trust score", "google review", "business trust"],
     answer:
-      "The Website Readiness Checker is on the Business page. It reviews a live website for SEO basics, headings, images, mobile signals, trust signals and missing growth features.",
+      "The Business page has two useful tools: Website Readiness Checker for live website basics like SEO, headings, images and trust signals, and Digital Trust Score for understanding digital confidence before spending on marketing.",
   },
   {
     keywords: ["social", "instagram", "facebook", "marketing", "lead", "whatsapp", "ads", "growth"],
@@ -476,22 +483,17 @@ const tivoroBotAnswers = [
   {
     keywords: ["school", "college", "institution", "workshop", "camp", "hackathon", "club"],
     answer:
-      "For schools and colleges, open the Institutions page. Tivoro can support AI clubs, coding workshops, hackathons, camps, project sprints, teacher/team upskilling and digital admission systems.",
+      "For schools and colleges, open the Institutions page. Tivoro can support AI clubs, coding workshops, hackathons, camps, project sprints, teacher/team upskilling, digital admission systems and student ambassador outreach.",
   },
   {
-    keywords: ["price", "pricing", "cost", "budget", "package", "fee"],
+    keywords: ["price", "pricing", "cost", "budget", "package", "fee", "quote", "estimate", "add-on", "addon"],
     answer:
-      "For learning batches, 1:1 classes are ₹4,000 for 8 sessions. Group classes are ₹2,000-₹3,000 for 8 sessions. Website pricing is handled on the Business page with a feature-based quote builder, so you pay only for selected features.",
-  },
-  {
-    keywords: ["campus", "ambassador", "apply", "applicant", "challenge"],
-    answer:
-      "Campus Ambassador information is part of the student journey. Start with Tivoro AI or open the Students page so we can guide the right next step.",
+      "For school learning batches, 1:1 classes are Rs 4,000 for 8 sessions and group classes are Rs 2,000-Rs 3,000 for 8 sessions. For college internships, Career page tracks start from Rs 1,999-Rs 2,999 for Starter and go up to Rs 24,999-Rs 34,999 for Career Accelerator. For websites, the Business page has a live quote builder starting at Rs 7,999.",
   },
   {
     keywords: ["book", "call", "slot", "counselling", "guidance", "talk", "contact", "whatsapp"],
     answer:
-      "You can book a counselling or service discussion slot from the homepage. You can also WhatsApp us at 8826758881 for course guidance, business website discussion, internship/project support, workshops or a custom digital growth plan.",
+      "Use Book Slot on the homepage to share your details and continue on WhatsApp. Tivoro supports course guidance, parent course finder, student path finder, college career matcher, ambassador applications, business websites, internships, workshops and custom digital growth plans.",
   },
   {
     keywords: ["india", "usa", "singapore", "middle east", "online", "location", "rehan"],
@@ -613,7 +615,7 @@ function syncProfileLinks(profile) {
 
 function inferProfileFromPage() {
   const page = window.location.pathname.split("/").pop();
-  if (page === "students.html" || page === "students.txt") return "student";
+  if (page === "students.html" || page === "students.txt" || page === "career.html" || page === "career.txt") return "student";
   if (page === "parents.html" || page === "parents.txt") return "parent";
   if (page === "business.html" || page === "business.txt" || page === "institutions.html" || page === "institutions.txt") return "business";
   return "";
@@ -2532,14 +2534,18 @@ function createTivoroBot() {
         return;
       }
       if (query.includes("student")) {
-        addMessage("Best next step: open Tivoro AI in Student mode for a skill mission, or use the Students page for coding, AI, projects, internships and Future Role Finder.", "bot");
+        addMessage("Best next step: open Tivoro AI in Student mode for a skill mission, use the Students page for coding, AI, projects and Future Role Finder, or open Career for campus ambassador and student role opportunities.", "bot");
         return;
       }
       if (query.includes("business")) {
         addMessage("Best next step: open Tivoro AI in Business mode for a growth roadmap, or use the Business page for website pricing, demos, checker and automation options.", "bot");
         return;
       }
-      addMessage("Start with the Tivoro AI button on the homepage. It gives the shortest path: choose Student, Parent or Business, answer a few questions, then move to WhatsApp or the detailed page.", "bot");
+      if (query.includes("show detailed")) {
+        addMessage("Detailed pages: Students for courses and career matcher, Career for campus ambassador and student roles, Parents for child course guidance, Business for websites and digital growth tools, About for founders, FAQ for common questions, and Book Slot for WhatsApp discussion.", "bot");
+        return;
+      }
+      addMessage("Start with the Tivoro AI button on the homepage. It gives the shortest path: choose Student, Parent or Business, answer a few questions, then move to WhatsApp or explore the detailed page.", "bot");
       return;
     }
     if (query.includes("whatsapp") || query.includes("talk")) {
