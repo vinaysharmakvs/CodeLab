@@ -3060,14 +3060,16 @@ code {
 }
 
 .site-footer .footer-whatsapp-icon {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 112px;
+  min-height: 46px;
+  padding: 0 18px;
+  border-radius: 8px;
   color: #ffffff;
   background: #25d366;
-  font-size: 1.15rem;
+  font-size: 0.9rem;
   line-height: 1;
   text-decoration: none;
   box-shadow: 0 14px 28px rgba(37, 211, 102, 0.24);
@@ -13370,18 +13372,8 @@ body:not(.profile-filter-ready) [data-profile-section] {
 }
 
 .tivoro-career-page .ambassador-highlights span::before {
-  position: absolute;
-  left: 13px;
-  display: grid;
-  place-items: center;
-  width: 20px;
-  height: 20px;
-  color: #07111f;
-  border-radius: 6px;
-  background: linear-gradient(135deg, var(--career-sun), var(--career-mint));
-  content: "âœ“";
-  font-size: 0.78rem;
-  font-weight: 950;
+  display: none;
+  content: none;
 }
 
 .tivoro-career-page .ambassador-highlights span:hover {
@@ -13554,6 +13546,12 @@ body:not(.profile-filter-ready) [data-profile-section] {
 .tivoro-career-page #ambassador-challenge .ambassador-highlights span {
   width: 100%;
   min-height: 52px;
+  padding-left: 16px;
+}
+
+.tivoro-career-page #ambassador-challenge .ambassador-highlights span::before {
+  display: none;
+  content: none;
 }
 
 .tivoro-career-page #ambassador-challenge .ambassador-challenge {
