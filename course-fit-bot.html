@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Course Fit Bot | Tivoro</title>
     <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
@@ -70,21 +73,24 @@
             placeholder="Start typing the learner requirement..."
             required
           ></textarea>
+          <div class="course-fit-actions">
+            <button class="primary-button course-fit-main-cta" type="submit"><span>Find Best-Fit Course</span><small>AI-style recommendation</small></button>
+          </div>
           <div class="course-fit-prompts" aria-label="Quick requirement examples">
             <button type="button" data-course-prompt="My child is new to coding and wants to make games with visual block coding.">New to coding</button>
             <button type="button" data-course-prompt="My child already knows Scratch and wants to move toward Python.">Scratch to Python</button>
             <button type="button" data-course-prompt="My child wants to build websites using HTML, CSS and JavaScript.">Websites</button>
             <button type="button" data-course-prompt="My child is interested in mobile app development and practical app projects.">Mobile apps</button>
+            <button type="button" data-course-prompt="My child wants to learn AI and Python with practical projects.">AI + Python</button>
+            <button type="button" data-course-prompt="My child is interested in cyber security, ethical hacking and data security foundations.">Cyber security</button>
+            <button type="button" data-course-prompt="My child wants computer science competitions like ACSL or USACO.">Competitions</button>
           </div>
           <div class="course-fit-path-chips" aria-label="Parent-friendly learning goals">
             <button type="button" data-course-append=" The parent wants confidence building and a course that feels enjoyable, not stressful.">Confidence first</button>
             <button type="button" data-course-append=" The family wants a portfolio-style project that the child can show at the end.">Project outcome</button>
             <button type="button" data-course-append=" The learner prefers a gentle beginner path with visual examples and weekly progress.">Gentle start</button>
             <button type="button" data-course-append=" The learner is ready for a more serious skill path with coding practice and homework.">Serious track</button>
-          </div>
-          <div class="course-fit-actions">
-            <button class="primary-button course-fit-main-cta" type="submit"><span>Find Best-Fit Course</span><small>AI-style recommendation</small></button>
-            <button class="secondary-button course-fit-secondary-cta" type="button" data-course-example>Fill Sample Brief</button>
+            <button type="button" data-course-append=" The parent is interested in current camps, short-term batches or holiday learning programs.">Current Camps</button>
           </div>
           <p class="course-fit-error" data-course-error hidden></p>
         </form>
@@ -122,6 +128,6 @@
       <a class="footer-whatsapp-icon" href="https://wa.me/16502294307" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">WhatsApp</a>
     </footer>
 
-    <script src="course-fit-bot.js?v=20260721-14"></script>
+    <script src="course-fit-bot.js?v=20260721-21"></script>
   </body>
 </html>
