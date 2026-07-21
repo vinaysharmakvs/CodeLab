@@ -1,0 +1,568 @@
+YOUNGGATES COURSE KNOWLEDGE BASE
+Bot-ready text dataset
+Source restriction: Only content published on https://www.younggates.com/
+Reviewed: 21 July 2026
+
+============================================================
+A. YOUNGGATES PLATFORM INFORMATION
+============================================================
+
+Brand: YoungGates
+
+Official website:
+https://www.younggates.com/
+
+Main offering:
+Online and in-person classes for K-12 students.
+
+Subjects explicitly mentioned by YoungGates:
+- Coding
+- Math
+- English
+- Robotics
+- Gaming
+- Other STEM and enrichment subjects
+
+Learning format explicitly mentioned:
+- Personalized 1:1 online classes
+- In-person group classes at Bay Area locations
+- Interactive live classes
+- Hands-on, project-based learning
+- Personalized learning based on student requirements
+- Flexible schedules
+- Personal dashboard
+- Assignments
+- Video recordings of classes
+- Online support
+- Qualified and experienced teachers
+
+General coding age range stated on the About page:
+Kids and teens aged 8-18.
+
+General bot note:
+Some individual programs may publish a different age or grade range. Use the range on the individual program page when it is available.
+
+============================================================
+B. REGULAR CLASSES
+============================================================
+
+------------------------------------------------------------
+COURSE ID: YG-CLASS-001
+COURSE NAME: Level 1 – Gaming/Animation Block Coding
+PROGRAM TYPE: Regular class
+CATEGORY: Coding, Game Development, Animation
+TECHNOLOGY/PLATFORM: Scratch
+LEVEL: Level 1 / Beginner-friendly
+AGE OR GRADE: Not specified on the public course page reviewed
+DURATION SHOWN: 60
+DURATION UNIT: Not clearly stated on the public page
+PRICE SHOWN:
+- $199 monthly
+- $599 for a 12-class package
+
+OFFICIAL COURSE DESCRIPTION:
+Scratch is a block-based visual programming language. YoungGates describes it as a suitable first programming language for children before progressing to advanced coding.
+
+STUDENTS CREATE:
+- Games
+- Animated stories
+- Interactive images
+- Songs
+- Fun and interactive Scratch projects
+
+STATED LEARNING BENEFITS:
+- Logical thinking
+- Problem-solving
+- Creative project building
+- Preparation for future programming languages
+- Ability to create with computers
+
+GOOD MATCH FOR PARENT QUERIES:
+- My child is new to coding.
+- My child wants to create games.
+- My child likes animation and stories.
+- I want an easy first coding course.
+- My child needs visual or block-based coding.
+- I want Scratch classes.
+- My child is not ready for text-based programming.
+
+NOT THE BEST MATCH WHEN:
+- The student specifically wants Python, Java, SQL, mobile applications, or professional web development.
+- The student has already mastered introductory Scratch and wants a higher level.
+
+OFFICIAL URL:
+https://www.younggates.com/Classes/level-1-gaminganimation-block-coding/
+
+------------------------------------------------------------
+COURSE ID: YG-CLASS-002
+COURSE NAME: Level 2 – Gaming/Animation Block Coding
+PROGRAM TYPE: Regular class
+CATEGORY: Coding, Game Development, Animation
+LEVEL: Level 2
+AGE OR GRADE: Not specified in the publicly indexed YoungGates content reviewed
+PREREQUISITE: Not specified
+CURRICULUM DETAILS: Not available in the publicly indexed page content reviewed
+
+BOT MATCHING GUIDANCE:
+Recommend as a possible next step when a parent says the student:
+- Has already completed beginner Scratch or block coding
+- Wants more advanced game or animation projects
+- Is looking for the next level after Level 1 Gaming/Animation Block Coding
+
+IMPORTANT:
+Confirm the student's previous Scratch experience and consult YoungGates before final enrollment because the public page reviewed does not state prerequisites.
+
+OFFICIAL URL:
+https://www.younggates.com/Classes/level-2-gaminganimation-block-coding/
+
+------------------------------------------------------------
+COURSE ID: YG-CLASS-003
+COURSE NAME: Intro to Apps Coding – Make Your Own Mobile Apps
+ALTERNATE PAGE TITLE FOUND: App Making – Block Based
+PROGRAM TYPE: Regular class
+CATEGORY: Mobile App Development, Block Coding
+LEVEL: Introductory
+AGE OR GRADE: Not specified in the publicly indexed YoungGates content reviewed
+PREREQUISITE: Not specified
+CURRICULUM DETAILS: Not available in the publicly indexed page content reviewed
+
+GOOD MATCH FOR PARENT QUERIES:
+- My child wants to make a mobile app.
+- My child is interested in app development.
+- My child prefers block coding.
+- My child wants a practical project.
+- Can my child build an application without advanced coding?
+
+BOT RESPONSE NOTE:
+Describe this only as a YoungGates introductory, block-based app-making course. Do not invent the app platform, exact projects, age range, or prerequisites.
+
+OFFICIAL URL:
+https://younggates.com/Classes/app-making-block-based/
+
+------------------------------------------------------------
+COURSE ID: YG-CLASS-004
+COURSE NAME: Beginner Python With Graphics
+PROGRAM TYPE: Regular class
+CATEGORY: Python, Graphics, Text-Based Coding
+LEVEL: Beginner
+AGE OR GRADE: Not specified in the publicly indexed YoungGates content reviewed
+PREREQUISITE: Not specified
+CURRICULUM DETAILS: Not available in the publicly indexed page content reviewed
+
+GOOD MATCH FOR PARENT QUERIES:
+- My child wants to learn Python.
+- My child wants beginner text-based coding.
+- My child enjoys visual or graphics-based projects.
+- What can my child study after block coding?
+- My child wants to move from Scratch to Python.
+
+IMPORTANT:
+The title confirms beginner Python with graphics, but the indexed page did not expose further curriculum. Confirm details with YoungGates.
+
+OFFICIAL URL:
+https://www.younggates.com/Classes/beginner-python-with-graphics/
+
+------------------------------------------------------------
+COURSE ID: YG-CLASS-005
+COURSE NAME: Level 1 – Web Dev – HTML, CSS
+PROGRAM TYPE: Regular class
+CATEGORY: Web Development
+TECHNOLOGIES: HTML, CSS
+LEVEL: Level 1
+AGE OR GRADE: Not specified in the publicly indexed YoungGates content reviewed
+PREREQUISITE: Not specified
+CURRICULUM DETAILS: Not available in the publicly indexed page content reviewed
+
+GOOD MATCH FOR PARENT QUERIES:
+- My child wants to build a website.
+- My child wants to learn HTML and CSS.
+- My child is interested in website design.
+- My child wants a beginner web-development course.
+- My child wants to learn how web pages are structured and styled.
+
+NOT THE BEST MATCH WHEN:
+- The student specifically wants JavaScript from the beginning.
+- The student wants mobile app development rather than websites.
+- The student wants Python, AI, Java, or SQL.
+
+OFFICIAL URL:
+https://www.younggates.com/Classes/level-1-web-dev-html-css/
+
+------------------------------------------------------------
+COURSE ID: YG-CLASS-006
+COURSE NAME: Level 2 – Web Dev – HTML, CSS, JavaScript
+PROGRAM TYPE: Regular class
+CATEGORY: Web Development
+TECHNOLOGIES: HTML, CSS, JavaScript
+LEVEL: Level 2
+AGE OR GRADE: Not specified in the publicly indexed YoungGates content reviewed
+PREREQUISITE: Not specified
+CURRICULUM DETAILS: Not available in the publicly indexed page content reviewed
+
+GOOD MATCH FOR PARENT QUERIES:
+- My child already knows basic HTML and CSS.
+- My child wants interactive websites.
+- My child wants to learn JavaScript.
+- What is the next course after beginner web development?
+- My child wants more advanced website coding.
+
+IMPORTANT:
+Because the course is labelled Level 2, the bot should check whether the student already understands basic HTML and CSS. YoungGates' indexed page does not explicitly state the prerequisite.
+
+OFFICIAL URL:
+https://www.younggates.com/Classes/level-2-web-dev-html-css-javascript/
+
+------------------------------------------------------------
+COURSE ID: YG-CLASS-007
+COURSE NAME: Mastering SQL & RDBMS from Basics to Advanced Queries
+PROGRAM TYPE: Regular class
+CATEGORY: Databases, SQL
+TECHNOLOGIES: SQL, RDBMS
+LEVEL: Basics to advanced queries
+AGE OR GRADE: Not specified in the publicly indexed YoungGates content reviewed
+PREREQUISITE: Not specified
+CURRICULUM DETAILS: The title states progression from basics to advanced SQL queries. Further details were not available in the indexed content reviewed.
+
+GOOD MATCH FOR PARENT QUERIES:
+- My child wants to learn SQL.
+- My child is interested in databases.
+- My child wants to understand relational database systems.
+- My child wants to work with data.
+- My child wants to learn database queries.
+
+BOT SAFETY RULE:
+Do not invent the database software, project list, age range, or coding prerequisites.
+
+OFFICIAL COURSE LISTING:
+Listed by YoungGates under “Popular among Kids” on its website.
+
+------------------------------------------------------------
+COURSE ID: YG-CLASS-008
+COURSE NAME: Master SQL & Java Projects with ChatGPT
+PROGRAM TYPE: Regular class
+CATEGORY: SQL, Java, AI-Assisted Coding, Projects
+TECHNOLOGIES: SQL, Java, ChatGPT
+LEVEL: Not specified
+AGE OR GRADE: Not specified in the publicly indexed YoungGates content reviewed
+PREREQUISITE: Not specified
+CURRICULUM DETAILS: The title states SQL and Java project work using ChatGPT. Further details were not available in the indexed content reviewed.
+
+GOOD MATCH FOR PARENT QUERIES:
+- My child wants Java projects.
+- My child wants SQL projects.
+- My child wants to use ChatGPT while learning coding.
+- My teenager wants project-based coding.
+- My child is interested in AI-assisted programming.
+
+IMPORTANT:
+This sounds more advanced than an introductory block-coding course, but YoungGates does not provide enough indexed detail to assign an age, level, or prerequisite. Ask about existing coding experience and recommend consultation before enrollment.
+
+OFFICIAL COURSE LISTING:
+Listed by YoungGates under “Popular among Kids” on its website.
+
+============================================================
+C. CAMPS AND SHORT PROGRAMS
+============================================================
+
+------------------------------------------------------------
+COURSE ID: YG-CAMP-001
+COURSE NAME: Beginner Online Python
+PROGRAM TYPE: Camp
+CATEGORY: Python, Coding, Logical Problem-Solving
+AGE RANGE: 8-12 years
+LEVEL: Beginner
+PRIOR EXPERIENCE SHOWN: 0
+SCHEDULE: Class schedule can be chosen
+DURATION: Flexible duration
+PRICE SHOWN: $150
+
+OFFICIAL COURSE DESCRIPTION:
+Python is described as a general-purpose, versatile, and popular programming language. YoungGates states that it is suitable as a first language because it is concise and easy to read. The course uses the native Python interpreter and includes project and logical-problem work.
+
+TOPICS EXPLICITLY LISTED:
+- Projects and logical problems
+- Flowcharts
+- Variables and types
+- Mathematical operators
+- User input
+- Comments
+- Comparison operators
+- Conditional statements
+- Loops
+
+GOOD MATCH FOR PARENT QUERIES:
+- My 8-12-year-old wants to learn Python.
+- My child has no Python experience.
+- My child wants text-based coding.
+- My child wants to learn variables, conditions, and loops.
+- My child needs coding and logical thinking.
+- I need a beginner Python camp.
+- My child wants to work on Python projects.
+
+NOT THE BEST MATCH WHEN:
+- The child is specifically seeking Scratch or block coding.
+- The child wants only web design, mobile apps, Java, or SQL.
+- The child is outside the displayed 8-12 age range without confirmation from YoungGates.
+
+OFFICIAL URL:
+https://www.younggates.com/Camps/beginner-online-python/
+
+------------------------------------------------------------
+COURSE ID: YG-CAMP-002
+COURSE NAME: AI for Coding (6th-8th Graders)
+PROGRAM TYPE: Camp
+CATEGORY: Artificial Intelligence, Coding
+GRADE RANGE: Grades 6-8
+LEVEL: Not specified
+PREREQUISITE: Not specified
+CURRICULUM DETAILS: Not available in the publicly indexed YoungGates content reviewed
+
+GOOD MATCH FOR PARENT QUERIES:
+- My child is in Grade 6, 7, or 8 and wants to learn AI.
+- My middle-school child is interested in AI and coding.
+- My child wants an age-appropriate AI coding program.
+- Is there an AI course for middle-school students?
+
+BOT RESPONSE NOTE:
+Use only the course title and stated grade range. Do not invent AI tools, programming languages, or projects.
+
+OFFICIAL URL:
+https://younggates.com/Camps/ai-for-coding-6th-8th-graders/
+
+------------------------------------------------------------
+COURSE ID: YG-CAMP-003
+COURSE NAME: AI For Coding (8th-12th Graders)
+PROGRAM TYPE: Camp
+CATEGORY: Artificial Intelligence, Coding
+GRADE RANGE: Grades 8-12
+LEVEL: Not specified
+PREREQUISITE: Not specified
+CURRICULUM DETAILS: Not available in the publicly indexed YoungGates content reviewed
+
+GOOD MATCH FOR PARENT QUERIES:
+- My teenager wants to learn AI and coding.
+- My child is in Grade 8-12.
+- Is there an AI program for high-school students?
+- My child wants a more age-appropriate AI coding course.
+
+BOT RESPONSE NOTE:
+Grade 8 appears in both YoungGates AI course titles. For a Grade 8 student, ask about coding experience and learning maturity, then suggest discussing the best level with YoungGates.
+
+OFFICIAL URL:
+https://www.younggates.com/Camps/ai-for-coding-8th-12th-graders/
+
+============================================================
+D. OTHER YOUNGGATES PROGRAM AREAS
+============================================================
+
+YoungGates also publishes or links to:
+- Math tutoring
+- English and other tutoring
+- Robotics
+- Gaming programs
+- Camps
+- Workshops
+- Contests
+- Championships
+- Olympiads
+- Free workshops
+- Summer camps
+- Onsite programs
+- Homeschool support
+- ACSL
+- USACO
+- College counseling
+- Counseling services
+- Internship
+- Hackathon
+- Leaderboard
+
+IMPORTANT:
+These should not automatically be treated as individual courses unless a specific YoungGates program page provides enough details.
+
+Internship:
+YoungGates states that it offers internships designed to provide practical experience.
+A fee of $799 is displayed on the public internship page.
+Further public details were not available in the indexed content reviewed.
+
+Internship URL:
+https://younggates.com/CollegePrep/Internship/
+
+============================================================
+E. BOT COURSE-SELECTION LOGIC
+============================================================
+
+STEP 1 — ASK AGE OR GRADE
+Suggested question:
+“What is your child’s age and current grade?”
+
+STEP 2 — ASK EXPERIENCE
+Suggested question:
+“Has your child coded before? If yes, what have they learned?”
+
+Experience categories:
+- No experience
+- Scratch or block coding
+- Basic Python
+- HTML and CSS
+- JavaScript
+- Java
+- SQL or databases
+- AI tools or AI coding
+- Other
+
+STEP 3 — ASK INTEREST
+Suggested question:
+“What would your child most like to create or learn?”
+
+Interest mapping:
+- Games, animations, stories -> Level 1 Gaming/Animation Block Coding
+- Advanced Scratch projects -> Level 2 Gaming/Animation Block Coding
+- Mobile apps -> Intro to Apps Coding / App Making – Block Based
+- Beginner Python for age 8-12 -> Beginner Online Python
+- Beginner Python with visual output -> Beginner Python With Graphics
+- First website -> Level 1 Web Dev – HTML, CSS
+- Interactive website / JavaScript -> Level 2 Web Dev – HTML, CSS, JavaScript
+- AI for middle school -> AI for Coding (6th-8th Graders)
+- AI for older students -> AI For Coding (8th-12th Graders)
+- SQL and databases -> Mastering SQL & RDBMS from Basics to Advanced Queries
+- Java, SQL, projects, and ChatGPT -> Master SQL & Java Projects with ChatGPT
+
+STEP 4 — CHECK PREREQUISITES
+- Level 1 courses can be considered for beginners unless the individual page says otherwise.
+- For every Level 2 course, ask whether the student completed Level 1 or has equivalent experience.
+- Do not assume prerequisites for courses where YoungGates has not published them.
+- For advanced-sounding SQL, Java, and AI courses, ask about previous coding experience.
+- When uncertain, suggest scheduling a call with YoungGates.
+
+STEP 5 — GIVE A CONTROLLED RECOMMENDATION
+Bot output structure:
+
+Primary recommendation:
+[Course name]
+
+Why it may fit:
+[Use only the student's age, experience, interest, and facts from this file.]
+
+What the student will learn:
+[Only include curriculum explicitly documented in this file.]
+
+Alternative:
+[One relevant course, if applicable.]
+
+Need confirmation:
+[State missing age, grade, prerequisite, schedule, or curriculum information.]
+
+Next action:
+“Confirm current availability, schedule, and enrollment details with YoungGates.”
+
+============================================================
+F. SAMPLE BOT RESPONSES
+============================================================
+
+SAMPLE 1
+Parent:
+“My 9-year-old has never coded and loves games.”
+
+Suggested response:
+“Level 1 – Gaming/Animation Block Coding may be a strong starting point. YoungGates uses Scratch, a visual block-based language, to help students create games, animated stories, interactive images, and songs while developing logic and problem-solving. Since the individual page does not state an age range, please confirm placement with YoungGates.”
+
+SAMPLE 2
+Parent:
+“My child is 10 and wants to learn Python from zero.”
+
+Suggested response:
+“Beginner Online Python is the closest match. YoungGates lists it for ages 8-12 and beginner students with no previous experience. Topics include flowcharts, variables, mathematical operators, user input, comparison operators, conditions, loops, projects, and logical problems.”
+
+SAMPLE 3
+Parent:
+“My Grade 7 child is interested in AI.”
+
+Suggested response:
+“AI for Coding (6th-8th Graders) matches the published grade range. YoungGates’ indexed page does not provide the detailed curriculum or prerequisites, so those should be confirmed before enrollment.”
+
+SAMPLE 4
+Parent:
+“My child wants to create a website but has no experience.”
+
+Suggested response:
+“Level 1 – Web Dev – HTML, CSS is the most relevant YoungGates option. It is the Level 1 website-development course and focuses on HTML and CSS according to its title. Confirm the recommended age and full curriculum with YoungGates.”
+
+SAMPLE 5
+Parent:
+“My child knows HTML and CSS and now wants an interactive website.”
+
+Suggested response:
+“Level 2 – Web Dev – HTML, CSS, JavaScript may be the next step because it adds JavaScript to HTML and CSS. Since YoungGates does not publish the prerequisite in the indexed content, confirm that the student’s current HTML and CSS knowledge is sufficient.”
+
+SAMPLE 6
+Parent:
+“My child wants to build phone apps without difficult coding.”
+
+Suggested response:
+“Intro to Apps Coding – Make Your Own Mobile Apps, also shown as App Making – Block Based, is the closest match. It is an introductory block-based app-making course. Confirm the age range, app platform, and project details directly with YoungGates.”
+
+SAMPLE 7
+Parent:
+“My Grade 8 student wants AI. Which course?”
+
+Suggested response:
+“YoungGates lists both AI for Coding (6th-8th Graders) and AI For Coding (8th-12th Graders), so Grade 8 overlaps. The best placement depends on the student’s prior coding experience and readiness. A YoungGates consultation is recommended before choosing.”
+
+============================================================
+G. INFORMATION THE BOT MUST NOT INVENT
+============================================================
+
+Do not invent:
+- Course ages not stated by YoungGates
+- Grade ranges not stated by YoungGates
+- Prerequisites
+- Number of classes
+- Course duration
+- Schedule
+- Software or learning platforms
+- Projects
+- Certificates for a specific course
+- Prices not displayed on the relevant page
+- Current availability
+- Teacher assignment
+- Guaranteed outcomes
+- Enrollment dates
+
+When information is unavailable, say:
+“YoungGates does not specify this detail in the public course information reviewed. Please confirm it with the YoungGates team.”
+
+============================================================
+H. CURRENT GENERAL PRICING DISPLAYED BY YOUNGGATES
+============================================================
+
+12-class package:
+- $599
+- 12-class book with assignments
+- Personal dashboard
+- Interactive live classes
+- Video recordings of every class
+- Qualified and experienced teachers
+- Hands-on, project-based learning
+- Online support
+- Personalized based on student requirements
+- One-hour 1:1 classes
+
+Monthly subscription:
+- $199
+- 4 classes
+- Personal dashboard
+- Interactive live classes
+- Video recordings of every class
+- Qualified and experienced teachers
+- Hands-on, project-based learning
+- Online support
+- Personalized based on student requirements
+- One-hour 1:1 classes
+
+IMPORTANT:
+These are general website pricing options. Do not automatically apply them to every camp or special program.
+
+============================================================
+END OF FILE
+============================================================
