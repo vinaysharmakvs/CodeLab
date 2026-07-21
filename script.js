@@ -2369,6 +2369,8 @@ function renderTrustScoreReport(report, formValues) {
   if (!trustResult) return;
   const factors = report.factors || [];
   const business = report.business || {};
+  const match = report.match || {};
+  const facts = report.facts || {};
   const overall = clampScore(report.overall);
   trustResult.innerHTML = `
     <div class="trust-score-meter trust-live-meter">
@@ -2382,6 +2384,8 @@ function renderTrustScoreReport(report, formValues) {
         <p>${escapeHtml(report.summary || "Digital Trust Score generated from public signals.")}</p>
         <div class="trust-business-facts">
           ${business.address ? `<strong>${escapeHtml(business.address)}</strong>` : ""}
+          ${match.confidence ? `<strong>${match.verified ? "Verified local match" : "Manual verification needed"}: ${escapeHtml(match.confidence)}%</strong>` : ""}
+          ${typeof facts.supportPagesChecked === "number" ? `<strong>Contact/About pages checked: ${escapeHtml(facts.supportPagesChecked)}</strong>` : ""}
           ${business.website ? `<a href="${escapeHtml(business.website)}" target="_blank" rel="noopener noreferrer">Website</a>` : ""}
           ${business.googleUrl ? `<a href="${escapeHtml(business.googleUrl)}" target="_blank" rel="noopener noreferrer">Google Profile</a>` : ""}
         </div>
@@ -3031,8 +3035,8 @@ trustForm?.addEventListener("submit", async (event) => {
       );
     } else if (code === "website-not-found") {
       renderTrustError(
-        "Matching website could not be found automatically",
-        "Tivoro could not confidently find matching live website signals from the business name and location. Send the details for manual review and we will check it properly.",
+        "Official local website could not be verified",
+        "Tivoro did not find a website that confidently matches both the business name and the entered location. Same-name websites from other cities/countries are not counted as official.",
         { href: trustManualReviewLink({ businessName, city, state }), label: "Send for Manual Review" }
       );
     } else if (code === "stale-google-endpoint" || code === "missing-google-places-key") {
