@@ -13,7 +13,6 @@ const courseInput = document.querySelector("#courseRequirement");
 const courseOutput = document.querySelector("[data-course-output]");
 const courseEmpty = document.querySelector("[data-course-empty]");
 const courseError = document.querySelector("[data-course-error]");
-const exampleButton = document.querySelector("[data-course-example]");
 const promptButtons = document.querySelectorAll("[data-course-prompt]");
 const appendButtons = document.querySelectorAll("[data-course-append]");
 const characterCount = document.querySelector("[data-course-count]");
@@ -21,6 +20,30 @@ const courseFitWhatsappNumber = "16502294307";
 
 let courseKnowledge = "";
 let parsedCourses = [];
+
+const courseUrlFallbacks = [
+  ["level 1 gaming animation block coding", "https://www.younggates.com/Classes/level-1-gaminganimation-block-coding/"],
+  ["level 2 gaming animation block coding", "https://www.younggates.com/Classes/level-2-gaminganimation-block-coding/"],
+  ["intro to apps coding make your own mobile apps", "https://younggates.com/Classes/app-making-block-based/"],
+  ["app making block based", "https://younggates.com/Classes/app-making-block-based/"],
+  ["beginner python with graphics", "https://www.younggates.com/Classes/beginner-python-with-graphics/"],
+  ["level 1 web dev html css", "https://www.younggates.com/Classes/level-1-web-dev-html-css/"],
+  ["level 2 web dev html css javascript", "https://www.younggates.com/Classes/level-2-web-dev-html-css-javascript/"],
+  ["beginner online python", "https://www.younggates.com/Camps/beginner-online-python/"],
+  ["python with graphics", "https://younggates.com/Camps/python-with-graphics/"],
+  ["ai and python coding", "https://younggates.com/Camps/ai-and-python-coding/"],
+  ["ai young creators camp", "https://younggates.com/Camps/ai-young-creators-camp/"],
+  ["ai champions program", "https://younggates.com/Camps/ai-champions-program/"],
+  ["ai for coding 6th-8th graders", "https://younggates.com/Camps/ai-for-coding-6th-8th-graders/"],
+  ["ai for coding 8th-12th graders", "https://www.younggates.com/Camps/ai-for-coding-8th-12th-graders/"],
+  ["microservices bootcamp unlocking scalable solutions", "https://younggates.com/Camps/microservices-bootcamp-unlocking-scalable-solutions/"],
+  ["cyber defender foundations of ethical hacking data security", "https://younggates.com/Camps/cyber-defender-foundations-of-ethical-hacking-data-security/"],
+  ["mastering sql rdbms from basics to advanced queries", "https://www.younggates.com/Classes/"],
+  ["master sql java projects with chatgpt", "https://www.younggates.com/Classes/"],
+  ["acsl", "https://younggates.com/ACSL/"],
+  ["usaco", "https://younggates.com/USACO/"],
+  ["internship", "https://younggates.com/CollegePrep/Internship/"],
+];
 
 const keywordGroups = {
   scratch: ["scratch", "block", "visual", "animation", "story", "stories"],
@@ -30,12 +53,119 @@ const keywordGroups = {
   web: ["website", "web", "html", "css", "javascript"],
   sql: ["sql", "database", "rdbms", "data"],
   ai: ["ai", "artificial intelligence", "chatbot", "prompt", "agent"],
+  career: ["career", "internship", "portfolio", "real world", "practical"],
+  cyber: ["cyber", "cybersecurity", "ethical hacking", "security", "data security", "defender"],
+  contests: ["competition", "contest", "olympiad", "championship", "acsl", "usaco"],
+  backend: ["microservices", "backend", "scalable", "scalable solutions", "api", "cloud"],
   math: ["math", "mathematics", "numbers", "algebra", "logic"],
   english: ["english", "communication", "speaking", "writing", "language"],
   robotics: ["robot", "robotics", "stem"],
+  camps: ["camp", "camps", "summer", "holiday", "short-term", "short term", "batch", "batches"],
   beginner: ["new", "beginner", "first", "start", "intro", "foundation", "easy"],
   advanced: ["advanced", "level 2", "next", "already", "knows", "completed"],
 };
+
+const supplementalYoungGatesPrograms = [
+  {
+    id: "YG-CAMP-PYTHON-GRAPHICS",
+    name: "Python With Graphics",
+    type: "Camp",
+    category: "Python, Graphics, Coding",
+    level: "Beginner to Intermediate",
+    age: "Young learners",
+    url: "https://younggates.com/Camps/python-with-graphics/",
+    block:
+      "COURSE NAME: Python With Graphics\nCATEGORY: Python, Graphics, Coding\nGOOD MATCH FOR PARENT QUERIES:\n- Learner wants Python with visual output.\n- Parent wants a fun coding camp with graphics.\n- Student is moving from block coding to text-based coding.\n- Family wants an enjoyable project-based Python start.",
+  },
+  {
+    id: "YG-CAMP-AI-PYTHON",
+    name: "AI and Python Coding",
+    type: "Camp",
+    category: "Artificial Intelligence, Python, Coding",
+    level: "Intermediate",
+    age: "Young learners",
+    url: "https://younggates.com/Camps/ai-and-python-coding/",
+    block:
+      "COURSE NAME: AI and Python Coding\nCATEGORY: Artificial Intelligence, Python, Coding\nGOOD MATCH FOR PARENT QUERIES:\n- Learner wants to combine AI and Python.\n- Student is curious about artificial intelligence projects.\n- Parent wants a future-ready coding path.\n- Family wants a practical AI coding camp.",
+  },
+  {
+    id: "YG-CAMP-AI-YOUNG-CREATORS",
+    name: "AI Young Creators Camp",
+    type: "Camp",
+    category: "Artificial Intelligence, Creativity, Project Learning",
+    level: "Beginner friendly",
+    age: "Young creators",
+    url: "https://younggates.com/Camps/ai-young-creators-camp/",
+    block:
+      "COURSE NAME: AI Young Creators Camp\nCATEGORY: Artificial Intelligence, Creativity, Project Learning\nGOOD MATCH FOR PARENT QUERIES:\n- Learner wants a creative AI experience.\n- Parent wants AI without making the child feel pressured.\n- Student enjoys making projects, stories or creative outputs.\n- Family wants a gentle introduction to AI tools and ideas.",
+  },
+  {
+    id: "YG-CAMP-AI-CHAMPIONS",
+    name: "AI Champions Program",
+    type: "Camp",
+    category: "Artificial Intelligence, Advanced Learning",
+    level: "Advanced",
+    age: "Serious learners",
+    url: "https://younggates.com/Camps/ai-champions-program/",
+    block:
+      "COURSE NAME: AI Champions Program\nCATEGORY: Artificial Intelligence, Advanced Learning\nGOOD MATCH FOR PARENT QUERIES:\n- Learner wants a serious AI learning track.\n- Student is ready for structured AI practice.\n- Parent wants a stronger future-focused program.\n- Family is looking for a high-commitment AI path.",
+  },
+  {
+    id: "YG-CAMP-MICROSERVICES",
+    name: "Microservices Bootcamp: Unlocking Scalable Solutions",
+    type: "Camp",
+    category: "Backend, Microservices, Scalable Systems",
+    level: "Advanced",
+    age: "Advanced learners",
+    url: "https://younggates.com/Camps/microservices-bootcamp-unlocking-scalable-solutions/",
+    block:
+      "COURSE NAME: Microservices Bootcamp: Unlocking Scalable Solutions\nCATEGORY: Backend, Microservices, Scalable Systems\nGOOD MATCH FOR PARENT QUERIES:\n- Learner wants backend or scalable system concepts.\n- Student is interested in APIs, architecture or cloud-style development.\n- Parent wants a serious advanced coding path.\n- Family wants real-world software engineering exposure.",
+  },
+  {
+    id: "YG-CAMP-CYBER-DEFENDER",
+    name: "Cyber Defender: Foundations of Ethical Hacking & Data Security",
+    type: "Camp",
+    category: "Cybersecurity, Ethical Hacking, Data Security",
+    level: "Intermediate to Advanced",
+    age: "Security-curious learners",
+    url: "https://younggates.com/Camps/cyber-defender-foundations-of-ethical-hacking-data-security/",
+    block:
+      "COURSE NAME: Cyber Defender: Foundations of Ethical Hacking & Data Security\nCATEGORY: Cybersecurity, Ethical Hacking, Data Security\nGOOD MATCH FOR PARENT QUERIES:\n- Learner is interested in cyber security or ethical hacking.\n- Parent wants safe, guided exposure to data security.\n- Student wants to understand online safety and security foundations.\n- Family wants a serious technology camp beyond basic coding.",
+  },
+  {
+    id: "YG-PROGRAM-ACSL",
+    name: "ACSL",
+    type: "Competition Program",
+    category: "Computer Science Contest Preparation",
+    level: "Competition Track",
+    age: "Contest-ready learners",
+    url: "https://younggates.com/ACSL/",
+    block:
+      "COURSE NAME: ACSL\nCATEGORY: Computer Science Contest Preparation\nGOOD MATCH FOR PARENT QUERIES:\n- Learner wants computer science competitions.\n- Parent asks about ACSL, contests or olympiad-style preparation.\n- Student enjoys logic, problem solving and structured challenges.\n- Family wants a competition-focused computer science path.",
+  },
+  {
+    id: "YG-PROGRAM-USACO",
+    name: "USACO",
+    type: "Competition Program",
+    category: "Programming Contest Preparation",
+    level: "Competition Track",
+    age: "Advanced contest learners",
+    url: "https://younggates.com/USACO/",
+    block:
+      "COURSE NAME: USACO\nCATEGORY: Programming Contest Preparation\nGOOD MATCH FOR PARENT QUERIES:\n- Learner wants competitive programming.\n- Parent asks about USACO or coding contests.\n- Student is ready for algorithmic problem solving.\n- Family wants a serious competition preparation path.",
+  },
+  {
+    id: "YG-PROGRAM-INTERNSHIP",
+    name: "Internship",
+    type: "Program",
+    category: "College Prep / Practical Experience",
+    level: "Advanced",
+    age: "Teen learners",
+    url: "https://younggates.com/CollegePrep/Internship/",
+    block:
+      "COURSE NAME: Internship\nCATEGORY: College Prep / Practical Experience\nGOOD MATCH FOR PARENT QUERIES:\n- Learner wants a serious skill path with practical experience.\n- Parent wants a portfolio-style project or real-world exposure.\n- Student is ready for coding practice, homework and career-focused learning.\n- Family wants a guided path beyond beginner classes.",
+  },
+];
 
 function normalizeText(text) {
   return String(text || "")
@@ -60,11 +190,18 @@ function getField(block, label) {
 
 function getUrl(block) {
   const officialUrl = block.match(/OFFICIAL URL:\s*\n\s*(https?:\/\/[^\s)]+)/i)?.[1];
-  return officialUrl || block.match(/https?:\/\/[^\s)]+/i)?.[0] || "";
+  const labelledUrl = block.match(/[A-Z][A-Z\s]+URL:\s*\n\s*(https?:\/\/[^\s)]+)/i)?.[1];
+  return officialUrl || labelledUrl || block.match(/https?:\/\/[^\s)]+/i)?.[0] || "";
+}
+
+function getCourseUrl(course) {
+  if (course.url) return course.url;
+  const normalizedName = normalizeText(course.name);
+  return courseUrlFallbacks.find(([key]) => normalizedName.includes(key))?.[1] || "https://www.younggates.com/Classes/";
 }
 
 function parseCourses(text) {
-  return text
+  const courses = text
     .split(/-{20,}/)
     .map((block) => block.trim())
     .filter((block) => /COURSE ID:/i.test(block))
@@ -82,6 +219,13 @@ function parseCourses(text) {
         searchable: normalizeText(block),
       };
     });
+
+  return courses.concat(
+    supplementalYoungGatesPrograms.map((program) => ({
+      ...program,
+      searchable: normalizeText(`${program.name} ${program.category} ${program.level} ${program.age} ${program.block}`),
+    }))
+  );
 }
 
 function getQuerySignals(query) {
@@ -113,6 +257,7 @@ function scoreCourse(course, query) {
 
   if (signals.includes("beginner") && /level 1|beginner|intro|first/i.test(course.block)) score += 18;
   if (signals.includes("advanced") && /level 2|advanced|next/i.test(course.block)) score += 18;
+  if (signals.includes("camps") && /project|hands-on|interactive|games|animation|app|web|python|ai/i.test(course.block)) score += 12;
   if (/\bgrade\s*[3-8]\b|\bclass\s*[3-8]\b|child|kid|kids/i.test(query) && /scratch|block|gaming|animation|app/i.test(course.block)) score += 10;
   if (/\bgrade\s*(9|10|11|12)\b|\bclass\s*(9|10|11|12)\b|teen/i.test(query) && /python|javascript|web|sql|ai/i.test(course.block)) score += 10;
 
@@ -231,6 +376,9 @@ function getCoursePopularity(courseName, score) {
   if (/sql|database/.test(normalized)) {
     return { label: "Career skill path", percent: 72, note: "Good fit for structured learners interested in data and queries." };
   }
+  if (/camp|holiday|short/.test(normalized)) {
+    return { label: "Current camp fit", percent: 80, note: "Useful for parents looking for a short-term learning sprint." };
+  }
   return { label: "Recommended path", percent: Math.min(88, Math.max(68, 64 + Math.round(score / 4))), note: "Mapped from the learner requirement and course signals." };
 }
 
@@ -261,6 +409,7 @@ function renderRecommendation(query) {
   const best = matches[0];
   const bestScore = Math.min(99, Math.round(best.score));
   const bestPopularity = getCoursePopularity(best.name, bestScore);
+  const bestCourseUrl = getCourseUrl(best);
   const whatsappText = encodeURIComponent(
     `Hello Tivoro, I used the Course Fit Bot. Requirement: ${query}. Best fit: ${best.name}. Please help me finalize the right batch.`
   );
@@ -290,7 +439,7 @@ function renderRecommendation(query) {
         ${extractUsefulLines(best.block).map((line) => `<li>${escapeHtml(line.replace(/^[A-Z ]+:/, "").trim())}</li>`).join("")}
       </ul>
       <div class="course-fit-links">
-        ${best.url ? `<a class="secondary-button course-page-link" href="${escapeHtml(best.url)}" target="_blank" rel="noopener noreferrer">View Course Details</a>` : ""}
+        <a class="secondary-button course-page-link" href="${escapeHtml(bestCourseUrl)}" target="_blank" rel="noopener noreferrer">Check Course</a>
         <a class="primary-button" href="https://wa.me/${courseFitWhatsappNumber}?text=${whatsappText}" target="_blank" rel="noopener noreferrer">Discuss on WhatsApp</a>
       </div>
     </article>
@@ -301,6 +450,10 @@ function renderRecommendation(query) {
           (match) => {
             const matchScore = Math.min(99, Math.round(match.score));
             const popularity = getCoursePopularity(match.name, matchScore);
+            const courseUrl = getCourseUrl(match);
+            const altWhatsappText = encodeURIComponent(
+              `Hello Tivoro, I used the Course Fit Bot. Requirement: ${query}. I want help with this alternative course: ${match.name}. Please guide me.`
+            );
             return `
             <article class="course-fit-card">
               <div class="course-fit-card-top">
@@ -311,7 +464,10 @@ function renderRecommendation(query) {
               <p>${escapeHtml(match.category || match.level || "Possible fit")}</p>
               <strong>${matchScore}% match</strong>
               <small class="course-fit-mini-signal">${popularity.percent}% parent-fit signal</small>
-              ${match.url ? `<a class="course-page-link-inline" href="${escapeHtml(match.url)}" target="_blank" rel="noopener noreferrer">View Course Details</a>` : ""}
+              <div class="course-fit-alt-actions">
+                <a class="course-page-link-inline" href="${escapeHtml(courseUrl)}" target="_blank" rel="noopener noreferrer">Check Course</a>
+                <a class="course-whatsapp-inline" href="https://wa.me/${courseFitWhatsappNumber}?text=${altWhatsappText}" target="_blank" rel="noopener noreferrer">WhatsApp Help</a>
+              </div>
             </article>
           `;
           }
@@ -370,13 +526,6 @@ courseForm?.addEventListener("submit", (event) => {
     renderRecommendation(query);
     setSearchingState(false);
   }, 260);
-});
-
-exampleButton?.addEventListener("click", () => {
-  courseInput.value = "My child is in Grade 7, new to coding, likes games and animation, and wants a fun first course before moving to Python.";
-  updateCharacterCount();
-  showCoursePreview();
-  courseInput.focus();
 });
 
 promptButtons.forEach((button) => {
