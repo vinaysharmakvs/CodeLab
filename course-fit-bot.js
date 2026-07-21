@@ -1,4 +1,7 @@
-const knowledgeBasePath = "api/younggates_course_bot_knowledge_base.txt";
+const knowledgeBasePaths = [
+  "data/younggates_course_bot_knowledge_base.txt",
+  "api/younggates_course_bot_knowledge_base.txt",
+];
 const sourceStatus = document.querySelector("[data-course-source-status]");
 const courseForm = document.querySelector(".course-fit-form");
 const courseInput = document.querySelector("#courseRequirement");
@@ -192,16 +195,23 @@ function renderRecommendation(query) {
 
 async function loadKnowledgeBase() {
   try {
-    const response = await fetch(knowledgeBasePath, { cache: "no-store" });
-    if (!response.ok) throw new Error("Knowledge file not found");
-    courseKnowledge = await response.text();
+    let loadedResponse = null;
+    for (const path of knowledgeBasePaths) {
+      const response = await fetch(path, { cache: "no-store" });
+      if (response.ok) {
+        loadedResponse = response;
+        break;
+      }
+    }
+    if (!loadedResponse) throw new Error("Knowledge file not found");
+    courseKnowledge = await loadedResponse.text();
     parsedCourses = parseCourses(courseKnowledge);
     sourceStatus.textContent = `${parsedCourses.length} courses loaded`;
   } catch (error) {
     sourceStatus.textContent = "Unable to load";
     courseError.hidden = false;
     courseError.textContent =
-      "The course knowledge file could not be loaded. If you are opening this directly as a file, use a local/live server so the page can read the txt file.";
+      "The course knowledge file could not be loaded. On Vercel, keep the txt file inside data/younggates_course_bot_knowledge_base.txt because /api is reserved for server functions. If opening locally, use a local server instead of file://.";
   }
 }
 
