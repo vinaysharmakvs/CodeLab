@@ -2657,10 +2657,15 @@ async function renderAmbassadorResult(data) {
   );
   ambassadorResult.innerHTML = `
     <div class="ambassador-result-head">
-      <span>Assessment result</span>
-      <h3>${title}</h3>
-      <p>${description}</p>
-      <strong>${score}%</strong>
+      <div class="ambassador-result-copy">
+        <span>Assessment result</span>
+        <h3>${title}</h3>
+        <p>${description}</p>
+      </div>
+      <div class="ambassador-score-card">
+        <strong>${score}%</strong>
+        <small>Readiness score</small>
+      </div>
     </div>
     <div class="ambassador-next-grid">
       <article><span>Recommended task</span><p>${task}</p></article>
