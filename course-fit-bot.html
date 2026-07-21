@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Course Fit Bot | Tivoro</title>
+    <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="course-fit-bot-page">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Tivoro home">
+        <span class="brand-mark">T</span>
+        <span>
+          <strong>Tivoro</strong>
+          <small>Where Ideas Become Reality</small>
+        </span>
+      </a>
+      <div class="header-actions">
+        <a class="header-cta" href="index.html">Back to Tivoro</a>
+      </div>
+    </header>
+
+    <main class="course-fit-main">
+      <section class="course-fit-hero">
+        <div>
+          <p class="eyebrow">Hidden Course Advisor</p>
+          <h1>Find the best-fit course from the knowledge base.</h1>
+          <p>
+            Type what the learner wants, their age or grade, current level, and goal. Tivoro will read the course knowledge file and suggest the closest YoungGates course matches.
+          </p>
+        </div>
+        <div class="course-fit-status">
+          <span>Knowledge source</span>
+          <strong data-course-source-status>Loading...</strong>
+          <small>api/younggates_course_bot_knowledge_base.txt</small>
+        </div>
+      </section>
+
+      <section class="course-fit-workspace">
+        <form class="course-fit-form" aria-label="Course fit bot">
+          <label for="courseRequirement">Learner requirement</label>
+          <textarea
+            id="courseRequirement"
+            name="courseRequirement"
+            rows="7"
+            placeholder="Example: My child is in Grade 7, new to coding, likes games and wants to start with something visual before Python."
+            required
+          ></textarea>
+          <div class="course-fit-actions">
+            <button class="primary-button" type="submit">Find Best Fit</button>
+            <button class="secondary-button" type="button" data-course-example>Use Example</button>
+          </div>
+          <p class="course-fit-error" data-course-error hidden></p>
+        </form>
+
+        <div class="course-fit-results" aria-live="polite">
+          <div class="course-fit-empty" data-course-empty>
+            <span>AI</span>
+            <strong>Waiting for requirement</strong>
+            <p>Share the learner's goal and this bot will map it against the text knowledge base.</p>
+          </div>
+          <div class="course-fit-output" data-course-output hidden></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>Tivoro</strong>
+        <span>Private course-fit advisor for internal guidance.</span>
+      </div>
+      <a class="footer-whatsapp-icon" href="https://wa.me/918826758881" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">WhatsApp</a>
+    </footer>
+
+    <script src="course-fit-bot.js"></script>
+  </body>
+</html>
