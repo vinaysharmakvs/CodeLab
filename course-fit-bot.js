@@ -15,6 +15,7 @@ const courseEmpty = document.querySelector("[data-course-empty]");
 const courseError = document.querySelector("[data-course-error]");
 const exampleButton = document.querySelector("[data-course-example]");
 const promptButtons = document.querySelectorAll("[data-course-prompt]");
+const appendButtons = document.querySelectorAll("[data-course-append]");
 const characterCount = document.querySelector("[data-course-count]");
 const courseFitWhatsappNumber = "16502294307";
 
@@ -58,7 +59,8 @@ function getField(block, label) {
 }
 
 function getUrl(block) {
-  return block.match(/https?:\/\/[^\s)]+/i)?.[0] || "";
+  const officialUrl = block.match(/OFFICIAL URL:\s*\n\s*(https?:\/\/[^\s)]+)/i)?.[1];
+  return officialUrl || block.match(/https?:\/\/[^\s)]+/i)?.[0] || "";
 }
 
 function parseCourses(text) {
@@ -138,11 +140,71 @@ function updateCharacterCount() {
   characterCount.textContent = `${count} character${count === 1 ? "" : "s"}`;
 }
 
+function startCourseTypingPlaceholder() {
+  if (!courseInput || !courseInput.dataset.courseTypingPlaceholder) return;
+  const examples = courseInput.dataset.courseTypingPlaceholder
+    .split("|")
+    .map((item) => item.trim())
+    .filter(Boolean);
+  if (!examples.length) return;
+
+  let exampleIndex = 0;
+  let charIndex = 0;
+  let deleting = false;
+
+  function tick() {
+    if (document.activeElement === courseInput || courseInput.value.trim()) {
+      window.setTimeout(tick, 700);
+      return;
+    }
+
+    const current = examples[exampleIndex];
+    if (!deleting) {
+      charIndex += 1;
+      courseInput.placeholder = current.slice(0, charIndex);
+      if (charIndex >= current.length) {
+        deleting = true;
+        window.setTimeout(tick, 1300);
+        return;
+      }
+    } else {
+      charIndex -= 1;
+      courseInput.placeholder = current.slice(0, charIndex);
+      if (charIndex <= 0) {
+        deleting = false;
+        exampleIndex = (exampleIndex + 1) % examples.length;
+      }
+    }
+
+    window.setTimeout(tick, deleting ? 18 : 34);
+  }
+
+  tick();
+}
+
 function setSearchingState(isSearching) {
   const submitButton = courseForm?.querySelector('button[type="submit"]');
   if (!submitButton) return;
   submitButton.disabled = isSearching;
-  submitButton.textContent = isSearching ? "Mapping..." : "Find Best Fit";
+  submitButton.innerHTML = isSearching
+    ? "<span>Mapping Course Fit</span><small>Reading requirement...</small>"
+    : "<span>Find Best-Fit Course</span><small>AI-style recommendation</small>";
+}
+
+function showCoursePreview() {
+  if (courseEmpty) courseEmpty.hidden = false;
+  if (courseOutput) {
+    courseOutput.hidden = true;
+    courseOutput.innerHTML = "";
+  }
+}
+
+function showCourseOutput(html) {
+  if (courseEmpty) courseEmpty.hidden = true;
+  if (courseOutput) {
+    courseOutput.hidden = false;
+    courseOutput.innerHTML = html;
+  }
 }
 
 function getFitLabel(score) {
@@ -186,15 +248,13 @@ function renderRecommendation(query) {
     .slice(0, 3);
 
   if (!matches.length) {
-    courseEmpty.hidden = true;
-    courseOutput.hidden = false;
-    courseOutput.innerHTML = `
+    showCourseOutput(`
       <article class="course-fit-card">
         <span>No clear match found</span>
         <h2>Ask for more detail before recommending.</h2>
         <p>I could not confidently map this requirement to the current course knowledge base. Ask for the learner's grade, current coding exposure, goal, and preferred project type.</p>
       </article>
-    `;
+    `);
     return;
   }
 
@@ -205,9 +265,7 @@ function renderRecommendation(query) {
     `Hello Tivoro, I used the Course Fit Bot. Requirement: ${query}. Best fit: ${best.name}. Please help me finalize the right batch.`
   );
 
-  courseEmpty.hidden = true;
-  courseOutput.hidden = false;
-  courseOutput.innerHTML = `
+  showCourseOutput(`
     <article class="course-fit-card is-best">
       <div class="course-fit-card-top">
         <span>Best fit</span>
@@ -232,7 +290,7 @@ function renderRecommendation(query) {
         ${extractUsefulLines(best.block).map((line) => `<li>${escapeHtml(line.replace(/^[A-Z ]+:/, "").trim())}</li>`).join("")}
       </ul>
       <div class="course-fit-links">
-        ${best.url ? `<a class="secondary-button" href="${escapeHtml(best.url)}" target="_blank" rel="noopener noreferrer">Open Course Page</a>` : ""}
+        ${best.url ? `<a class="secondary-button course-page-link" href="${escapeHtml(best.url)}" target="_blank" rel="noopener noreferrer">View Course Details</a>` : ""}
         <a class="primary-button" href="https://wa.me/${courseFitWhatsappNumber}?text=${whatsappText}" target="_blank" rel="noopener noreferrer">Discuss on WhatsApp</a>
       </div>
     </article>
@@ -253,14 +311,14 @@ function renderRecommendation(query) {
               <p>${escapeHtml(match.category || match.level || "Possible fit")}</p>
               <strong>${matchScore}% match</strong>
               <small class="course-fit-mini-signal">${popularity.percent}% parent-fit signal</small>
-              ${match.url ? `<a href="${escapeHtml(match.url)}" target="_blank" rel="noopener noreferrer">View course</a>` : ""}
+              ${match.url ? `<a class="course-page-link-inline" href="${escapeHtml(match.url)}" target="_blank" rel="noopener noreferrer">View Course Details</a>` : ""}
             </article>
           `;
           }
         )
         .join("")}
     </div>
-  `;
+  `);
 }
 
 async function loadKnowledgeBase() {
@@ -301,15 +359,13 @@ courseForm?.addEventListener("submit", (event) => {
     return;
   }
   setSearchingState(true);
-  courseEmpty.hidden = true;
-  courseOutput.hidden = false;
-  courseOutput.innerHTML = `
+  showCourseOutput(`
     <div class="course-fit-loading">
       <span></span>
       <strong>Reading knowledge base</strong>
       <p>Mapping requirement, learner intent and course signals...</p>
     </div>
-  `;
+  `);
   window.setTimeout(() => {
     renderRecommendation(query);
     setSearchingState(false);
@@ -319,6 +375,7 @@ courseForm?.addEventListener("submit", (event) => {
 exampleButton?.addEventListener("click", () => {
   courseInput.value = "My child is in Grade 7, new to coding, likes games and animation, and wants a fun first course before moving to Python.";
   updateCharacterCount();
+  showCoursePreview();
   courseInput.focus();
 });
 
@@ -326,10 +383,29 @@ promptButtons.forEach((button) => {
   button.addEventListener("click", () => {
     courseInput.value = button.dataset.coursePrompt || "";
     updateCharacterCount();
+    showCoursePreview();
     courseInput.focus();
   });
 });
 
-courseInput?.addEventListener("input", updateCharacterCount);
+appendButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const addition = button.dataset.courseAppend || "";
+    courseInput.value = `${courseInput.value.trim()}${addition}`.trim();
+    button.classList.toggle("is-selected", courseInput.value.includes(addition.trim()));
+    updateCharacterCount();
+    showCoursePreview();
+    courseInput.focus();
+  });
+});
+
+courseInput?.addEventListener("input", () => {
+  updateCharacterCount();
+  if (!courseInput.value.trim() && courseOutput) {
+    courseOutput.hidden = true;
+    courseOutput.innerHTML = "";
+  }
+});
 updateCharacterCount();
+startCourseTypingPlaceholder();
 loadKnowledgeBase();
