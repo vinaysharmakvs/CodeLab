@@ -235,6 +235,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 18px;
 }
 
 .course-fit-actions .primary-button,
@@ -397,19 +398,56 @@
 }
 
 .course-page-link {
-  border-color: rgba(66, 217, 181, 0.32);
-  color: #ffffff;
-  background: rgba(66, 217, 181, 0.1);
+  border: 1px solid rgba(66, 217, 181, 0.62);
+  color: #06111d;
+  background: linear-gradient(135deg, #42d9b5, #ffd45f);
+  box-shadow: 0 18px 38px rgba(66, 217, 181, 0.18);
 }
 
 .course-page-link-inline {
   display: inline-flex;
-  width: fit-content;
-  margin-top: 6px;
-  border: 1px solid rgba(66, 217, 181, 0.24);
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  min-width: 128px;
+  border: 1px solid rgba(66, 217, 181, 0.54);
   border-radius: 999px;
-  background: rgba(66, 217, 181, 0.08);
-  padding: 8px 11px;
+  color: #06111d;
+  background: linear-gradient(135deg, #42d9b5, #ffd45f);
+  padding: 9px 14px;
+  box-shadow: 0 14px 28px rgba(66, 217, 181, 0.14);
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.course-fit-alt-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.course-fit-alt-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.course-page-link:hover,
+.course-page-link-inline:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 36px rgba(66, 217, 181, 0.22);
+  filter: saturate(1.08);
+}
+
+.course-whatsapp-inline {
+  border: 1px solid rgba(255, 212, 95, 0.28);
+  background: rgba(255, 212, 95, 0.1);
+  color: var(--yellow);
 }
 
 @media (max-width: 900px) {
@@ -14719,7 +14757,7 @@ body:not(.profile-filter-ready) [data-profile-section] {
 }
 
 .course-fit-path-chips {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .course-fit-path-chips button {
@@ -14926,11 +14964,35 @@ body:not(.profile-filter-ready) [data-profile-section] {
     border-radius: 18px;
   }
 
-  .course-fit-prompts,
   .course-fit-path-chips,
   .course-fit-alt-grid,
   .course-fit-insight-strip {
     grid-template-columns: 1fr;
+  }
+
+  .course-fit-prompts {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 2px 2px 10px;
+    margin-inline: -2px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .course-fit-prompts::-webkit-scrollbar {
+    height: 0;
+  }
+
+  .course-fit-prompts button {
+    flex: 0 0 auto;
+    min-height: 36px;
+    min-width: auto;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    scroll-snap-align: start;
   }
 
   .requirement-brief-header {
