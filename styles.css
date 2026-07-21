@@ -4465,7 +4465,7 @@ code {
 .role-matcher::before,
 .health-checker-form::before,
 .booking-planner::before {
-  content: "Answer a few details  â€¢  Get a clear recommendation  â€¢  Decide without pressure";
+  content: "Answer a few details. Get a clear recommendation. Decide without pressure.";
   display: block;
   padding: 11px 13px;
   color: #17469f;
