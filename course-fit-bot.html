@@ -49,6 +49,49 @@
         </div>
       </section>
 
+      <section class="course-fit-workspace">
+        <form class="course-fit-form" aria-label="Course fit bot">
+          <div class="requirement-brief-header">
+            <span>01</span>
+            <div>
+              <strong>Tell us what the learner needs</strong>
+              <p>Write it like a counselling note: grade, interest, current skill level, learning goal, preferred project and any parent concern.</p>
+            </div>
+          </div>
+          <div class="course-fit-form-head">
+            <label for="courseRequirement">Course Requirement Brief</label>
+            <span data-course-count>0 characters</span>
+          </div>
+          <textarea
+            id="courseRequirement"
+            name="courseRequirement"
+            rows="7"
+            data-course-typing-placeholder="Grade 7 learner. New to coding. Enjoys games and animation. Parent wants a fun first course before Python, with a clear project outcome and weekly progress.|Grade 9 student. Knows basic HTML and CSS. Wants to build interactive websites and understand JavaScript through practical projects.|My child has completed Scratch basics and now wants to move toward beginner Python with visual graphics-based projects."
+            placeholder="Start typing the learner requirement..."
+            required
+          ></textarea>
+          <div class="course-fit-prompts" aria-label="Quick requirement examples">
+            <button type="button" data-course-prompt="My child is new to coding and wants to make games with visual block coding.">New to coding</button>
+            <button type="button" data-course-prompt="My child already knows Scratch and wants to move toward Python.">Scratch to Python</button>
+            <button type="button" data-course-prompt="My child wants to build websites using HTML, CSS and JavaScript.">Websites</button>
+            <button type="button" data-course-prompt="My child is interested in mobile app development and practical app projects.">Mobile apps</button>
+          </div>
+          <div class="course-fit-path-chips" aria-label="Parent-friendly learning goals">
+            <button type="button" data-course-append=" The parent wants confidence building and a course that feels enjoyable, not stressful.">Confidence first</button>
+            <button type="button" data-course-append=" The family wants a portfolio-style project that the child can show at the end.">Project outcome</button>
+            <button type="button" data-course-append=" The learner prefers a gentle beginner path with visual examples and weekly progress.">Gentle start</button>
+            <button type="button" data-course-append=" The learner is ready for a more serious skill path with coding practice and homework.">Serious track</button>
+          </div>
+          <div class="course-fit-actions">
+            <button class="primary-button course-fit-main-cta" type="submit"><span>Find Best-Fit Course</span><small>AI-style recommendation</small></button>
+            <button class="secondary-button course-fit-secondary-cta" type="button" data-course-example>Fill Sample Brief</button>
+          </div>
+          <p class="course-fit-error" data-course-error hidden></p>
+        </form>
+
+        <div class="course-fit-output" data-course-output hidden aria-live="polite"></div>
+      </section>
+
       <section class="course-fit-top-courses" aria-label="Top Tivoro course paths">
         <article>
           <span>Top Rated</span>
@@ -69,42 +112,6 @@
           <b>Recommended for 81% website goals</b>
         </article>
       </section>
-
-      <section class="course-fit-workspace">
-        <form class="course-fit-form" aria-label="Course fit bot">
-          <div class="course-fit-form-head">
-            <label for="courseRequirement">Learner requirement</label>
-            <span data-course-count>0 characters</span>
-          </div>
-          <textarea
-            id="courseRequirement"
-            name="courseRequirement"
-            rows="7"
-            placeholder="Example: My child is in Grade 7, new to coding, likes games and wants to start with something visual before Python."
-            required
-          ></textarea>
-          <div class="course-fit-prompts" aria-label="Quick requirement examples">
-            <button type="button" data-course-prompt="My child is new to coding and wants to make games with visual block coding.">New to coding</button>
-            <button type="button" data-course-prompt="My child already knows Scratch and wants to move toward Python.">Scratch to Python</button>
-            <button type="button" data-course-prompt="My child wants to build websites using HTML, CSS and JavaScript.">Websites</button>
-            <button type="button" data-course-prompt="My child is interested in mobile app development and practical app projects.">Mobile apps</button>
-          </div>
-          <div class="course-fit-actions">
-            <button class="primary-button" type="submit">Find Best Fit</button>
-            <button class="secondary-button" type="button" data-course-example>Use Example</button>
-          </div>
-          <p class="course-fit-error" data-course-error hidden></p>
-        </form>
-
-        <div class="course-fit-results" aria-live="polite">
-          <div class="course-fit-empty" data-course-empty>
-            <span>AI</span>
-            <strong>Waiting for requirement</strong>
-            <p>Share the learner's goal and this bot will map it against the text knowledge base.</p>
-          </div>
-          <div class="course-fit-output" data-course-output hidden></div>
-        </div>
-      </section>
     </main>
 
     <footer class="site-footer">
@@ -115,6 +122,6 @@
       <a class="footer-whatsapp-icon" href="https://wa.me/16502294307" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">WhatsApp</a>
     </footer>
 
-    <script src="course-fit-bot.js?v=20260721-06"></script>
+    <script src="course-fit-bot.js?v=20260721-14"></script>
   </body>
 </html>
