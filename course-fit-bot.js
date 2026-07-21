@@ -14,6 +14,9 @@ const courseOutput = document.querySelector("[data-course-output]");
 const courseEmpty = document.querySelector("[data-course-empty]");
 const courseError = document.querySelector("[data-course-error]");
 const exampleButton = document.querySelector("[data-course-example]");
+const promptButtons = document.querySelectorAll("[data-course-prompt]");
+const characterCount = document.querySelector("[data-course-count]");
+const courseFitWhatsappNumber = "16502294307";
 
 let courseKnowledge = "";
 let parsedCourses = [];
@@ -129,6 +132,26 @@ function extractUsefulLines(block) {
   return useful.slice(0, 5);
 }
 
+function updateCharacterCount() {
+  if (!characterCount || !courseInput) return;
+  const count = courseInput.value.trim().length;
+  characterCount.textContent = `${count} character${count === 1 ? "" : "s"}`;
+}
+
+function setSearchingState(isSearching) {
+  const submitButton = courseForm?.querySelector('button[type="submit"]');
+  if (!submitButton) return;
+  submitButton.disabled = isSearching;
+  submitButton.textContent = isSearching ? "Mapping..." : "Find Best Fit";
+}
+
+function getFitLabel(score) {
+  if (score >= 80) return "Excellent match";
+  if (score >= 55) return "Strong match";
+  if (score >= 32) return "Possible match";
+  return "Needs review";
+}
+
 function renderRecommendation(query) {
   if (!parsedCourses.length) {
     courseError.hidden = false;
@@ -156,6 +179,7 @@ function renderRecommendation(query) {
   }
 
   const best = matches[0];
+  const bestScore = Math.min(99, Math.round(best.score));
   const whatsappText = encodeURIComponent(
     `Hello Tivoro, I used the Course Fit Bot. Requirement: ${query}. Best fit: ${best.name}. Please help me finalize the right batch.`
   );
@@ -164,19 +188,27 @@ function renderRecommendation(query) {
   courseOutput.hidden = false;
   courseOutput.innerHTML = `
     <article class="course-fit-card is-best">
-      <span>Best fit</span>
+      <div class="course-fit-card-top">
+        <span>Best fit</span>
+        <em>${escapeHtml(getFitLabel(bestScore))}</em>
+      </div>
       <h2>${escapeHtml(best.name)}</h2>
       <p>${escapeHtml(best.category || "Recommended from the course knowledge base")}</p>
-      <div class="course-fit-score"><strong>${Math.min(99, Math.round(best.score))}%</strong><small>match confidence</small></div>
+      <div class="course-fit-score">
+        <strong>${bestScore}%</strong>
+        <small>match confidence</small>
+        <i style="--fit:${bestScore}%"></i>
+      </div>
       <div class="course-fit-tags">
         ${(best.reasons.length ? best.reasons : ["course match"]).map((reason) => `<em>${escapeHtml(reason)}</em>`).join("")}
       </div>
+      <h3>Why this course fits</h3>
       <ul>
         ${extractUsefulLines(best.block).map((line) => `<li>${escapeHtml(line.replace(/^[A-Z ]+:/, "").trim())}</li>`).join("")}
       </ul>
       <div class="course-fit-links">
         ${best.url ? `<a class="secondary-button" href="${escapeHtml(best.url)}" target="_blank" rel="noopener noreferrer">Open Course Page</a>` : ""}
-        <a class="primary-button" href="https://wa.me/918826758881?text=${whatsappText}" target="_blank" rel="noopener noreferrer">Discuss on WhatsApp</a>
+        <a class="primary-button" href="https://wa.me/${courseFitWhatsappNumber}?text=${whatsappText}" target="_blank" rel="noopener noreferrer">Discuss on WhatsApp</a>
       </div>
     </article>
     <div class="course-fit-alt-grid">
@@ -185,7 +217,10 @@ function renderRecommendation(query) {
         .map(
           (match) => `
             <article class="course-fit-card">
-              <span>Alternative</span>
+              <div class="course-fit-card-top">
+                <span>Alternative</span>
+                <em>${escapeHtml(getFitLabel(Math.min(99, Math.round(match.score))))}</em>
+              </div>
               <h3>${escapeHtml(match.name)}</h3>
               <p>${escapeHtml(match.category || match.level || "Possible fit")}</p>
               <strong>${Math.min(99, Math.round(match.score))}% match</strong>
@@ -235,12 +270,36 @@ courseForm?.addEventListener("submit", (event) => {
     courseError.textContent = "Please type the learner requirement first.";
     return;
   }
-  renderRecommendation(query);
+  setSearchingState(true);
+  courseEmpty.hidden = true;
+  courseOutput.hidden = false;
+  courseOutput.innerHTML = `
+    <div class="course-fit-loading">
+      <span></span>
+      <strong>Reading knowledge base</strong>
+      <p>Mapping requirement, learner intent and course signals...</p>
+    </div>
+  `;
+  window.setTimeout(() => {
+    renderRecommendation(query);
+    setSearchingState(false);
+  }, 260);
 });
 
 exampleButton?.addEventListener("click", () => {
   courseInput.value = "My child is in Grade 7, new to coding, likes games and animation, and wants a fun first course before moving to Python.";
+  updateCharacterCount();
   courseInput.focus();
 });
 
+promptButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    courseInput.value = button.dataset.coursePrompt || "";
+    updateCharacterCount();
+    courseInput.focus();
+  });
+});
+
+courseInput?.addEventListener("input", updateCharacterCount);
+updateCharacterCount();
 loadKnowledgeBase();
