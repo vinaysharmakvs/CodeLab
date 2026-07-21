@@ -1512,3 +1512,571 @@ General information only.
 ======================================================================
 END OF KNOWLEDGE BASE V3 ADDITIONS
 ======================================================================
+
+======================================================================
+22. VERIFIED NEW CAMPS AND COMPETITION PROGRAMS
+======================================================================
+
+Data verified from the official YoungGates pages on 21 July 2026.
+Prices, weeks, and schedules may change; the bot must ask parents to confirm current availability.
+
+----------------------------------------------------------------------
+COURSE ID: YG-CAMP-PY-GRAPHICS
+OFFICIAL NAME: Python With Graphics
+TYPE: camp
+STATUS: official
+OFFICIAL URL: https://younggates.com/Camps/python-with-graphics/
+CATEGORY: Python, Graphics, Creative Coding
+OFFICIAL AGE RANGE: 12-18 years
+OFFICIAL LEVEL: Beginner
+OFFICIAL PRIOR EXPERIENCE: 0
+OFFICIAL SCHEDULE: Schedule can be chosen
+OFFICIAL DURATION: Flexible Duration
+OFFICIAL PRICE: $250
+
+OFFICIAL OVERVIEW:
+Students learn to develop simple yet powerful graphics using the Python Turtle graphics environment.
+
+OFFICIAL TOPICS:
+- Turtle Graphics library
+- Move and turn commands
+- Basic geometry and exploration
+- Drawing polygons
+- Drawing stars
+- Drawing spirals
+- Stamping
+- Randomizing drawings
+- Coloring drawings
+
+OFFICIAL TIME SLOTS:
+- 6:00 am-8:00 am PST
+- 9:00 am-11:00 am PST
+
+BEST FOR:
+- Ages 12-18 beginning text-based coding
+- Visual and creative learners
+- Students transitioning from Scratch to Python
+- Students interested in geometry, patterns, colors, and drawing
+
+PARENT INTENTS:
+- My teenager wants beginner Python
+- My child likes drawing and coding
+- My child wants Python Turtle
+- My child wants visual Python projects
+- What comes after Scratch?
+
+SEARCH KEYWORDS:
+- python graphics
+- python turtle
+- drawing with python
+- creative coding
+- beginner python
+- visual python
+- geometry coding
+- python for teens
+
+RECOMMENDED NEXT STEPS:
+- AI and Python Coding
+- AI Champions Program
+- Intermediate Python Projects
+- Python Game Development custom pathway
+
+BOT NOTES:
+- Use the official age range and price, but ask parents to confirm current availability.
+- Recommend over general Python when the student prefers visual and creative projects.
+
+----------------------------------------------------------------------
+COURSE ID: YG-CAMP-AI-PYTHON
+OFFICIAL NAME: AI And Python Coding
+TYPE: camp
+STATUS: official
+OFFICIAL URL: https://younggates.com/Camps/ai-and-python-coding/
+CATEGORY: Artificial Intelligence, Python, AI Agents, Projects
+OFFICIAL AGE RANGE: 12-18 years
+OFFICIAL LEVEL: Not explicitly labeled; page says suitable for beginners and aspiring programmers
+OFFICIAL PRIOR EXPERIENCE: 0
+OFFICIAL SCHEDULE: 1:1 personalized format, 1 hour/day for one student; flexible duration shown
+OFFICIAL DURATION: Flexible Duration
+OFFICIAL PRICE: $299
+
+OFFICIAL OVERVIEW:
+Students learn AI through coding and build AI projects while learning Python programming.
+
+OFFICIAL TOPICS:
+- Python programming
+- Artificial intelligence
+- Problem solving
+- Project presentation
+- Innovation and creativity
+
+OFFICIAL PROJECTS:
+- Own AI chatbot
+- Custom personality bot
+- AI that fetches real-world data
+- AI agent with advanced capabilities
+- Capstone project
+
+OFFICIAL TIME SLOTS:
+- 9:00 am-11:00 am PST
+
+BEST FOR:
+- Ages 12-18 interested in Python through AI projects
+- Beginners and aspiring programmers
+- Students motivated by chatbots, agents, and real-world data
+- Students wanting a demonstrable capstone
+
+PARENT INTENTS:
+- My teenager wants AI and Python
+- My child wants to build a chatbot
+- My child wants an AI agent
+- My child wants coding through AI projects
+- Is there an AI course for a beginner?
+
+SEARCH KEYWORDS:
+- ai and python
+- python ai
+- ai chatbot
+- personality bot
+- ai agent
+- real-world data
+- ai projects
+- beginner ai coding
+
+RECOMMENDED NEXT STEPS:
+- AI Champions Program
+- AI Young Creators Camp
+- Python Data Science custom course
+- Student Tech Portfolio Program
+
+BOT NOTES:
+- Recommend when the parent wants both Python and AI.
+- Differentiate from AI Young Creators: this course emphasizes Python coding and AI bots/agents.
+
+----------------------------------------------------------------------
+COURSE ID: YG-CAMP-AI-CREATORS
+OFFICIAL NAME: AI Young Creators Camp
+TYPE: camp
+STATUS: official
+OFFICIAL URL: https://younggates.com/Camps/ai-young-creators-camp/
+CATEGORY: Artificial Intelligence, Prompting, Website or Digital Project, Entrepreneurship
+OFFICIAL AGE RANGE: 12-18 years
+OFFICIAL LEVEL: Not explicitly labeled
+OFFICIAL PRIOR EXPERIENCE: 0
+OFFICIAL SCHEDULE: 1:1 personalized format, 1 hour/day for one student; flexible duration shown
+OFFICIAL DURATION: Flexible Duration
+OFFICIAL PRICE: $299
+
+OFFICIAL OVERVIEW:
+Students turn ideas into real products using AI and creativity and build an AI-powered project.
+
+OFFICIAL TOPICS:
+- AI creativity and smart prompting
+- Building a website or digital project
+- Turning ideas into real products
+- Project planning and creator mindset
+- Launching a project online
+- Presenting and showcasing innovation
+
+OFFICIAL PROJECTS:
+- Student's own website or digital project
+- AI-powered product or creative project
+- Online project launch and showcase
+
+OFFICIAL TIME SLOTS:
+- 9:00 am-11:00 am PST
+- 5:00 pm-7:00 pm PST
+
+BEST FOR:
+- Creative students who enjoy designing, building, and presenting
+- Students wanting a real online project
+- Students interested in entrepreneurship or product creation
+- Students less focused on deep programming and more focused on creating
+
+PARENT INTENTS:
+- My child has an idea and wants to build it
+- My child wants to create a website using AI
+- My child wants to launch a project online
+- My child likes design and entrepreneurship
+- My child wants a portfolio project
+
+SEARCH KEYWORDS:
+- ai creator
+- ai project
+- smart prompting
+- build website with ai
+- digital product
+- launch project online
+- creator mindset
+- portfolio project
+
+RECOMMENDED NEXT STEPS:
+- AI Champions Program
+- Web Development Level 1 or Level 2
+- GitHub, Version Control and Deployment custom course
+- Student Tech Portfolio Program
+
+BOT NOTES:
+- Recommend when the outcome is a launched product, website, or digital project.
+- Differentiate from AI and Python Coding: this course emphasizes product creation, prompting, launch, and presentation.
+
+----------------------------------------------------------------------
+COURSE ID: YG-CAMP-AI-CHAMPIONS
+OFFICIAL NAME: AI Champions Program
+TYPE: camp
+STATUS: official
+OFFICIAL URL: https://younggates.com/Camps/ai-champions-program/
+CATEGORY: Artificial Intelligence, Python, Large Language Models, AI Agents
+OFFICIAL AGE RANGE: 12-18 years
+OFFICIAL LEVEL: Not explicitly labeled
+OFFICIAL PRIOR EXPERIENCE: 0
+OFFICIAL SCHEDULE: 1:1 personalized format, 1 hour/day for one student; flexible duration shown
+OFFICIAL DURATION: Flexible Duration
+OFFICIAL PRICE: $299
+
+OFFICIAL OVERVIEW:
+A deeper dive into artificial intelligence, coding, large language models, chatbots, and AI agents.
+
+OFFICIAL TOPICS:
+- How AI and large language models work
+- Python basics
+- Prompt engineering techniques
+- Chatbots with memory and personality
+- Connecting AI to weather, news, and knowledge sources
+- AI agents that think and take actions
+- Building and presenting a complete AI application
+
+OFFICIAL PROJECTS:
+- First AI program
+- Personality-based chatbot
+- AI with memory
+- AI agent with real-world capabilities
+- Final AI app for Demo Day
+
+OFFICIAL TIME SLOTS:
+- 9:00 am-11:00 am PST
+- 5:00 pm-7:00 pm PST
+
+BEST FOR:
+- Ages 12-18 wanting a deeper AI experience
+- Students interested in LLMs, agents, connected data, and complete AI apps
+- Students seeking an AI portfolio or Demo Day project
+
+PARENT INTENTS:
+- My teenager wants to understand how AI works
+- My child wants advanced AI agents
+- My child wants a chatbot with memory
+- My child wants prompt engineering and Python
+- My child wants an AI application for a demo
+
+SEARCH KEYWORDS:
+- ai champions
+- large language models
+- llm
+- python basics
+- prompt engineering
+- chatbot memory
+- ai agent
+- ai application
+- demo day
+
+RECOMMENDED NEXT STEPS:
+- Python Data Science custom course
+- AI Portfolio and Internship Preparation
+- Advanced AI Agent custom course
+- Student Tech Portfolio Program
+
+BOT NOTES:
+- Recommend as the deeper AI option among the three new AI camps.
+- Although prior experience is shown as 0, ask about readiness because the content is more advanced.
+
+----------------------------------------------------------------------
+COURSE ID: YG-CAMP-MICROSERVICES
+OFFICIAL NAME: Microservices Bootcamp: Unlocking Scalable Solutions
+TYPE: camp
+STATUS: official
+OFFICIAL URL: https://younggates.com/Camps/microservices-bootcamp-unlocking-scalable-solutions/
+CATEGORY: Microservices, Java, Python, APIs, Databases, Deployment
+OFFICIAL AGE RANGE: 12-18 years; objective states Grades 8-12
+OFFICIAL LEVEL: Beginner
+OFFICIAL PRIOR EXPERIENCE: 0
+OFFICIAL SCHEDULE: Class schedule can be chosen
+OFFICIAL DURATION: Flexible Duration
+OFFICIAL PRICE: $299
+
+OFFICIAL OVERVIEW:
+Hands-on experience building, deploying, and managing scalable microservices using Java and Python.
+
+OFFICIAL TOPICS:
+- Microservices architecture and advantages over monolithic systems
+- API-driven development
+- Containerization
+- Java with Spring Boot and Spring Cloud
+- Python with Django
+- MySQL or PostgreSQL integration
+- Building, testing, and deploying microservices
+- Service discovery
+- Scalability and collaboration
+
+OFFICIAL PROJECTS:
+- E-commerce microservices for inventory, orders, and payments
+- Health tracker with user management, data tracking, and analytics
+- Project presentation to peers and parents
+
+OFFICIAL TIME SLOTS:
+- 6:00 am-8:00 am PST
+- 11:00 am-1:00 pm PST
+
+BEST FOR:
+- Grades 8-12 or ages 12-18 interested in backend systems
+- Students interested in Java, Python, APIs, databases, and deployment
+- Students wanting industry-relevant architecture experience
+
+PARENT INTENTS:
+- My child wants backend development
+- My teenager wants Java and Python
+- My child wants to learn APIs
+- My child wants scalable software architecture
+- My child wants an advanced real-world software project
+
+SEARCH KEYWORDS:
+- microservices
+- backend
+- spring boot
+- spring cloud
+- django
+- api development
+- containerization
+- mysql
+- postgresql
+- scalable systems
+
+RECOMMENDED NEXT STEPS:
+- Full-Stack Web Development custom course
+- Cloud and DevOps custom pathway
+- Java and SQL Projects with ChatGPT
+- Backend Engineering Portfolio
+
+BOT NOTES:
+- The page labels the camp beginner and prior experience 0, but the technology stack is substantial.
+- Ask about Java/Python familiarity and recommend a readiness assessment before final placement.
+
+----------------------------------------------------------------------
+COURSE ID: YG-CAMP-CYBER-DEFENDER
+OFFICIAL NAME: Cyber Defender – Foundations of Ethical Hacking & Data Security
+TYPE: camp
+STATUS: official
+OFFICIAL URL: https://younggates.com/Camps/cyber-defender-foundations-of-ethical-hacking-data-security/
+CATEGORY: Cybersecurity, Java, Data Security, Ethical Hacking Awareness
+OFFICIAL AGE RANGE: 12-18 years
+OFFICIAL LEVEL: Beginner
+OFFICIAL PRIOR EXPERIENCE: 0; no prior coding experience required
+OFFICIAL SCHEDULE: Class schedule can be chosen
+OFFICIAL DURATION: Five-day program; page also displays flexible duration
+OFFICIAL PRICE: $249
+
+OFFICIAL OVERVIEW:
+A five-day, project-based program using Java to introduce ethical hacking principles, cybersecurity awareness, digital protection, and defensive security tools.
+
+OFFICIAL TOPICS:
+- Ethical hacking principles and digital responsibility
+- Encryption for text and sensitive information
+- SHA-256 hashing for password protection
+- CAPTCHA-style bot prevention
+- Secure login features
+- Authentication and basic session logic
+- Risk analysis and prevention strategies
+- Cyber-defender mindset
+
+OFFICIAL PROJECTS:
+- Day 1: Secret Message Encryptor
+- Day 2: Password Protector
+- Day 3: CAPTCHA Generator
+- Day 4: Secure Login Portal
+- Day 5: Cyber Shield Toolkit
+
+OFFICIAL TIME SLOTS:
+- 9:00 am-11:00 am PST
+
+BEST FOR:
+- Ages 12-18 with no prior coding required
+- Students interested in defensive cybersecurity and digital responsibility
+- Students motivated by practical Java-based security projects
+
+PARENT INTENTS:
+- My child wants cybersecurity
+- My teenager wants ethical hacking
+- My child wants to learn encryption
+- My child wants Java security projects
+- My child wants to understand data protection
+
+SEARCH KEYWORDS:
+- cyber defender
+- cybersecurity for teens
+- ethical hacking foundations
+- java security
+- encryption
+- sha-256
+- hashing
+- captcha
+- secure login
+- data security
+- cyber defense
+
+RECOMMENDED NEXT STEPS:
+- Java Foundations and Projects custom course
+- Cybersecurity and Online Safety custom pathway
+- Networking Foundations custom course
+- Cybersecurity Portfolio Program
+
+BOT NOTES:
+- Frame this only as defensive, legal, supervised, age-appropriate cybersecurity education.
+- Do not imply access to real systems, real targets, unauthorized testing, or harmful activity.
+
+----------------------------------------------------------------------
+COURSE ID: YG-COMP-ACSL
+OFFICIAL NAME: ACSL
+TYPE: competition preparation section
+STATUS: official_page_dynamic_content
+OFFICIAL URL: https://younggates.com/ACSL/
+CATEGORY: Computer Science Competition, Algorithms, Programming
+OFFICIAL AGE RANGE: Not visible in reviewed page content
+OFFICIAL LEVEL: Not visible in reviewed page content
+OFFICIAL PRIOR EXPERIENCE: Not visible in reviewed page content
+OFFICIAL SCHEDULE: Not visible in reviewed page content
+OFFICIAL DURATION: Not visible in reviewed page content
+OFFICIAL PRICE: Not visible in reviewed page content
+
+OFFICIAL OVERVIEW:
+YoungGates has an official ACSL page, but its division details load dynamically and were not exposed in the public page text reviewed.
+
+BEST FOR:
+- Students interested in computer science competitions
+- Students seeking division-based contest preparation after assessment
+
+PARENT INTENTS:
+- My child wants ACSL preparation
+- Which ACSL division is right for my child?
+- My child wants a computer science competition
+- My child needs algorithms and programming contest practice
+
+SEARCH KEYWORDS:
+- ACSL
+- American Computer Science League
+- computer science contest
+- ACSL preparation
+- algorithms
+- programming competition
+
+RECOMMENDED NEXT STEPS:
+- Contact YoungGates for current ACSL divisions and placement
+- Competitive Programming custom pathway
+- Data Structures and Algorithms custom course
+
+BOT NOTES:
+- Do not invent divisions, age ranges, syllabus, schedule, or price.
+- Route to WhatsApp for current division information and student placement.
+
+----------------------------------------------------------------------
+COURSE ID: YG-COMP-USACO
+OFFICIAL NAME: USACO
+TYPE: competition preparation section
+STATUS: official_page_dynamic_content
+OFFICIAL URL: https://younggates.com/USACO/
+CATEGORY: Competitive Programming, Algorithms, Programming Contest
+OFFICIAL AGE RANGE: Not visible in reviewed page content
+OFFICIAL LEVEL: Not visible in reviewed page content
+OFFICIAL PRIOR EXPERIENCE: Not visible in reviewed page content
+OFFICIAL SCHEDULE: Not visible in reviewed page content
+OFFICIAL DURATION: Not visible in reviewed page content
+OFFICIAL PRICE: Not visible in reviewed page content
+
+OFFICIAL OVERVIEW:
+YoungGates has an official USACO page, but its program content loads dynamically and was not exposed in the public page text reviewed.
+
+BEST FOR:
+- Students interested in algorithmic competitive programming
+- Students ready for placement based on language and current problem-solving level
+
+PARENT INTENTS:
+- My child wants USACO training
+- How can my child prepare for USACO?
+- My child wants competitive programming
+- My child wants algorithm contest preparation
+
+SEARCH KEYWORDS:
+- USACO
+- USA Computing Olympiad
+- competitive programming
+- USACO preparation
+- algorithm contest
+- coding competition
+
+RECOMMENDED NEXT STEPS:
+- Contact YoungGates for current USACO program details
+- Data Structures and Algorithms custom course
+- Competitive Programming custom pathway
+
+BOT NOTES:
+- Do not invent divisions, prerequisites, syllabus, dates, or price.
+- Ask for programming language, contest experience, current level, and target date before handoff.
+
+======================================================================
+23. NEW COURSE COMPARISON RULES
+======================================================================
+
+QUESTION: AI and Python Coding vs AI Young Creators Camp
+ANSWER: Choose AI and Python Coding when the student wants Python, chatbots, real-world data, and AI agents. Choose AI Young Creators when the student wants prompting, product creation, a website or digital project, online launch, and presentation.
+
+QUESTION: AI Champions vs AI and Python Coding
+ANSWER: AI Champions is the deeper AI option, with LLM concepts, Python basics, prompt engineering, memory-based chatbots, connected knowledge sources, and agents. AI and Python Coding is a beginner-friendly project route focused on learning Python through chatbots, personality bots, data-connected AI, and a capstone.
+
+QUESTION: Python With Graphics vs AI and Python Coding
+ANSWER: Python With Graphics is better for beginners who enjoy visual drawing, geometry, patterns, and Turtle graphics. AI and Python Coding is better for students motivated by chatbots, agents, and AI projects.
+
+QUESTION: ACSL vs USACO
+ANSWER: Both are competition-related YoungGates sections, but the reviewed pages load details dynamically. The bot must ask about grade, programming language, competition experience, and goal, then route to YoungGates for current program and placement details.
+
+QUESTION: Cyber Defender vs Microservices Bootcamp
+ANSWER: Cyber Defender focuses on defensive cybersecurity, encryption, password hashing, CAPTCHA, secure login logic, and Java-based security projects. Microservices focuses on backend architecture, APIs, Java/Spring, Python/Django, databases, deployment, service discovery, and scalable systems.
+
+======================================================================
+24. EXPANDED ROADMAPS
+======================================================================
+
+AI PATHWAY
+1. Python With Graphics or Beginner Python
+2. AI And Python Coding
+3. AI Young Creators Camp or AI Champions Program
+4. AI Portfolio custom program
+5. Internship eligibility review
+
+CYBERSECURITY PATHWAY
+1. Digital safety and Java foundations if needed
+2. Cyber Defender
+3. Networking Foundations custom course
+4. Defensive Cybersecurity Portfolio
+5. Advanced supervised competition or internship pathway
+
+BACKEND PATHWAY
+1. Python or Java foundations
+2. SQL and RDBMS
+3. Microservices Bootcamp
+4. Cloud and DevOps custom course
+5. Backend Portfolio or Internship
+
+COMPETITION PATHWAY
+1. Programming foundations
+2. Problem-solving and algorithms
+3. ACSL or USACO placement assessment
+4. Division/level-specific preparation
+5. Timed practice and competition review
+
+======================================================================
+25. CURRENT-DATA RULE
+======================================================================
+
+Camp prices, dates, time slots, and availability are time-sensitive.
+The bot may quote the website data stored here only as the displayed information reviewed on 21 July 2026.
+It must always add: “Please confirm the current schedule, availability, and price with YoungGates.”
+
+END OF KNOWLEDGE BASE V4
