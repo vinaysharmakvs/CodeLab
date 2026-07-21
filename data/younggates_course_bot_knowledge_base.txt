@@ -1273,3 +1273,242 @@ Final CTA:
 “Your request is suitable for a personalized YoungGates plan. Please WhatsApp {{YOUNGGATES_WHATSAPP_NUMBER}} and share the child’s age, grade, previous experience, interest, schedule, and project idea. The team can confirm the best course or create a customized course.”
 
 END OF KNOWLEDGE BASE
+
+
+
+======================================================================
+15. COMPLETE YOUNGGATES NAVIGATION & LINK MAP
+======================================================================
+
+OFFICIAL CLASSES
+- Level 1 – Gaming/Animation Block Coding
+  https://www.younggates.com/Classes/level-1-gaminganimation-block-coding/
+- Level 2 – Gaming/Animation Block Coding
+  https://www.younggates.com/Classes/level-2-gaminganimation-block-coding/
+- Intro to Apps Coding – Make Your Own Mobile Apps
+  https://www.younggates.com/Classes/app-making-block-based/
+- Beginner Python With Graphics
+  https://www.younggates.com/Classes/beginner-python-with-graphics/
+- Level 1 – Web Dev – HTML, CSS
+  https://www.younggates.com/Classes/level-1-web-dev-html-css/
+- Level 2 – Web Dev – HTML, CSS, JavaScript
+  https://www.younggates.com/Classes/level-2-web-dev-html-css-javascript/
+- Let's Explore Excel
+  https://www.younggates.com/Classes/lets-explore-excel/
+- 1:1 Fast Math (verify URL before sharing)
+- Mastering SQL & RDBMS (verify URL before sharing)
+- Master SQL & Java Projects with ChatGPT (verify URL before sharing)
+
+OFFICIAL CAMPS
+- Main Camps: https://www.younggates.com/Camps/
+- Beginner Online Python: https://www.younggates.com/Camps/beginner-online-python/
+- AI for Coding (6th–8th): https://www.younggates.com/Camps/ai-for-coding-6th-8th-graders/
+- AI for Coding (8th–12th): https://www.younggates.com/Camps/ai-for-coding-8th-12th-graders/
+
+OTHER OFFICIAL SECTIONS
+- Pricing: https://www.younggates.com/Pricing/
+- College Prep: https://www.younggates.com/CollegePrep/
+- Internship: https://www.younggates.com/CollegePrep/Internship/
+- Counseling Services: https://www.younggates.com/CounselingServices/
+- Free Workshops: https://www.younggates.com/FreeWorkshops/
+- Hackathon: https://www.younggates.com/Hackathon/
+- About: https://www.younggates.com/AboutUs
+- Home: https://www.younggates.com/
+
+======================================================================
+16. GLOBAL INTENT MAPPING
+======================================================================
+
+Intent Groups:
+Coding, Scratch, Python, AI, Prompt Engineering, Game Development,
+Roblox, Minecraft, Website Development, Mobile App Development,
+Java, SQL, Excel, Data Science, Robotics, Cybersecurity,
+Fast Math, Personalized Math, English, STEM,
+Summer Camps, Winter Camps, Spring Camps,
+Workshops, Free Workshops, Hackathons,
+Coding Competitions, ACSL, USACO, Olympiad,
+College Preparation, Internship, Portfolio,
+GitHub & Deployment, Personalized 1:1 Learning,
+Trial Class, Pricing, Schedule, Teacher Matching,
+Custom Course Request.
+
+CUSTOM COURSE RULE
+If there is no exact official course:
+1. Recommend the closest official course.
+2. Suggest a personalized pathway.
+3. State clearly that it is a customizable learning plan.
+4. Route the parent to YoungGates WhatsApp for syllabus, pricing, schedule, and teacher confirmation.
+
+END OF KNOWLEDGE BASE V2.1
+
+
+
+======================================================================
+17. HIGH-INTENT US PARENT SEARCH LIBRARY
+======================================================================
+
+The bot should recognize these searches even when course names are not mentioned.
+
+BEGINNER
+- best coding classes for kids
+- online coding classes for kids
+- coding tutor for kids
+- STEM classes for kids
+- technology classes for kids
+- coding after school
+- live coding classes
+- coding bootcamp for kids
+
+BY AGE
+- coding for 5 year old
+- coding for 6 year old
+- coding for 7 year old
+- coding classes for 8 year olds
+- coding classes for 9 year olds
+- coding classes for 10 year olds
+- coding for middle school
+- coding for teens
+
+AI
+- AI classes for kids
+- ChatGPT classes for kids
+- prompt engineering for kids
+- AI summer camp
+- machine learning for teens
+- AI coding classes
+
+GAME DEVELOPMENT
+- Roblox coding
+- Minecraft coding
+- Scratch classes
+- game development for kids
+- make your own game
+- Unity classes for kids
+
+WEB
+- website development for kids
+- HTML CSS classes
+- JavaScript for teens
+- build a website
+
+PYTHON
+- beginner Python
+- Python classes for kids
+- Python tutor
+- Python coding camp
+
+DATA
+- SQL classes
+- Excel classes
+- data science for teens
+- data analytics for students
+
+CAREER
+- future skills for kids
+- AI careers
+- computer science classes
+- college prep coding
+- tech skills for kids
+
+PROBLEM BASED
+- my child loves video games
+- productive screen time
+- educational online activities
+- improve logical thinking
+- improve problem solving
+- gifted child activities
+
+======================================================================
+18. OBJECTION HANDLING
+======================================================================
+
+PRICE
+Response:
+"We can recommend the most suitable pathway first. YoungGates also offers a trial option on its pricing page. Please confirm current pricing and offers."
+
+NO EXPERIENCE
+Response:
+"That's perfectly fine. Many students begin with no coding experience. We'll recommend an age-appropriate beginner pathway."
+
+SCREEN TIME
+Response:
+"YoungGates emphasizes guided, project-based learning where students actively create instead of passively consuming content."
+
+NOT SURE WHICH COURSE
+Response:
+"I'll ask a few questions about age, interests, and experience to recommend the best pathway."
+
+ONLY WANTS ONE TOPIC
+Response:
+"YoungGates may be able to create a personalized module. Please contact the team on WhatsApp for confirmation."
+
+======================================================================
+19. LEAD QUALIFICATION
+======================================================================
+
+Collect before handoff:
+- Child age
+- Grade
+- Country
+- Time zone
+- Previous experience
+- Current school
+- Main interest
+- Desired project
+- Preferred schedule
+- Budget preference
+- Parent name
+- WhatsApp
+- Email
+- Deadline (if any)
+
+Lead score:
+HOT:
+Ready to enroll within 30 days.
+
+WARM:
+Exploring options.
+
+COLD:
+General information only.
+
+======================================================================
+20. CONVERSATION RULES
+======================================================================
+
+1. Never recommend solely by age.
+2. Ask no more than three questions before recommending.
+3. Always explain WHY a course matches.
+4. Suggest one alternative course.
+5. If confidence is below 70%, ask another question.
+6. For unmatched requests, propose a custom pathway.
+7. End every custom recommendation with a WhatsApp handoff.
+8. Never promise admission, internship, certificates, or outcomes.
+9. Clearly distinguish official information from suggested curriculum.
+10. Keep responses parent-friendly and concise.
+
+======================================================================
+21. EXAMPLE NATURAL LANGUAGE INTENTS
+======================================================================
+
+"My son loves Roblox."
+→ Roblox custom course + Scratch/Python depending on experience.
+
+"My daughter wants to become an AI engineer."
+→ AI pathway: Python → AI → Portfolio.
+
+"He wants to build websites."
+→ Web Level 1 or Level 2 based on HTML/CSS knowledge.
+
+"She is weak in calculations."
+→ Fast Math or Personalized Math.
+
+"He wants to make mobile apps."
+→ App Making + custom advanced app pathway.
+
+"I don't know where to start."
+→ Ask age, experience, and interest, then recommend.
+
+======================================================================
+END OF KNOWLEDGE BASE V3 ADDITIONS
+======================================================================
