@@ -1,6 +1,11 @@
 const knowledgeBasePaths = [
+  "https://www.tivoro.in/data/younggates_course_bot_knowledge_base.txt",
+  "https://www.tivoro.in/api/younggates_course_bot_knowledge_base.txt",
+  `${window.location.origin}/data/younggates_course_bot_knowledge_base.txt`,
+  `${window.location.origin}/api/younggates_course_bot_knowledge_base.txt`,
+  `${window.location.origin}/kidsverse-codelab/data/younggates_course_bot_knowledge_base.txt`,
+  `${window.location.origin}/kidsverse-codelab/api/younggates_course_bot_knowledge_base.txt`,
   "data/younggates_course_bot_knowledge_base.txt",
-  "api/younggates_course_bot_knowledge_base.txt",
 ];
 const sourceStatus = document.querySelector("[data-course-source-status]");
 const courseForm = document.querySelector(".course-fit-form");
@@ -194,13 +199,19 @@ function renderRecommendation(query) {
 }
 
 async function loadKnowledgeBase() {
+  const attemptedPaths = [];
   try {
     let loadedResponse = null;
     for (const path of knowledgeBasePaths) {
-      const response = await fetch(path, { cache: "no-store" });
-      if (response.ok) {
-        loadedResponse = response;
-        break;
+      try {
+        attemptedPaths.push(path);
+        const response = await fetch(path, { cache: "no-store" });
+        if (response.ok) {
+          loadedResponse = response;
+          break;
+        }
+      } catch (error) {
+        // Try the next possible deployment path.
       }
     }
     if (!loadedResponse) throw new Error("Knowledge file not found");
@@ -211,7 +222,7 @@ async function loadKnowledgeBase() {
     sourceStatus.textContent = "Unable to load";
     courseError.hidden = false;
     courseError.textContent =
-      "The course knowledge file could not be loaded. On Vercel, keep the txt file inside data/younggates_course_bot_knowledge_base.txt because /api is reserved for server functions. If opening locally, use a local server instead of file://.";
+      `The course knowledge file could not be loaded by the bot script. Tried: ${attemptedPaths.join(", ")}. If the file opens directly, please hard refresh the bot page or redeploy course-fit-bot.js.`;
   }
 }
 
