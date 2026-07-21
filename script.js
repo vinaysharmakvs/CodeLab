@@ -3036,7 +3036,7 @@ trustForm?.addEventListener("submit", async (event) => {
     } else if (code === "website-not-found") {
       renderTrustError(
         "Official local website could not be verified",
-        "Tivoro did not find a website that confidently matches both the business name and the entered location. Same-name websites from other cities/countries are not counted as official.",
+        "Tivoro checked possible homepage/contact/about page signals but did not find a website matching both the business name and entered city/location. Same-name websites from other cities/countries are not counted as official.",
         { href: trustManualReviewLink({ businessName, city, state }), label: "Send for Manual Review" }
       );
     } else if (code === "stale-google-endpoint" || code === "missing-google-places-key") {
