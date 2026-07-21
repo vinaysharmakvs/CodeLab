@@ -1,285 +1,297 @@
-YOUNGGATES COURSE KNOWLEDGE BASE
-Bot-ready text dataset
-Source restriction: Only content published on https://www.younggates.com/
-Reviewed: 21 July 2026
+YOUNGGATES AI COURSE COUNSELOR KNOWLEDGE BASE
+Version: 2.0
+Prepared for automated course selection and customized-course routing
+Official website: https://www.younggates.com/
+Review date: 21 July 2026
 
-============================================================
-A. YOUNGGATES PLATFORM INFORMATION
-============================================================
+DATA TYPES
+1. OFFICIAL: Explicitly published by YoungGates.
+2. SUGGESTED CURRICULUM: Practical curriculum added for counseling. It is customizable and not an official promise until approved.
+3. CUSTOM COURSE: A proposed learning plan based on a parent request. It is not necessarily listed on the website.
 
-Brand: YoungGates
+MANDATORY DISCLOSURE
+For suggested curriculum say:
+“Suggested and customizable; final syllabus subject to YoungGates approval.”
 
-Official website:
-https://www.younggates.com/
+For custom courses say:
+“This is not currently confirmed as a fixed website-listed course. Please contact YoungGates on WhatsApp for final syllabus, teacher availability, schedule, and pricing.”
 
-Main offering:
-Online and in-person classes for K-12 students.
+WHATSAPP PLACEHOLDER
+Replace {{YOUNGGATES_WHATSAPP_NUMBER}} with the confirmed active WhatsApp number.
 
-Subjects explicitly mentioned by YoungGates:
+Suggested CTA:
+“WhatsApp YoungGates at {{YOUNGGATES_WHATSAPP_NUMBER}} with the child’s age, grade, previous experience, interest, preferred schedule, and project goal.”
+
+Do not claim the public phone number is WhatsApp-enabled until confirmed.
+
+
+======================================================================
+YOUNGGATES PLATFORM — OFFICIAL
+======================================================================
+
+YoungGates provides personalized online and in-person learning for K–12 students.
+
+Officially mentioned areas:
 - Coding
 - Math
 - English
 - Robotics
 - Gaming
-- Other STEM and enrichment subjects
+- STEM and enrichment programs
 
-Learning format explicitly mentioned:
+Official general coding learner range:
+- Kids and teens aged 8–18
+
+Official learning approach:
 - Personalized 1:1 online classes
-- In-person group classes at Bay Area locations
-- Interactive live classes
+- In-person Bay Area group classes
+- Live instruction
+- Personalized schedules
+- Adaptive teaching
 - Hands-on, project-based learning
-- Personalized learning based on student requirements
-- Flexible schedules
 - Personal dashboard
 - Assignments
-- Video recordings of classes
+- Class recordings
 - Online support
-- Qualified and experienced teachers
+- Qualified teachers
+- Personalization based on student requirements
 
-General coding age range stated on the About page:
-Kids and teens aged 8-18.
+Official pricing displayed:
+- Trial class: $0
+- Monthly subscription: $199 for 4 classes
+- 12-class package: $599
+- Standard paid classes are described as one-hour 1:1 classes
 
-General bot note:
-Some individual programs may publish a different age or grade range. Use the range on the individual program page when it is available.
+Pricing rule:
+Always ask parents to confirm current pricing, taxes, promotions, validity, and whether the selected camp or special program uses the standard plan.
 
-============================================================
-B. REGULAR CLASSES
-============================================================
 
-------------------------------------------------------------
-COURSE ID: YG-CLASS-001
+======================================================================
+STUDENT PROFILE AND BOT QUESTIONS
+======================================================================
+
+Collect:
+- Student age
+- Grade
+- Country/time zone
+- Previous coding or subject experience
+- Technologies already learned
+- Main interest
+- Preferred project
+- Learning goal
+- Schedule preference
+- Desired duration
+- Deadline
+- Parent name
+- WhatsApp and email
+
+Minimum information before a confident recommendation:
+1. Age or grade
+2. Previous experience
+3. Interest or goal
+
+Suggested opening questions:
+1. What is your child’s age and grade?
+2. Has your child learned coding before?
+3. What would your child most like to create or improve?
+
+Skill levels:
+LEVEL 0 — Discovery: no experience
+LEVEL 1 — Beginner: basic sequencing or introductory activities
+LEVEL 2 — Explorer: can use basic blocks, tags, formulas, or simple logic
+LEVEL 3 — Intermediate: variables, conditions, loops, functions, structured projects
+LEVEL 4 — Advanced: APIs, databases, frameworks, multi-part projects
+LEVEL 5 — Competition/Portfolio: contests, internship, portfolio, specialized preparation
+
+Do not assign level from age alone.
+
+
+======================================================================
+OFFICIAL COURSE CATALOG
+======================================================================
+
+
+----------------------------------------------------------------------
+COURSE ID: YG-COD-SCRATCH-L1
 COURSE NAME: Level 1 – Gaming/Animation Block Coding
-PROGRAM TYPE: Regular class
-CATEGORY: Coding, Game Development, Animation
-TECHNOLOGY/PLATFORM: Scratch
-LEVEL: Level 1 / Beginner-friendly
-AGE OR GRADE: Not specified on the public course page reviewed
-DURATION SHOWN: 60
-DURATION UNIT: Not clearly stated on the public page
-PRICE SHOWN:
-- $199 monthly
-- $599 for a 12-class package
+STATUS: OFFICIAL WEBSITE COURSE/PROGRAM
+Official platform: Scratch
+Official level: Level 1
+Official class length displayed: 60 minutes
+Official price displayed: $199 monthly / $599 12-class package
+Official age/grade: Not stated on the individual page
 
-OFFICIAL COURSE DESCRIPTION:
-Scratch is a block-based visual programming language. YoungGates describes it as a suitable first programming language for children before progressing to advanced coding.
+Official description:
+Students create games, animated stories, interactive images, songs, and other interactive projects using Scratch.
 
-STUDENTS CREATE:
-- Games
-- Animated stories
-- Interactive images
-- Songs
-- Fun and interactive Scratch projects
-
-STATED LEARNING BENEFITS:
+Official benefits:
 - Logical thinking
 - Problem-solving
 - Creative project building
-- Preparation for future programming languages
-- Ability to create with computers
+- Foundation for future programming languages
 
-GOOD MATCH FOR PARENT QUERIES:
-- My child is new to coding.
-- My child wants to create games.
-- My child likes animation and stories.
-- I want an easy first coding course.
-- My child needs visual or block-based coding.
-- I want Scratch classes.
-- My child is not ready for text-based programming.
+Best for:
+- Absolute beginners
+- Visual learners
+- Students interested in games, stories, animation, art, or music
 
-NOT THE BEST MATCH WHEN:
-- The student specifically wants Python, Java, SQL, mobile applications, or professional web development.
-- The student has already mastered introductory Scratch and wants a higher level.
+Suggested curriculum — customizable:
+- Sprites, stage, motion, and events
+- Looks, sound, and storytelling
+- Loops
+- Conditions and sensing
+- Variables, scores, timers, and lives
+- Messages and scene changes
+- Debugging
+- Final project
 
-OFFICIAL URL:
-https://www.younggates.com/Classes/level-1-gaminganimation-block-coding/
+Suggested projects:
+- Maze
+- Catching game
+- Quiz
+- Interactive story
+- Animated greeting
+- Student-choice game
 
-------------------------------------------------------------
-COURSE ID: YG-CLASS-002
+Difficulty guide: 1/5
+Likely prerequisite: None
+Next steps:
+- Scratch Level 2
+- Beginner Python with Graphics
+- App Making
+
+
+
+----------------------------------------------------------------------
+COURSE ID: YG-COD-SCRATCH-L2
 COURSE NAME: Level 2 – Gaming/Animation Block Coding
-PROGRAM TYPE: Regular class
-CATEGORY: Coding, Game Development, Animation
-LEVEL: Level 2
-AGE OR GRADE: Not specified in the publicly indexed YoungGates content reviewed
-PREREQUISITE: Not specified
-CURRICULUM DETAILS: Not available in the publicly indexed page content reviewed
+STATUS: OFFICIAL WEBSITE COURSE/PROGRAM
+Official class length displayed: 50 minutes
+Official price displayed: $199 monthly / $599 12-class package
+Official age/grade: Not stated
 
-BOT MATCHING GUIDANCE:
-Recommend as a possible next step when a parent says the student:
-- Has already completed beginner Scratch or block coding
-- Wants more advanced game or animation projects
-- Is looking for the next level after Level 1 Gaming/Animation Block Coding
+Official description:
+Students continue Scratch and explore AI-themed projects.
 
-IMPORTANT:
-Confirm the student's previous Scratch experience and consult YoungGates before final enrollment because the public page reviewed does not state prerequisites.
+Official project examples:
+- Chatbot using Scratch
+- Translator using Scratch
+- Snake game
+- Catch the Star
+- AI simple calculator
+- Additional projects based on student level
 
-OFFICIAL URL:
-https://www.younggates.com/Classes/level-2-gaminganimation-block-coding/
+Best for:
+- Students with basic Scratch experience
+- Students wanting advanced games
+- Students curious about introductory AI concepts
 
-------------------------------------------------------------
-COURSE ID: YG-CLASS-003
-COURSE NAME: Intro to Apps Coding – Make Your Own Mobile Apps
-ALTERNATE PAGE TITLE FOUND: App Making – Block Based
-PROGRAM TYPE: Regular class
-CATEGORY: Mobile App Development, Block Coding
-LEVEL: Introductory
-AGE OR GRADE: Not specified in the publicly indexed YoungGates content reviewed
-PREREQUISITE: Not specified
-CURRICULUM DETAILS: Not available in the publicly indexed page content reviewed
+Suggested curriculum — customizable:
+- Advanced variables and lists
+- Cloning
+- Custom blocks
+- Multi-level game logic
+- Chatbot decision trees
+- Translation-themed projects
+- Difference between rule-based logic and broader AI concepts
+- Independent capstone
 
-GOOD MATCH FOR PARENT QUERIES:
-- My child wants to make a mobile app.
-- My child is interested in app development.
-- My child prefers block coding.
-- My child wants a practical project.
-- Can my child build an application without advanced coding?
+Difficulty guide: 2/5
+Likely prerequisite: Scratch Level 1 or equivalent
+Next steps:
+- Beginner Python
+- Python with Graphics
+- AI for Coding
 
-BOT RESPONSE NOTE:
-Describe this only as a YoungGates introductory, block-based app-making course. Do not invent the app platform, exact projects, age range, or prerequisites.
 
-OFFICIAL URL:
-https://younggates.com/Classes/app-making-block-based/
 
-------------------------------------------------------------
-COURSE ID: YG-CLASS-004
+----------------------------------------------------------------------
+COURSE ID: YG-COD-APP-BLOCK
+COURSE NAME: Intro to Apps Coding – Make Your Own Mobile Apps / App Making – Block Based
+STATUS: OFFICIAL WEBSITE COURSE/PROGRAM
+Official detailed syllabus and age range were not clearly available in indexed website content.
+
+Best for:
+- Students wanting to build mobile apps
+- Beginners preferring visual block-based tools
+- Students interested in buttons, screens, and user interaction
+
+Suggested curriculum — customizable:
+- App screens and interface components
+- Buttons, labels, text inputs, and images
+- Events and user actions
+- Variables and calculations
+- Conditions and validation
+- Lists and simple data storage
+- Multi-screen navigation
+- Testing and debugging
+- Final app
+
+Suggested projects:
+- Quiz app
+- Calculator
+- Flashcard app
+- Habit tracker
+- School information app
+- Simple game app
+
+Important:
+Do not name a specific app-building platform unless YoungGates confirms it.
+
+Difficulty guide: 1–2/5
+Likely prerequisite: None or basic block coding
+
+
+
+----------------------------------------------------------------------
+COURSE ID: YG-COD-PY-GRAPHICS
 COURSE NAME: Beginner Python With Graphics
-PROGRAM TYPE: Regular class
-CATEGORY: Python, Graphics, Text-Based Coding
-LEVEL: Beginner
-AGE OR GRADE: Not specified in the publicly indexed YoungGates content reviewed
-PREREQUISITE: Not specified
-CURRICULUM DETAILS: Not available in the publicly indexed page content reviewed
+STATUS: OFFICIAL WEBSITE COURSE/PROGRAM
+Official level: Beginner
+Official detailed syllabus and age range were not clearly available in indexed website content.
 
-GOOD MATCH FOR PARENT QUERIES:
-- My child wants to learn Python.
-- My child wants beginner text-based coding.
-- My child enjoys visual or graphics-based projects.
-- What can my child study after block coding?
-- My child wants to move from Scratch to Python.
+Best for:
+- Students moving from Scratch to text coding
+- Visual learners
+- Students interested in patterns, drawing, animation, or games
 
-IMPORTANT:
-The title confirms beginner Python with graphics, but the indexed page did not expose further curriculum. Confirm details with YoungGates.
+Suggested curriculum — customizable:
+- Python syntax
+- Coordinates and drawing
+- Variables and data types
+- Input and output
+- Arithmetic
+- Loops
+- Conditions
+- Functions
+- Randomization
+- Debugging
+- Final visual project
 
-OFFICIAL URL:
-https://www.younggates.com/Classes/beginner-python-with-graphics/
+Suggested projects:
+- Pattern generator
+- Digital art
+- Shape drawing
+- Racing game
+- Visual quiz
+- Maze
 
-------------------------------------------------------------
-COURSE ID: YG-CLASS-005
-COURSE NAME: Level 1 – Web Dev – HTML, CSS
-PROGRAM TYPE: Regular class
-CATEGORY: Web Development
-TECHNOLOGIES: HTML, CSS
-LEVEL: Level 1
-AGE OR GRADE: Not specified in the publicly indexed YoungGates content reviewed
-PREREQUISITE: Not specified
-CURRICULUM DETAILS: Not available in the publicly indexed page content reviewed
+Difficulty guide: 2/5
+Likely prerequisite: No text coding required; keyboard confidence helps
 
-GOOD MATCH FOR PARENT QUERIES:
-- My child wants to build a website.
-- My child wants to learn HTML and CSS.
-- My child is interested in website design.
-- My child wants a beginner web-development course.
-- My child wants to learn how web pages are structured and styled.
 
-NOT THE BEST MATCH WHEN:
-- The student specifically wants JavaScript from the beginning.
-- The student wants mobile app development rather than websites.
-- The student wants Python, AI, Java, or SQL.
 
-OFFICIAL URL:
-https://www.younggates.com/Classes/level-1-web-dev-html-css/
-
-------------------------------------------------------------
-COURSE ID: YG-CLASS-006
-COURSE NAME: Level 2 – Web Dev – HTML, CSS, JavaScript
-PROGRAM TYPE: Regular class
-CATEGORY: Web Development
-TECHNOLOGIES: HTML, CSS, JavaScript
-LEVEL: Level 2
-AGE OR GRADE: Not specified in the publicly indexed YoungGates content reviewed
-PREREQUISITE: Not specified
-CURRICULUM DETAILS: Not available in the publicly indexed page content reviewed
-
-GOOD MATCH FOR PARENT QUERIES:
-- My child already knows basic HTML and CSS.
-- My child wants interactive websites.
-- My child wants to learn JavaScript.
-- What is the next course after beginner web development?
-- My child wants more advanced website coding.
-
-IMPORTANT:
-Because the course is labelled Level 2, the bot should check whether the student already understands basic HTML and CSS. YoungGates' indexed page does not explicitly state the prerequisite.
-
-OFFICIAL URL:
-https://www.younggates.com/Classes/level-2-web-dev-html-css-javascript/
-
-------------------------------------------------------------
-COURSE ID: YG-CLASS-007
-COURSE NAME: Mastering SQL & RDBMS from Basics to Advanced Queries
-PROGRAM TYPE: Regular class
-CATEGORY: Databases, SQL
-TECHNOLOGIES: SQL, RDBMS
-LEVEL: Basics to advanced queries
-AGE OR GRADE: Not specified in the publicly indexed YoungGates content reviewed
-PREREQUISITE: Not specified
-CURRICULUM DETAILS: The title states progression from basics to advanced SQL queries. Further details were not available in the indexed content reviewed.
-
-GOOD MATCH FOR PARENT QUERIES:
-- My child wants to learn SQL.
-- My child is interested in databases.
-- My child wants to understand relational database systems.
-- My child wants to work with data.
-- My child wants to learn database queries.
-
-BOT SAFETY RULE:
-Do not invent the database software, project list, age range, or coding prerequisites.
-
-OFFICIAL COURSE LISTING:
-Listed by YoungGates under “Popular among Kids” on its website.
-
-------------------------------------------------------------
-COURSE ID: YG-CLASS-008
-COURSE NAME: Master SQL & Java Projects with ChatGPT
-PROGRAM TYPE: Regular class
-CATEGORY: SQL, Java, AI-Assisted Coding, Projects
-TECHNOLOGIES: SQL, Java, ChatGPT
-LEVEL: Not specified
-AGE OR GRADE: Not specified in the publicly indexed YoungGates content reviewed
-PREREQUISITE: Not specified
-CURRICULUM DETAILS: The title states SQL and Java project work using ChatGPT. Further details were not available in the indexed content reviewed.
-
-GOOD MATCH FOR PARENT QUERIES:
-- My child wants Java projects.
-- My child wants SQL projects.
-- My child wants to use ChatGPT while learning coding.
-- My teenager wants project-based coding.
-- My child is interested in AI-assisted programming.
-
-IMPORTANT:
-This sounds more advanced than an introductory block-coding course, but YoungGates does not provide enough indexed detail to assign an age, level, or prerequisite. Ask about existing coding experience and recommend consultation before enrollment.
-
-OFFICIAL COURSE LISTING:
-Listed by YoungGates under “Popular among Kids” on its website.
-
-============================================================
-C. CAMPS AND SHORT PROGRAMS
-============================================================
-
-------------------------------------------------------------
-COURSE ID: YG-CAMP-001
+----------------------------------------------------------------------
+COURSE ID: YG-CAMP-PY-BEGINNER
 COURSE NAME: Beginner Online Python
-PROGRAM TYPE: Camp
-CATEGORY: Python, Coding, Logical Problem-Solving
-AGE RANGE: 8-12 years
-LEVEL: Beginner
-PRIOR EXPERIENCE SHOWN: 0
-SCHEDULE: Class schedule can be chosen
-DURATION: Flexible duration
-PRICE SHOWN: $150
+STATUS: OFFICIAL WEBSITE COURSE/PROGRAM
+Official age range: 8–12 years
+Official prior experience shown: 0
+Official duration: Flexible
+Official schedule: Parent can choose
+Official price displayed: $150
 
-OFFICIAL COURSE DESCRIPTION:
-Python is described as a general-purpose, versatile, and popular programming language. YoungGates states that it is suitable as a first language because it is concise and easy to read. The course uses the native Python interpreter and includes project and logical-problem work.
-
-TOPICS EXPLICITLY LISTED:
+Official topics:
 - Projects and logical problems
 - Flowcharts
 - Variables and types
@@ -290,279 +302,974 @@ TOPICS EXPLICITLY LISTED:
 - Conditional statements
 - Loops
 
-GOOD MATCH FOR PARENT QUERIES:
-- My 8-12-year-old wants to learn Python.
-- My child has no Python experience.
-- My child wants text-based coding.
-- My child wants to learn variables, conditions, and loops.
-- My child needs coding and logical thinking.
-- I need a beginner Python camp.
-- My child wants to work on Python projects.
+Best for:
+- Ages 8–12 beginning Python
+- Students with no Python experience
+- Learners ready for text-based coding
 
-NOT THE BEST MATCH WHEN:
-- The child is specifically seeking Scratch or block coding.
-- The child wants only web design, mobile apps, Java, or SQL.
-- The child is outside the displayed 8-12 age range without confirmation from YoungGates.
+Suggested extensions — customizable:
+- Lists
+- Functions
+- Random module
+- Debugging
+- Mini text games
+- Final project
 
-OFFICIAL URL:
-https://www.younggates.com/Camps/beginner-online-python/
+Suggested projects:
+- Number guessing game
+- Calculator
+- Quiz
+- Rock-paper-scissors
+- Story generator
 
-------------------------------------------------------------
-COURSE ID: YG-CAMP-002
-COURSE NAME: AI for Coding (6th-8th Graders)
-PROGRAM TYPE: Camp
-CATEGORY: Artificial Intelligence, Coding
-GRADE RANGE: Grades 6-8
-LEVEL: Not specified
-PREREQUISITE: Not specified
-CURRICULUM DETAILS: Not available in the publicly indexed YoungGates content reviewed
+Difficulty guide: 2/5
+Prerequisite: No prior Python experience
 
-GOOD MATCH FOR PARENT QUERIES:
-- My child is in Grade 6, 7, or 8 and wants to learn AI.
-- My middle-school child is interested in AI and coding.
-- My child wants an age-appropriate AI coding program.
-- Is there an AI course for middle-school students?
 
-BOT RESPONSE NOTE:
-Use only the course title and stated grade range. Do not invent AI tools, programming languages, or projects.
 
-OFFICIAL URL:
-https://younggates.com/Camps/ai-for-coding-6th-8th-graders/
+----------------------------------------------------------------------
+COURSE ID: YG-COD-WEB-L1
+COURSE NAME: Level 1 – Web Dev – HTML, CSS
+STATUS: OFFICIAL WEBSITE COURSE/PROGRAM
+Official class length displayed: 60 minutes
+Official price displayed: $199 monthly / $599 12-class package
 
-------------------------------------------------------------
-COURSE ID: YG-CAMP-003
-COURSE NAME: AI For Coding (8th-12th Graders)
-PROGRAM TYPE: Camp
-CATEGORY: Artificial Intelligence, Coding
-GRADE RANGE: Grades 8-12
-LEVEL: Not specified
-PREREQUISITE: Not specified
-CURRICULUM DETAILS: Not available in the publicly indexed YoungGates content reviewed
+Official learning:
+- Website structure using HTML
+- Styling and design using CSS
+- Creating a complete visually appealing webpage based on a chosen topic
 
-GOOD MATCH FOR PARENT QUERIES:
-- My teenager wants to learn AI and coding.
-- My child is in Grade 8-12.
-- Is there an AI program for high-school students?
-- My child wants a more age-appropriate AI coding course.
+Best for:
+- Beginners wanting to build websites
+- Students interested in design plus coding
+- Students wanting a personal, hobby, school, or business-style webpage
 
-BOT RESPONSE NOTE:
-Grade 8 appears in both YoungGates AI course titles. For a Grade 8 student, ask about coding experience and learning maturity, then suggest discussing the best level with YoungGates.
+Suggested curriculum — customizable:
+- How websites work
+- HTML document structure
+- Headings, paragraphs, lists, links, and images
+- Tables and forms
+- Semantic sections
+- CSS selectors
+- Colors, typography, spacing, borders, and backgrounds
+- Box model
+- Introductory layout
+- Responsive-design basics
+- Accessibility basics
+- Website testing
 
-OFFICIAL URL:
-https://www.younggates.com/Camps/ai-for-coding-8th-12th-graders/
+Suggested projects:
+- Personal profile page
+- Hobby website
+- School-club page
+- Local-business mock website
+- Travel page
 
-============================================================
-D. OTHER YOUNGGATES PROGRAM AREAS
-============================================================
+Official outcome:
+A complete visually appealing webpage coded from scratch.
 
-YoungGates also publishes or links to:
-- Math tutoring
-- English and other tutoring
-- Robotics
-- Gaming programs
-- Camps
-- Workshops
-- Contests
-- Championships
-- Olympiads
-- Free workshops
-- Summer camps
-- Onsite programs
-- Homeschool support
-- ACSL
-- USACO
-- College counseling
-- Counseling services
-- Internship
-- Hackathon
-- Leaderboard
+Difficulty guide: 2/5
+Likely prerequisite: None; basic typing helps
 
-IMPORTANT:
-These should not automatically be treated as individual courses unless a specific YoungGates program page provides enough details.
 
-Internship:
-YoungGates states that it offers internships designed to provide practical experience.
-A fee of $799 is displayed on the public internship page.
-Further public details were not available in the indexed content reviewed.
 
-Internship URL:
-https://younggates.com/CollegePrep/Internship/
+----------------------------------------------------------------------
+COURSE ID: YG-COD-WEB-L2
+COURSE NAME: Level 2 – Web Dev – HTML, CSS, JavaScript
+STATUS: OFFICIAL WEBSITE COURSE/PROGRAM
+Official prerequisite: Completion of Level 1
+Official class length displayed: 60 minutes
+Official price displayed: $199 monthly / $599 12-class package
 
-============================================================
-E. BOT COURSE-SELECTION LOGIC
-============================================================
-
-STEP 1 — ASK AGE OR GRADE
-Suggested question:
-“What is your child’s age and current grade?”
-
-STEP 2 — ASK EXPERIENCE
-Suggested question:
-“Has your child coded before? If yes, what have they learned?”
-
-Experience categories:
-- No experience
-- Scratch or block coding
-- Basic Python
-- HTML and CSS
+Official topics:
 - JavaScript
-- Java
-- SQL or databases
-- AI tools or AI coding
-- Other
+- Dynamically changing text and styles
+- Pop-up alerts and interactive messages
+- Text-field validation
+- Basics of server-side programming
+- Simple real-time web applications
+- Data validation
 
-STEP 3 — ASK INTEREST
-Suggested question:
-“What would your child most like to create or learn?”
+Official outcome:
+Responsive, interactive websites that look good and function intelligently.
 
-Interest mapping:
-- Games, animations, stories -> Level 1 Gaming/Animation Block Coding
-- Advanced Scratch projects -> Level 2 Gaming/Animation Block Coding
-- Mobile apps -> Intro to Apps Coding / App Making – Block Based
-- Beginner Python for age 8-12 -> Beginner Online Python
-- Beginner Python with visual output -> Beginner Python With Graphics
-- First website -> Level 1 Web Dev – HTML, CSS
-- Interactive website / JavaScript -> Level 2 Web Dev – HTML, CSS, JavaScript
-- AI for middle school -> AI for Coding (6th-8th Graders)
-- AI for older students -> AI For Coding (8th-12th Graders)
-- SQL and databases -> Mastering SQL & RDBMS from Basics to Advanced Queries
-- Java, SQL, projects, and ChatGPT -> Master SQL & Java Projects with ChatGPT
+Suggested curriculum — customizable:
+- Variables, operators, and functions
+- Events and DOM manipulation
+- Conditions and loops
+- Arrays and objects
+- Form validation
+- Local storage
+- API introduction where appropriate
+- Backend concepts
+- Testing and deployment
 
-STEP 4 — CHECK PREREQUISITES
-- Level 1 courses can be considered for beginners unless the individual page says otherwise.
-- For every Level 2 course, ask whether the student completed Level 1 or has equivalent experience.
-- Do not assume prerequisites for courses where YoungGates has not published them.
-- For advanced-sounding SQL, Java, and AI courses, ask about previous coding experience.
-- When uncertain, suggest scheduling a call with YoungGates.
+Suggested projects:
+- Interactive quiz
+- To-do app
+- Calculator
+- Validated form
+- Interactive portfolio
+- Final web application
 
-STEP 5 — GIVE A CONTROLLED RECOMMENDATION
-Bot output structure:
+Difficulty guide: 3/5
+Prerequisite: Level 1 or equivalent HTML/CSS knowledge
 
-Primary recommendation:
-[Course name]
 
-Why it may fit:
-[Use only the student's age, experience, interest, and facts from this file.]
 
-What the student will learn:
-[Only include curriculum explicitly documented in this file.]
+----------------------------------------------------------------------
+COURSE ID: YG-COD-AI-MIDDLE
+COURSE NAME: AI for Coding (6th–8th Graders)
+STATUS: OFFICIAL WEBSITE COURSE/PROGRAM
+Official grade range: Grades 6–8
+Official detailed syllabus was not clearly available in indexed website content.
 
-Alternative:
-[One relevant course, if applicable.]
+Best for:
+- Middle-school students curious about AI
+- Students wanting age-appropriate AI coding projects
 
-Need confirmation:
-[State missing age, grade, prerequisite, schedule, or curriculum information.]
+Suggested curriculum — customizable:
+- What AI is and is not
+- AI examples in daily life
+- Data, patterns, labels, and predictions
+- Responsible and safe AI use
+- Prompt-writing foundations
+- Rule-based chatbot versus AI chatbot
+- Age-appropriate coding activities
+- Bias, privacy, and fact-checking
+- Final AI-themed project
 
-Next action:
-“Confirm current availability, schedule, and enrollment details with YoungGates.”
+Suggested projects:
+- FAQ chatbot prototype
+- Smart quiz
+- Recommendation logic
+- Classification demonstration
+- AI-assisted educational tool
 
-============================================================
-F. SAMPLE BOT RESPONSES
-============================================================
+Difficulty guide: 2–3/5
+Prerequisite: Not officially stated; ask about Scratch or Python experience
 
-SAMPLE 1
-Parent:
-“My 9-year-old has never coded and loves games.”
+Grade 8 rule:
+Grade 8 overlaps both AI programs. Placement requires experience and maturity assessment.
 
-Suggested response:
-“Level 1 – Gaming/Animation Block Coding may be a strong starting point. YoungGates uses Scratch, a visual block-based language, to help students create games, animated stories, interactive images, and songs while developing logic and problem-solving. Since the individual page does not state an age range, please confirm placement with YoungGates.”
 
-SAMPLE 2
-Parent:
-“My child is 10 and wants to learn Python from zero.”
 
-Suggested response:
-“Beginner Online Python is the closest match. YoungGates lists it for ages 8-12 and beginner students with no previous experience. Topics include flowcharts, variables, mathematical operators, user input, comparison operators, conditions, loops, projects, and logical problems.”
+----------------------------------------------------------------------
+COURSE ID: YG-COD-AI-HIGH
+COURSE NAME: AI for Coding (8th–12th Graders)
+STATUS: OFFICIAL WEBSITE COURSE/PROGRAM
+Official grade range: Grades 8–12
+Official detailed syllabus was not clearly available in indexed website content.
 
-SAMPLE 3
-Parent:
-“My Grade 7 child is interested in AI.”
+Best for:
+- Teenagers interested in AI
+- Students seeking portfolio-level AI projects
+- Students exploring AI-related careers
 
-Suggested response:
-“AI for Coding (6th-8th Graders) matches the published grade range. YoungGates’ indexed page does not provide the detailed curriculum or prerequisites, so those should be confirmed before enrollment.”
+Suggested curriculum — customizable:
+- AI and machine-learning foundations
+- Data collection and preparation
+- Features, labels, training, testing, and evaluation
+- Python foundations where needed
+- Classification and prediction
+- NLP and chatbot concepts
+- Generative AI and prompt engineering
+- Responsible AI, privacy, copyright, bias, and verification
+- API concepts where appropriate
+- Portfolio capstone
 
-SAMPLE 4
-Parent:
-“My child wants to create a website but has no experience.”
+Suggested projects:
+- Recommendation prototype
+- Study assistant
+- Text classifier
+- Prediction project
+- AI chatbot
+- Data-analysis project
 
-Suggested response:
-“Level 1 – Web Dev – HTML, CSS is the most relevant YoungGates option. It is the Level 1 website-development course and focuses on HTML and CSS according to its title. Confirm the recommended age and full curriculum with YoungGates.”
+Difficulty guide: 3–4/5
+Prerequisite: Not officially stated; Python helps for advanced projects
 
-SAMPLE 5
-Parent:
-“My child knows HTML and CSS and now wants an interactive website.”
 
-Suggested response:
-“Level 2 – Web Dev – HTML, CSS, JavaScript may be the next step because it adds JavaScript to HTML and CSS. Since YoungGates does not publish the prerequisite in the indexed content, confirm that the student’s current HTML and CSS knowledge is sufficient.”
 
-SAMPLE 6
-Parent:
-“My child wants to build phone apps without difficult coding.”
+----------------------------------------------------------------------
+COURSE ID: YG-DATA-SQL
+COURSE NAME: Mastering SQL & RDBMS from Basics to Advanced Queries
+STATUS: OFFICIAL WEBSITE COURSE/PROGRAM
+Official level from title: Basics to advanced queries
+Official age/grade and detailed syllabus were not clearly available in indexed website content.
 
-Suggested response:
-“Intro to Apps Coding – Make Your Own Mobile Apps, also shown as App Making – Block Based, is the closest match. It is an introductory block-based app-making course. Confirm the age range, app platform, and project details directly with YoungGates.”
+Best for:
+- Students interested in databases and data
+- Students curious how applications store information
+- Students exploring analytics or backend development
 
-SAMPLE 7
-Parent:
-“My Grade 8 student wants AI. Which course?”
+Suggested curriculum — customizable:
+- Database and RDBMS concepts
+- Tables, rows, columns, keys, and relationships
+- SELECT, WHERE, ORDER BY, and LIMIT
+- INSERT, UPDATE, and DELETE
+- Aggregations and GROUP BY
+- Joins
+- Subqueries
+- Constraints and normalization
+- Views and indexes introduction
+- Final multi-table database project
 
-Suggested response:
-“YoungGates lists both AI for Coding (6th-8th Graders) and AI For Coding (8th-12th Graders), so Grade 8 overlaps. The best placement depends on the student’s prior coding experience and readiness. A YoungGates consultation is recommended before choosing.”
+Suggested projects:
+- School database
+- Library database
+- Online-store database
+- Student-result analysis
+- Sports statistics database
 
-============================================================
-G. INFORMATION THE BOT MUST NOT INVENT
-============================================================
+Difficulty guide: 3/5
+Likely prerequisite: Logical thinking; prior coding helps
 
-Do not invent:
-- Course ages not stated by YoungGates
-- Grade ranges not stated by YoungGates
-- Prerequisites
-- Number of classes
-- Course duration
-- Schedule
-- Software or learning platforms
-- Projects
-- Certificates for a specific course
-- Prices not displayed on the relevant page
+
+
+----------------------------------------------------------------------
+COURSE ID: YG-COD-JAVA-SQL-AI
+COURSE NAME: Master SQL & Java Projects with ChatGPT
+STATUS: OFFICIAL WEBSITE COURSE/PROGRAM
+Official age, level, prerequisite, and detailed syllabus were not clearly available in indexed website content.
+
+Best for:
+- Students requesting Java and SQL projects
+- Experienced learners wanting integrated project work
+- Students interested in responsible AI-assisted coding
+
+Suggested curriculum — customizable:
+- Java foundations assessment
+- Classes, objects, methods, and collections
+- Exceptions and file handling
+- SQL and relational database revision
+- CRUD application design
+- Connecting Java logic with data
+- Responsible ChatGPT use for planning, explanation, debugging, and review
+- Verification of AI-generated suggestions
+- Documentation and presentation
+- Final integrated project
+
+Suggested projects:
+- Student management system
+- Library management system
+- Inventory system
+- Appointment manager
+- Expense tracker
+
+Difficulty guide: 4/5
+Likely prerequisite: Some Java/programming background and database readiness
+
+AI rule:
+ChatGPT supports learning; it does not replace understanding, original work, or teacher guidance.
+
+
+
+----------------------------------------------------------------------
+COURSE ID: YG-DATA-EXCEL
+COURSE NAME: Let’s Explore Excel
+STATUS: OFFICIAL WEBSITE COURSE/PROGRAM
+Official level: Beginner to intermediate
+Official class length displayed: 60 minutes
+Official price displayed: $199 monthly / $599 12-class package
+
+Official topics:
+- Excel interface
+- Conditional formatting
+- Formulas and functions
+- IF, AND, OR, and logical statements
+- Tables and structured data
+- Pivot tables
+- Macros
+
+Official target learners:
+- Beginners
+- Intermediate users strengthening their skills
+
+Suggested projects — customizable:
+- Grade tracker
+- Personal budget
+- Survey analysis
+- Attendance tracker
+- Sales dashboard
+- Sports-data summary
+- Automated report
+
+Difficulty guide: 2–3/5
+Prerequisite: None for beginner placement
+
+
+
+----------------------------------------------------------------------
+COURSE ID: YG-MATH-FAST
+COURSE NAME: 1:1 FAST MATH
+STATUS: OFFICIAL WEBSITE COURSE/PROGRAM
+Official class length displayed: 60 minutes
+Official price displayed: $199 monthly / $599 12-class package
+
+Official description:
+Mental calculation techniques that support speed, accuracy, mental agility, number understanding, patterns, mathematical relationships, confidence, creativity, and problem-solving.
+
+Best for:
+- Students calculating slowly
+- Students relying heavily on written work
+- Students wanting stronger number sense and confidence
+
+Suggested curriculum — customizable:
+- Baseline assessment
+- Number bonds and place value
+- Addition and subtraction strategies
+- Multiplication and division strategies
+- Estimation and checking
+- Fractions, decimals, and percentages by grade
+- Number patterns and puzzles
+- Real-life mental math
+
+Important:
+Do not promise a fixed speed improvement or competition result.
+
+
+
+----------------------------------------------------------------------
+COURSE ID: YG-COLLEGE-INTERNSHIP
+COURSE NAME: Internship
+STATUS: OFFICIAL WEBSITE COURSE/PROGRAM
+Official description:
+YoungGates states that internships provide practical experience.
+
+Official fee displayed:
+$799 summer workshop
+
+Official age/grade, duration, and project details were not clearly available in indexed website content.
+
+Best for:
+- Older students with an existing skill foundation
+- Students seeking practical experience
+- Students building a portfolio
+- Students preparing for college or careers
+
+Bot rule:
+Do not recommend internship to a complete beginner without checking grade, skills, projects, goals, and availability.
+
+Confirm on WhatsApp:
+Eligibility, dates, format, mentorship, deliverables, certificate, fee, and application process.
+
+
+
+======================================================================
+CUSTOM COURSE CATALOG
+======================================================================
+
+All courses below are proposed custom pathways, not confirmed fixed website-listed courses.
+Every recommendation must route the parent to WhatsApp for approval.
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-01
+NAME: Minecraft Coding and Game Design
+MATCH WHEN:
+Minecraft, game worlds, building, commands, or game design
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Game-design logic, coordinates, events, commands, storytelling, teamwork, and coding depending on platform and learner level.
+
+CONFIRM:
+Platform, edition, age, account, and device requirements.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-02
+NAME: Roblox Game Development
+MATCH WHEN:
+Roblox or creating a Roblox game
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+3D world design, scripting foundations, interactions, game mechanics, testing, safe publishing, and portfolio presentation.
+
+CONFIRM:
+Age, prior coding, device, account permission, and platform availability.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-03
+NAME: Cybersecurity and Online Safety
+MATCH WHEN:
+Cybersecurity, online safety, privacy, or ethical hacking
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Digital citizenship, privacy, passwords, phishing awareness, safe browsing, basic networking, defensive-security concepts, and safe practice environments.
+
+CONFIRM:
+All work must be defensive, legal, supervised, age-appropriate, and sandboxed.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-04
+NAME: Generative AI and Prompt Engineering
+MATCH WHEN:
+ChatGPT, prompts, AI productivity, or creative AI
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+How generative AI works at a high level, prompt design, iteration, fact-checking, bias, privacy, copyright awareness, responsible use, and a project.
+
+CONFIRM:
+Age, school policy, parental consent, and approved tools.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-05
+NAME: Build and Launch a Project Using AI
+MATCH WHEN:
+A real AI-assisted project, GitHub, deployment, or live URL
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Idea selection, requirements, prompts, prototype, coding, testing, GitHub repository, deployment, presentation, and final live demo.
+
+CONFIRM:
+Coding level, project scope, accounts, hosting, and deployment inclusion.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-06
+NAME: Intermediate Python Projects
+MATCH WHEN:
+Student already knows Python basics
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Functions, lists, dictionaries, files, errors, modules, object-oriented concepts, APIs, debugging, and project structure.
+
+CONFIRM:
+Current Python level and preferred project.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-07
+NAME: Python Game Development
+MATCH WHEN:
+Python plus games
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Game loops, events, coordinates, collision, scoring, levels, sound, reusable functions, debugging, and capstone.
+
+CONFIRM:
+Python foundation and tool choice.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-08
+NAME: Python Data Science
+MATCH WHEN:
+Data science, analytics, charts, or statistics
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+CSV/spreadsheets, Python data handling, cleaning, charts, analysis, simple statistics, responsible interpretation, and final project.
+
+CONFIRM:
+Python/Excel foundation and dataset suitability.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-09
+NAME: Power BI and Data Dashboards
+MATCH WHEN:
+Dashboards, business intelligence, or data presentation
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Data import, cleaning overview, visualization, filters, calculated fields, dashboard design, and storytelling with data.
+
+CONFIRM:
+Power BI availability and Excel/data foundation.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-10
+NAME: Full-Stack Web Development
+MATCH WHEN:
+Complete web applications
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+HTML, CSS, JavaScript, frontend, backend, database, APIs, authentication concepts, deployment, and capstone.
+
+CONFIRM:
+Web Level 1/2 equivalent skills.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-11
+NAME: React Frontend Development
+MATCH WHEN:
+Modern frontend or React
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Components, props, state, events, forms, routing, APIs, reusable UI, testing, and deployment.
+
+CONFIRM:
+HTML, CSS, and JavaScript readiness.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-12
+NAME: GitHub, Version Control, and Deployment
+MATCH WHEN:
+GitHub, repository, Vercel, live URL, or publishing
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Repositories, commits, branches, README, project organization, collaboration, deployment, domains, and demos.
+
+CONFIRM:
+Account permissions and hosting choice.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-13
+NAME: Java Foundations and Projects
+MATCH WHEN:
+Java requested by a beginner
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Syntax, variables, conditions, loops, methods, arrays, classes, objects, exceptions, collections, and a project.
+
+CONFIRM:
+Age, prior coding, and learning goal.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-14
+NAME: Data Structures and Algorithms
+MATCH WHEN:
+DSA, advanced problem-solving, interviews, or college preparation
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Complexity intuition, arrays, strings, stacks, queues, sorting, searching, recursion, trees, graphs, and practice.
+
+CONFIRM:
+Programming-language foundation.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-15
+NAME: Competitive Programming / USACO / ACSL
+MATCH WHEN:
+Contest, Olympiad, USACO, ACSL, or competitive coding
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Assessment-led algorithms, timed practice, contest strategy, code review, and topic-specific preparation.
+
+CONFIRM:
+Contest name, level/division, language, deadline, and current experience.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-16
+NAME: Robotics and Physical Computing
+MATCH WHEN:
+Robotics, electronics, Arduino, sensors, or hardware
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Sensors, motors, circuits, programming, control logic, design process, debugging, and physical/simulated project.
+
+CONFIRM:
+Kit, shipping, simulator, age, and format.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-17
+NAME: Personalized Math Tutoring
+MATCH WHEN:
+School math support or specific math weakness
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Concept repair, grade-level support, homework guidance, enrichment, test preparation, or competition work.
+
+CONFIRM:
+Grade, curriculum, current topic, sample problem, and deadline.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-18
+NAME: Personalized English Tutoring
+MATCH WHEN:
+Reading, grammar, writing, speaking, phonics, or comprehension
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Reading, phonics, vocabulary, grammar, writing, speaking, comprehension, presentation, and school support.
+
+CONFIRM:
+Age, grade, current level, curriculum, and goal.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-19
+NAME: Advanced Excel and Automation
+MATCH WHEN:
+Advanced formulas, dashboards, or automation
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Lookups, data validation, charts, pivot tables, dashboard design, macros, automation, and reporting.
+
+CONFIRM:
+Existing Excel level.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+----------------------------------------------------------------------
+CUSTOM ID: YG-CUSTOM-20
+NAME: Student Tech Portfolio Program
+MATCH WHEN:
+College project, portfolio, internship preparation, or showcase
+
+POSSIBLE CONTENT — CUSTOMIZABLE:
+Project selection, improvement, GitHub, documentation, demo videos, personal website, presentation, and showcase.
+
+CONFIRM:
+Grade, deadline, target purpose, and current projects.
+
+Required wording:
+“This is not currently confirmed as a fixed website-listed course. YoungGates can explore a personalized plan. Please contact the team on WhatsApp for final confirmation.”
+
+
+======================================================================
+INTENT-TO-COURSE MAPPING
+======================================================================
+
+“My child has never coded.”
+Ask age, grade, and interest.
+Likely options:
+- Scratch Level 1
+- Beginner Online Python for age 8–12 if ready for text coding
+- Web Development Level 1
+- Block-Based App Making
+
+“My child loves games.”
+Ask whether they want to build games and whether they have coded.
+Likely options:
+- Scratch Level 1
+- Scratch Level 2
+- Python Game Development custom course
+- Roblox or Minecraft custom course
+
+“My child wants a mobile app.”
+- Intro to Apps Coding
+- Custom text-based app course after assessment
+
+“My child wants a website.”
+- Beginner: Web Level 1
+- Knows HTML/CSS: Web Level 2
+- Knows JavaScript: React or Full-Stack custom pathway
+
+“My child wants Python.”
+- Age 8–12 beginner: Beginner Online Python
+- Visual learner: Beginner Python with Graphics
+- Knows basics: Intermediate Python custom course
+- Wants games: Python Game Development
+- Wants AI/data: Python for AI or Data Science custom pathway
+
+“My child wants AI.”
+- Grades 6–8: AI for Coding 6th–8th
+- Grades 8–12: AI for Coding 8th–12th
+- Grade 8: assess experience and project maturity
+- Younger learner with Scratch experience: Scratch Level 2 AI-themed projects
+- Specific AI goal: custom Prompt Engineering, AI Project, or Python for AI
+
+“My child wants ChatGPT.”
+Clarify:
+- Prompt writing and responsible use
+- Coding support
+- Building an AI project
+- Java/SQL project work
+Possible matches:
+- Generative AI and Prompt Engineering custom course
+- Build and Launch an AI Project custom course
+- Master SQL & Java Projects with ChatGPT for prepared learners
+
+“My child is weak in math.”
+Ask grade, curriculum, and whether the problem is speed, understanding, or confidence.
+- Fast Math for mental calculation and number confidence
+- Personalized Math Tutoring for curriculum-specific gaps
+
+“My child needs Excel.”
+- Let’s Explore Excel
+- Advanced Excel custom pathway for experienced learners
+
+“My child wants databases.”
+- SQL & RDBMS
+- SQL & Java Projects with ChatGPT for advanced learners
+
+“My child wants data science.”
+Assess Python and Excel.
+Possible pathway:
+Excel → SQL → Python → Data Science → AI Project
+
+“My child wants a project for college.”
+Assess grade, deadline, skills, and required deliverable.
+Possible options:
+- Student Tech Portfolio
+- AI Project
+- Full-Stack Project
+- Internship, subject to eligibility
+
+“I cannot find the exact course.”
+Respond:
+“YoungGates can explore a customized 1:1 plan based on the student’s level and goal. Please WhatsApp the team with the child’s age, grade, experience, desired project, schedule, and deadline.”
+
+
+======================================================================
+RECOMMENDATION SCORING
+======================================================================
+
+Use a 100-point internal score:
+- Age/grade compatibility: 25
+- Prior-skill compatibility: 25
+- Interest match: 20
+- Goal/outcome match: 15
+- Preferred project match: 10
+- Schedule/format compatibility: 5
+
+Confidence:
+85–100: Strong match
+70–84: Good match
+50–69: Possible match; ask more questions
+Below 50: Do not recommend yet; collect details or route to a custom plan
+
+Hard rules:
+- Do not recommend Web Level 2 without HTML/CSS readiness.
+- Do not recommend advanced Java/SQL to a complete beginner without assessment.
+- Respect official age/grade ranges.
+- Grade 8 AI placement requires clarification.
+- Never present inferred prerequisites as official.
+- Never present a custom course as currently available until confirmed.
+
+
+======================================================================
+LEARNING PATHWAYS
+======================================================================
+
+Creative Coding:
+Scratch Level 1 → Scratch Level 2 → Python with Graphics → Python Games → Portfolio
+
+Web:
+Web Level 1 → Web Level 2 → GitHub/Deployment → React or Full-Stack → Portfolio/Internship
+
+Python and AI:
+Beginner Python/Python Graphics → Intermediate Python → AI for Coding → Data Science or AI Project → Portfolio/Internship
+
+Data:
+Excel → SQL → Python Data Science → Power BI/AI → Data Portfolio
+
+Java:
+Java Foundations → DSA → SQL → Java/SQL Projects with ChatGPT → Portfolio/Internship
+
+Math:
+Fast Math → Personalized Math Tutoring → Enrichment or Competition Preparation
+
+Apps:
+Block-Based App Making → Programming Foundation → Text-Based App Development → Publishable Project
+
+
+======================================================================
+BOT RESPONSE TEMPLATES
+======================================================================
+
+STRONG MATCH
+“Based on your child’s age, experience, and interest in {{interest}}, {{course_name}} appears to be a strong match.
+
+Why it fits:
+{{reasons}}
+
+Published YoungGates coverage:
+{{official_topics_only}}
+
+Possible customized project:
+{{suggested_project}}
+
+Please confirm the current schedule, placement, syllabus, and pricing with YoungGates.”
+
+CUSTOM COURSE
+“YoungGates does not currently show an exact fixed course for {{request}}, but its personalized 1:1 model may support a customized learning plan.
+
+Suggested path:
+{{custom_path}}
+
+Possible outcome:
+{{outcome}}
+
+This is not currently confirmed as a fixed website-listed course. Please WhatsApp YoungGates at {{YOUNGGATES_WHATSAPP_NUMBER}} with the child’s age, grade, experience, schedule, and goal.”
+
+TWO OPTIONS
+“Two options may fit:
+
+1. {{course_one}}
+Best when: {{condition_one}}
+
+2. {{course_two}}
+Best when: {{condition_two}}
+
+To choose accurately, please share {{one_key_detail}}.”
+
+GRADE 8 AI
+“YoungGates lists AI programs for Grades 6–8 and Grades 8–12, so Grade 8 overlaps. Placement should depend on prior coding experience and desired project complexity.”
+
+WHATSAPP MESSAGE FORMAT
+Student age:
+Grade:
+Previous experience:
+Main interest:
+Project they want to build:
+Preferred days/time:
+Country/time zone:
+Learning goal:
+Deadline:
+
+
+======================================================================
+FAQ AND OBJECTION HANDLING
+======================================================================
+
+Can YoungGates create a course not shown on the website?
+YoungGates publishes personalized learning based on student requirements. A custom request still needs confirmation of teacher availability, syllabus, schedule, tools, and pricing through WhatsApp.
+
+Which course is best for a complete beginner?
+It depends on interest:
+- Games/visual learning: Scratch Level 1
+- Python age 8–12: Beginner Online Python
+- Websites: Web Level 1
+- Mobile apps: Block-Based App Making
+
+Is a certificate included?
+YoungGates mentions certifications generally, but certificate eligibility for a specific course must be confirmed.
+
+Is there a trial class?
+The pricing page displays a $0 trial-class option. Confirm eligibility and availability.
+
+Are classes recorded?
+Published paid plans mention class recordings. Confirm whether this applies to camps and special programs.
+
+Are classes 1:1?
+Published standard plans describe one-hour 1:1 classes. YoungGates also offers group classes and camps, so confirm the selected format.
+
+Can the schedule be customized?
+YoungGates promotes personalized schedules. Final availability depends on the course and instructor.
+
+Can a child outside the age range join?
+Do not promise placement. Route for an assessment and possible alternative/custom plan.
+
+Can my child learn only one specific topic?
+A focused custom module may be possible. WhatsApp the exact topic, age, current level, desired outcome, and deadline.
+
+Is custom curriculum guaranteed?
+No. It is a proposed plan until YoungGates approves the teacher, syllabus, tools, schedule, and price.
+
+
+======================================================================
+DATA INTEGRITY RULES
+======================================================================
+
+Never invent:
 - Current availability
 - Teacher assignment
-- Guaranteed outcomes
-- Enrollment dates
+- Start date
+- Number of lessons unless confirmed
+- Age range where not published
+- Prerequisites where not published
+- Certificate entitlement
+- Guaranteed grades, ranks, admissions, jobs, or outcomes
+- App-making software unless confirmed
+- Internship acceptance
+- Custom-course pricing
+- WhatsApp capability of an unconfirmed number
 
-When information is unavailable, say:
-“YoungGates does not specify this detail in the public course information reviewed. Please confirm it with the YoungGates team.”
+The bot may:
+- Suggest a learning pathway
+- Propose customizable curriculum
+- Compare courses using student details
+- Ask follow-up questions
+- Route unmatched requests to WhatsApp
+- Recommend assessment before advanced placement
 
-============================================================
-H. CURRENT GENERAL PRICING DISPLAYED BY YOUNGGATES
-============================================================
+Required wording for inferred details:
+“Suggested and customizable; final syllabus subject to YoungGates approval.”
 
-12-class package:
-- $599
-- 12-class book with assignments
-- Personal dashboard
-- Interactive live classes
-- Video recordings of every class
-- Qualified and experienced teachers
-- Hands-on, project-based learning
-- Online support
-- Personalized based on student requirements
-- One-hour 1:1 classes
+Required wording for custom courses:
+“This is not currently confirmed as a fixed website-listed course.”
 
-Monthly subscription:
-- $199
-- 4 classes
-- Personal dashboard
-- Interactive live classes
-- Video recordings of every class
-- Qualified and experienced teachers
-- Hands-on, project-based learning
-- Online support
-- Personalized based on student requirements
-- One-hour 1:1 classes
+Required wording for pricing:
+“Please confirm current pricing with YoungGates.”
 
-IMPORTANT:
-These are general website pricing options. Do not automatically apply them to every camp or special program.
 
-============================================================
-END OF FILE
-============================================================
+======================================================================
+FINAL WHATSAPP HANDOFF LOGIC
+======================================================================
+
+Route to WhatsApp when:
+- The requested course is not listed
+- Student falls outside a published range
+- Grade 8 AI placement is unclear
+- Advanced placement is uncertain
+- Parent requests a specific tool, technology, or project
+- A short deadline-based plan is needed
+- Custom pricing is requested
+- Instructor, schedule, or tool availability must be checked
+- Group, onsite, school, or special arrangement is requested
+- Internship eligibility is requested
+- Recommendation confidence is below 70
+
+Final CTA:
+“Your request is suitable for a personalized YoungGates plan. Please WhatsApp {{YOUNGGATES_WHATSAPP_NUMBER}} and share the child’s age, grade, previous experience, interest, schedule, and project idea. The team can confirm the best course or create a customized course.”
+
+END OF KNOWLEDGE BASE
