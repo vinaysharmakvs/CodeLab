@@ -2371,6 +2371,7 @@ function renderTrustScoreReport(report, formValues) {
   const business = report.business || {};
   const match = report.match || {};
   const facts = report.facts || {};
+  const matchedLocation = Array.isArray(match.matchedLocationTokens) ? match.matchedLocationTokens.join(", ") : "";
   const overall = clampScore(report.overall);
   trustResult.innerHTML = `
     <div class="trust-score-meter trust-live-meter">
@@ -2384,7 +2385,7 @@ function renderTrustScoreReport(report, formValues) {
         <p>${escapeHtml(report.summary || "Digital Trust Score generated from public signals.")}</p>
         <div class="trust-business-facts">
           ${business.address ? `<strong>${escapeHtml(business.address)}</strong>` : ""}
-          ${match.confidence ? `<strong>${match.verified ? "Verified local match" : "Manual verification needed"}: ${escapeHtml(match.confidence)}%</strong>` : ""}
+          ${match.confidence ? `<strong>${match.verified ? `Location evidence found: ${matchedLocation || "Matched"}` : "Manual verification needed"} (${escapeHtml(match.confidence)}%)</strong>` : ""}
           ${typeof facts.supportPagesChecked === "number" ? `<strong>Contact/About pages checked: ${escapeHtml(facts.supportPagesChecked)}</strong>` : ""}
           ${business.website ? `<a href="${escapeHtml(business.website)}" target="_blank" rel="noopener noreferrer">Website</a>` : ""}
           ${business.googleUrl ? `<a href="${escapeHtml(business.googleUrl)}" target="_blank" rel="noopener noreferrer">Google Profile</a>` : ""}
