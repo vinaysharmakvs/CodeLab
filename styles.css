@@ -3531,6 +3531,22 @@ code {
   box-shadow: 0 14px 28px rgba(37, 211, 102, 0.24);
 }
 
+.site-footer .footer-email {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 16px;
+  border: 1px solid rgba(54, 124, 255, 0.14);
+  border-radius: 8px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.76);
+  font-size: 0.9rem;
+  font-weight: 950;
+  text-decoration: none;
+  box-shadow: 0 12px 26px rgba(19, 34, 56, 0.08);
+}
+
 .page-hero {
   position: relative;
   display: grid;
@@ -15602,6 +15618,13 @@ body:not(.profile-filter-ready) [data-profile-section] {
     linear-gradient(135deg, #211321 0%, #6f1d46 52%, #d8a15d 132%);
 }
 
+.garry-cares-project {
+  --project-bg:
+    radial-gradient(circle at 18% 16%, rgba(245, 184, 75, 0.42), transparent 13rem),
+    radial-gradient(circle at 86% 12%, rgba(22, 163, 122, 0.34), transparent 14rem),
+    linear-gradient(135deg, #102438 0%, #1767d1 50%, #16a37a 130%);
+}
+
 .upcoming-project-visual,
 .upcoming-project-copy {
   position: relative;
@@ -15647,6 +15670,11 @@ body:not(.profile-filter-ready) [data-profile-section] {
 .dental-care-visual img {
   object-position: center top;
   filter: saturate(1.06) contrast(1.03);
+}
+
+.garry-cares-visual img {
+  object-position: center;
+  filter: saturate(1.06) contrast(1.04);
 }
 
 .upcoming-project-card:hover .upcoming-project-visual img {
