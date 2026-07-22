@@ -592,7 +592,7 @@
   min-height: 100%;
   padding: clamp(20px, 4vw, 34px);
   border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 28px;
+  border-radius: 22px;
   background:
     radial-gradient(circle at 80% 8%, rgba(255, 212, 95, 0.18), transparent 26%),
     rgba(255, 255, 255, 0.08);
@@ -1891,7 +1891,7 @@ code {
   align-items: start;
   padding: clamp(28px, 5vw, 54px);
   border: 1px solid rgba(19, 34, 56, 0.08);
-  border-radius: 28px;
+  border-radius: 22px;
   background:
     radial-gradient(circle at 12% 16%, rgba(255, 212, 95, 0.28), transparent 28%),
     radial-gradient(circle at 88% 12%, rgba(66, 217, 181, 0.18), transparent 28%),
@@ -4396,7 +4396,7 @@ code {
   align-items: start;
   padding: clamp(26px, 5vw, 54px);
   border: 1px solid rgba(54, 124, 255, 0.1);
-  border-radius: 30px;
+  border-radius: 24px;
   background:
     radial-gradient(circle at 9% 12%, rgba(255, 212, 95, 0.28), transparent 27%),
     radial-gradient(circle at 92% 10%, rgba(66, 217, 181, 0.22), transparent 28%),
@@ -14211,12 +14211,12 @@ body:not(.profile-filter-ready) [data-profile-section] {
   gap: clamp(22px, 4vw, 46px);
   align-items: stretch;
   min-width: 100%;
-  min-height: 430px;
+  min-height: 310px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.34);
   border-radius: 30px;
   color: var(--impact-copy, var(--impact-ink, #15396a));
-  padding: clamp(26px, 4.4vw, 54px);
+  padding: clamp(18px, 3vw, 30px);
 }
 
 .impact-slide::before {
@@ -14389,7 +14389,7 @@ body:not(.profile-filter-ready) [data-profile-section] {
     var(--impact-panel-bg, rgba(255, 255, 255, 0.62));
   box-shadow: 0 18px 54px rgba(15, 45, 86, 0.12);
   backdrop-filter: blur(18px);
-  min-height: 318px;
+  min-height: 220px
   padding: 20px;
   text-align: center;
   transition: transform 0.32s ease;
@@ -14420,7 +14420,7 @@ body:not(.profile-filter-ready) [data-profile-section] {
 }
 
 .brand-logo-orb {
-  width: min(230px, 76%);
+  width: min(155px, 66%);
   aspect-ratio: 1;
   margin: 0 auto;
   border-radius: 34px;
@@ -14480,8 +14480,8 @@ body:not(.profile-filter-ready) [data-profile-section] {
 
 .brand-story-badge {
   position: absolute;
-  left: 14px;
-  bottom: 14px;
+  left: 10px;
+  bottom: 10px;
   border: 1px solid rgba(255, 255, 255, 0.52);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.86);
@@ -14627,8 +14627,8 @@ body:not(.profile-filter-ready) [data-profile-section] {
   }
 
   .impact-slide {
-    min-height: 590px;
-    padding: 22px;
+    min-height: 430px;
+    padding: 16px;
   }
 
   .impact-slide-copy strong {
@@ -15025,6 +15025,418 @@ body:not(.profile-filter-ready) [data-profile-section] {
   transform: translateY(-3px);
 }
 
+/* Tivoro Workflow Builder */
+.workflow-builder-page {
+  color: #f7fbff;
+  background:
+    radial-gradient(circle at 12% 6%, rgba(66, 217, 181, 0.2), transparent 30rem),
+    radial-gradient(circle at 82% 0%, rgba(255, 212, 95, 0.16), transparent 28rem),
+    linear-gradient(180deg, #050912 0%, #08111f 52%, #050912 100%);
+}
+
+.workflow-builder-page .site-header {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(5, 9, 18, 0.82);
+  backdrop-filter: blur(18px);
+}
+
+.workflow-main {
+  display: grid;
+  gap: 22px;
+  width: min(1220px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 110px 0 36px;
+}
+
+.workflow-hero,
+.workflow-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.workflow-hero,
+.workflow-form,
+.workflow-output,
+.workflow-hero-panel,
+.workflow-report-card {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 90% 0%, rgba(66, 217, 181, 0.12), transparent 20rem),
+    rgba(255, 255, 255, 0.07);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.24);
+}
+
+.workflow-hero {
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.42fr);
+  padding: clamp(22px, 4vw, 44px);
+}
+
+.workflow-hero h1 {
+  max-width: 840px;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(2.6rem, 6.2vw, 5.8rem);
+  line-height: 0.94;
+}
+
+.workflow-hero p {
+  max-width: 720px;
+  color: rgba(247, 251, 255, 0.68);
+  line-height: 1.6;
+}
+
+.workflow-hero-pills,
+.workflow-chip-row,
+.workflow-dashboard-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.workflow-hero-pills span,
+.workflow-dashboard-tags b {
+  border: 1px solid rgba(66, 217, 181, 0.24);
+  border-radius: 999px;
+  color: var(--mint);
+  background: rgba(66, 217, 181, 0.08);
+  padding: 8px 11px;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.workflow-hero-panel {
+  display: grid;
+  align-content: space-between;
+  gap: 20px;
+  padding: 22px;
+}
+
+.workflow-hero-panel > span,
+.workflow-report-card > span,
+.workflow-summary-card span {
+  color: var(--mint);
+  font-size: 0.76rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.workflow-hero-panel strong {
+  color: #ffffff;
+  font-size: 1.8rem;
+  line-height: 1.05;
+}
+
+.workflow-hero-panel div {
+  display: grid;
+  gap: 9px;
+}
+
+.workflow-hero-panel b {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 10px 12px;
+}
+
+.workflow-form {
+  display: grid;
+  gap: 14px;
+  padding: clamp(18px, 3vw, 28px);
+}
+
+.workflow-form label {
+  display: grid;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.82rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.workflow-form input,
+.workflow-form select,
+.workflow-form textarea {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  color: #ffffff;
+  background: rgba(5, 9, 18, 0.66);
+  padding: 13px 14px;
+  font: inherit;
+  outline: none;
+}
+
+.workflow-form textarea {
+  min-height: 210px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.workflow-form input:focus,
+.workflow-form select:focus,
+.workflow-form textarea:focus {
+  border-color: var(--mint);
+  box-shadow: 0 0 0 4px rgba(66, 217, 181, 0.13);
+}
+
+.workflow-chip-row button {
+  min-height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 8px 12px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.workflow-generate-button {
+  min-height: 58px;
+  color: #06101d;
+  background: linear-gradient(135deg, var(--mint), var(--yellow));
+}
+
+.workflow-output {
+  display: grid;
+  gap: 14px;
+  padding: clamp(16px, 2.4vw, 22px);
+}
+
+.workflow-output[hidden] {
+  display: none;
+}
+
+.workflow-summary-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.workflow-report-card {
+  padding: clamp(16px, 2vw, 22px);
+}
+
+.workflow-report-card h2,
+.workflow-report-card h3 {
+  margin: 8px 0 10px;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.workflow-report-card p,
+.workflow-report-card li {
+  color: rgba(247, 251, 255, 0.68);
+  line-height: 1.5;
+}
+
+.workflow-report-card ul,
+.workflow-report-card ol {
+  margin: 10px 0 0;
+  padding-left: 20px;
+}
+
+.workflow-logic-card {
+  display: grid;
+  gap: 16px;
+  background:
+    radial-gradient(circle at 95% 0%, rgba(255, 212, 95, 0.16), transparent 20rem),
+    rgba(255, 255, 255, 0.07);
+}
+
+.workflow-system-card {
+  display: grid;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.workflow-system-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.32fr) minmax(0, 1fr);
+  gap: 16px;
+  padding: clamp(16px, 2.2vw, 22px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.workflow-system-row:last-child {
+  border-bottom: 0;
+}
+
+.workflow-system-title {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.workflow-system-title span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  color: #06101d;
+  background: linear-gradient(135deg, var(--mint), var(--yellow));
+  font-size: 0.8rem;
+  font-weight: 950;
+}
+
+.workflow-system-title h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.05rem;
+}
+
+.workflow-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-content: start;
+}
+
+.workflow-pill-list b {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 8px 11px;
+  font-size: 0.82rem;
+  line-height: 1.2;
+}
+
+.workflow-pill-list.is-report b {
+  border-color: rgba(255, 212, 95, 0.24);
+  color: var(--yellow);
+  background: rgba(255, 212, 95, 0.08);
+}
+
+.workflow-step-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: workflowStep;
+}
+
+.workflow-step-list li {
+  position: relative;
+  min-height: 40px;
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px 12px 10px 44px;
+  color: rgba(247, 251, 255, 0.74);
+}
+
+.workflow-step-list li::before {
+  position: absolute;
+  top: 9px;
+  left: 10px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 9px;
+  color: #06101d;
+  background: var(--mint);
+  font-size: 0.72rem;
+  font-weight: 950;
+  counter-increment: workflowStep;
+  content: counter(workflowStep);
+}
+
+.workflow-progress-preview {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.workflow-progress-preview div {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 12px;
+}
+
+.workflow-progress-preview strong {
+  display: block;
+  color: #ffffff;
+  font-size: 0.84rem;
+}
+
+.workflow-progress-preview i {
+  display: block;
+  height: 7px;
+  margin-top: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--mint), var(--yellow));
+}
+
+@media (max-width: 900px) {
+  .workflow-hero,
+  .workflow-workspace,
+  .workflow-progress-preview {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-summary-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 620px) {
+  .workflow-main {
+    width: min(100% - 22px, 1220px);
+    padding-top: 96px;
+  }
+
+  .workflow-hero,
+  .workflow-form,
+  .workflow-output,
+  .workflow-report-card {
+    border-radius: 20px;
+  }
+
+  .workflow-hero {
+    padding: 18px;
+  }
+
+  .workflow-hero h1 {
+    font-size: clamp(2.05rem, 11vw, 3rem);
+  }
+
+  .workflow-chip-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .workflow-chip-row button {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .workflow-system-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .workflow-summary-card .primary-button {
+    width: 100%;
+  }
+}
+
 @media (max-width: 980px) {
   .course-fit-hero,
   .course-fit-workspace,
@@ -15098,5 +15510,250 @@ body:not(.profile-filter-ready) [data-profile-section] {
   .course-fit-card-top {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+
+/* Upcoming Tivoro Projects */
+.upcoming-projects-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.upcoming-projects-section::before {
+  position: absolute;
+  top: 18%;
+  left: -110px;
+  width: 260px;
+  height: 260px;
+  border-radius: 999px;
+  content: "";
+  background: rgba(255, 194, 89, 0.14);
+  filter: blur(7px);
+}
+
+.upcoming-project-carousel {
+  margin-top: 20px;
+}
+
+.upcoming-project-viewport {
+  background: #ffffff;
+}
+
+.upcoming-project-track {
+  display: flex;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.upcoming-project-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(230px, 0.36fr) minmax(0, 1fr);
+  gap: clamp(16px, 3vw, 30px);
+  align-items: stretch;
+  min-width: 100%;
+  min-height: 310px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  border-radius: 24px;
+  color: #ffffff;
+  padding: clamp(18px, 3vw, 30px);
+  box-shadow: 0 30px 86px rgba(15, 45, 86, 0.18);
+  isolation: isolate;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.upcoming-project-card::before,
+.upcoming-project-card::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  z-index: -1;
+}
+
+.upcoming-project-card::before {
+  background: var(--project-bg);
+}
+
+.upcoming-project-card::after {
+  background:
+    linear-gradient(90deg, rgba(9, 22, 43, 0.18), rgba(9, 22, 43, 0.68)),
+    radial-gradient(circle at 86% 12%, rgba(255, 255, 255, 0.22), transparent 12rem);
+}
+
+.dental-care-project {
+  --project-bg:
+    radial-gradient(circle at 18% 16%, rgba(142, 213, 255, 0.5), transparent 13rem),
+    radial-gradient(circle at 86% 12%, rgba(255, 255, 255, 0.44), transparent 14rem),
+    linear-gradient(135deg, #053b5c 0%, #0f8fc7 50%, #bdefff 135%);
+}
+
+.daily-dabba-project {
+  --project-bg:
+    radial-gradient(circle at 16% 18%, rgba(248, 217, 208, 0.96), transparent 13rem),
+    radial-gradient(circle at 80% 12%, rgba(223, 243, 232, 0.88), transparent 13rem),
+    linear-gradient(135deg, #7d352d 0%, #e88976 48%, #f7c978 122%);
+}
+
+.velvet-plate-project {
+  --project-bg:
+    radial-gradient(circle at 18% 16%, rgba(255, 235, 194, 0.74), transparent 13rem),
+    radial-gradient(circle at 86% 12%, rgba(166, 28, 74, 0.4), transparent 14rem),
+    linear-gradient(135deg, #211321 0%, #6f1d46 52%, #d8a15d 132%);
+}
+
+.upcoming-project-visual,
+.upcoming-project-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.upcoming-project-visual {
+  display: grid;
+  min-height: 220px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.44);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.5), transparent 11rem),
+    rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 22px 54px rgba(9, 22, 43, 0.16);
+  backdrop-filter: blur(18px);
+}
+
+.upcoming-project-visual img {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  object-fit: cover;
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+.daily-dabba-visual img {
+  width: min(155px, 66%);
+  height: auto;
+  min-height: auto;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 22px 54px rgba(9, 22, 43, 0.2);
+}
+
+.velvet-plate-visual img {
+  object-position: 58% center;
+  filter: saturate(1.08) contrast(1.02);
+}
+
+.dental-care-visual img {
+  object-position: center top;
+  filter: saturate(1.06) contrast(1.03);
+}
+
+.upcoming-project-card:hover .upcoming-project-visual img {
+  transform: scale(1.05);
+}
+
+.upcoming-project-visual em {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  color: #15396a;
+  box-shadow: 0 14px 32px rgba(9, 22, 43, 0.16);
+  padding: 7px 10px;
+  font-style: normal;
+  font-size: 0.76rem;
+  font-weight: 950;
+}
+
+.upcoming-project-copy {
+  display: grid;
+  align-content: center;
+  min-width: 0;
+}
+
+.upcoming-project-copy span {
+  width: fit-content;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  padding: 7px 10px;
+  font-size: 0.7rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.upcoming-project-copy strong {
+  display: block;
+  max-width: 680px;
+  margin-top: 12px;
+  font-size: clamp(2rem, 3.8vw, 3.6rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.upcoming-project-copy p {
+  max-width: 620px;
+  margin: 12px 0 16px;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.96rem;
+  line-height: 1.48;
+}
+
+.upcoming-project-copy b {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 10px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #15396a;
+  padding: 11px 14px;
+  font-size: 0.9rem;
+}
+
+.upcoming-project-copy b::after {
+  content: "->";
+}
+
+@media (max-width: 900px) {
+  .upcoming-project-card {
+    grid-template-columns: 1fr;
+  }
+
+  .upcoming-project-visual {
+    min-height: 210px;
+  }
+
+  .upcoming-project-visual img {
+    min-height: 210px;
+  }
+}
+
+@media (max-width: 640px) {
+  .upcoming-project-viewport,
+  .upcoming-project-card {
+    border-radius: 24px;
+  }
+
+  .upcoming-project-card {
+    min-height: 430px;
+    padding: 16px;
+  }
+
+  .upcoming-project-copy strong {
+    font-size: 2rem;
+  }
+
+  .upcoming-project-copy p {
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .daily-dabba-visual img {
+    width: min(135px, 62%);
   }
 }
