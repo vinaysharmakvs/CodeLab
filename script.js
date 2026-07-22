@@ -3252,3 +3252,51 @@ const initImpactCarousel = () => {
 };
 
 initImpactCarousel();
+
+const initUpcomingCarousel = () => {
+  const carousel = document.querySelector("[data-upcoming-carousel]");
+  if (!carousel) return;
+
+  const track = carousel.querySelector(".upcoming-project-track");
+  const slides = Array.from(carousel.querySelectorAll(".upcoming-project-card"));
+  const dots = Array.from(carousel.querySelectorAll(".upcoming-dots button"));
+  const prev = carousel.querySelector(".upcoming-prev");
+  const next = carousel.querySelector(".upcoming-next");
+  let index = 0;
+  let timer;
+
+  const showSlide = (nextIndex) => {
+    index = (nextIndex + slides.length) % slides.length;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach((dot, dotIndex) => dot.classList.toggle("active", dotIndex === index));
+  };
+
+  const start = () => {
+    window.clearInterval(timer);
+    timer = window.setInterval(() => showSlide(index + 1), 4600);
+  };
+
+  prev?.addEventListener("click", () => {
+    showSlide(index - 1);
+    start();
+  });
+
+  next?.addEventListener("click", () => {
+    showSlide(index + 1);
+    start();
+  });
+
+  dots.forEach((dot, dotIndex) => {
+    dot.addEventListener("click", () => {
+      showSlide(dotIndex);
+      start();
+    });
+  });
+
+  carousel.addEventListener("mouseenter", () => window.clearInterval(timer));
+  carousel.addEventListener("mouseleave", start);
+  showSlide(0);
+  start();
+};
+
+initUpcomingCarousel();
