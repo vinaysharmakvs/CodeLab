@@ -673,6 +673,7 @@ function leadTypeForBooking(level) {
 
 const tivoroBotQuickQuestions = [
   "Start Tivoro AI",
+  "How Tivoro works",
   "I am a parent",
   "I am a student",
   "I am a business owner",
@@ -692,6 +693,11 @@ const tivoroBotAnswers = [
     keywords: ["start tivoro", "tivoro", "ai guide", "ai advisor", "where should i start", "not sure", "confused"],
     answer:
       "Start with Tivoro AI. It is the fastest route for parents, students and businesses: answer a few questions, get a personalized recommendation, then choose WhatsApp guidance or the detailed page.",
+  },
+  {
+    keywords: ["how tivoro works", "how we work", "growth engine", "digital business", "business journey", "process", "workflow", "transformation", "deliverable", "understand", "launch growth", "scale continuously"],
+    answer:
+      "Open How We Work to see the Tivoro Growth Engine. It shows how a business moves from unclear digital presence to a working digital business: discovery, opportunity mapping, product thinking, website experience, AI automation, growth dashboard and continuous improvement. Page: how-we-work.html",
   },
   {
     keywords: ["student", "college", "internship", "project", "final year", "fyp", "resume", "interview", "career", "role", "python", "ai champions", "teen", "chatbot", "agent", "prompt", "gemini"],
@@ -2851,10 +2857,10 @@ function createTivoroBot() {
         return;
       }
       if (query.includes("show detailed")) {
-        addMessage("Detailed pages: Students for courses and career matcher, Career for campus ambassador and student roles, Parents for child course guidance, Business for websites and digital growth tools, About for founders, FAQ for common questions, and Book Slot for WhatsApp discussion.", "bot");
+        addMessage("Detailed pages: How We Work for the Tivoro Growth Engine, Students for courses and career matcher, Career for campus ambassador and student roles, Parents for child course guidance, Business for websites and digital growth tools, About for founders, FAQ for common questions, and Book Slot for WhatsApp discussion.", "bot");
         return;
       }
-      addMessage("Start with the Tivoro AI button on the homepage. It gives the shortest path: choose Student, Parent or Business, answer a few questions, then move to WhatsApp or explore the detailed page.", "bot");
+      addMessage("Start with the Tivoro AI button on the homepage. It gives the shortest path: choose Student, Parent or Business, answer a few questions, then move to WhatsApp or explore the detailed page. If you want to understand Tivoro's business-building approach, open How We Work.", "bot");
       return;
     }
     if (query.includes("whatsapp") || query.includes("talk")) {
@@ -2871,7 +2877,7 @@ function createTivoroBot() {
     addMessage(
       best?.score
         ? best.item.answer
-        : "The cleanest path is to start with Tivoro AI. It will ask whether you are a student, parent or business owner, then create a simple roadmap. You can also use the Explore links on the homepage for detailed pages.",
+        : "The cleanest path is to start with Tivoro AI. It will ask whether you are a student, parent or business owner, then create a simple roadmap. You can also open How We Work to see Tivoro's Growth Engine, or use the Explore links on the homepage for detailed pages.",
       "bot"
     );
   }
@@ -2894,7 +2900,7 @@ function createTivoroBot() {
   }
 
   addMessage(
-    "Hi, I am Tivoro AI. I can help you choose the right path without browsing the full website."
+    "Hi, I am Tivoro AI. I can help you choose the right path or explain how Tivoro turns ideas into digital businesses."
   );
 
   tivoroBotQuickQuestions.forEach((question) => {
