@@ -15,7 +15,7 @@
     </script>
     <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=20260721-trust-evidence" />
+    <link rel="stylesheet" href="styles.css?v=20260724-mascot-moods" />
   </head>
   <body class="business-page tivoro-premium-page">
     <header class="site-header">
@@ -36,7 +36,6 @@
             <a class="primary-button" href="#website-price-builder">Build Website Quote</a>
             <a class="secondary-button" href="#digital-trust-score">Digital Trust Score</a>
             <a class="secondary-button" href="#business-samples">Use Smart Mapper</a>
-            <a class="secondary-button" href="#demo-gallery">View Website Demos</a>
             <a class="secondary-button" href="#website-health">Website Check</a>
           </div>
           <div class="web-stats-row">
@@ -147,7 +146,7 @@
             <p class="eyebrow">Smart website mapper</p>
             <h2>Tell us what you want to build.</h2>
           </div>
-          <p>Type your business idea once. We will map it to a website direction, budget level and sample preview.</p>
+          <p>Type your business idea once. We will map it to the right website direction, budget level and matching Tivoro client or upcoming project examples.</p>
         </div>
         <div class="smart-business-mapper business-mapper-hero">
           <div class="business-mapper-grid">
@@ -274,53 +273,6 @@
         </div>
       </section>
 
-      <section class="section business-sample-section" id="business-sample-preview">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Website sample direction</p>
-            <h2>Choose your industry and see a practical preview.</h2>
-          </div>
-          <p>Use these samples to imagine the first version of your business website before final scope is confirmed.</p>
-        </div>
-        <div class="business-sample-studio">
-          <aside class="sample-controls">
-            <label>
-              Business category
-              <select data-sample-category>
-                <option>School</option>
-                <option>College</option>
-                <option>Coaching institute</option>
-                <option>Salon</option>
-                <option>Retail store</option>
-                <option>Clinic</option>
-                <option>Cafe / restaurant</option>
-                <option>Chai stall / food stall</option>
-                <option>Tutor</option>
-                <option>Real estate</option>
-                <option>NGO / trust</option>
-                <option>Creator / personal brand</option>
-                <option>Startup</option>
-                <option>Local service business</option>
-              </select>
-            </label>
-            <label>
-              Budget level
-              <select data-sample-budget>
-                <option>Starter Website</option>
-                <option>Growth Website</option>
-                <option>Premium System</option>
-              </select>
-            </label>
-            <div class="sample-note">
-              <strong>No pressure consultation</strong>
-              <span>Use this as a sample direction. Final scope is confirmed only after understanding your actual requirement.</span>
-            </div>
-            <button class="primary-button" type="button" data-sample-whatsapp>Request This Sample</button>
-          </aside>
-          <article class="sample-preview" data-sample-preview aria-live="polite"></article>
-        </div>
-      </section>
-
       <section class="section health-checker-section" id="website-health">
         <div class="health-checker-copy">
           <p class="eyebrow">Website insight</p>
@@ -343,88 +295,6 @@
           <button class="primary-button" type="submit">Run Website Check</button>
           <article class="health-result" data-health-result hidden></article>
         </form>
-      </section>
-
-      <section class="section demo-gallery-section" id="demo-gallery">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Live demo gallery</p>
-            <h2>Choose an industry. See what your website can become.</h2>
-          </div>
-          <p>Every demo shows a practical direction: desktop preview, mobile feel, starting budget and the main enquiry goal.</p>
-        </div>
-        <div class="demo-toolbar">
-          <div class="demo-filters" aria-label="Industry filters">
-            <button class="is-active" type="button" data-template-filter="all">All</button>
-            <button type="button" data-template-filter="salon">Salon</button>
-            <button type="button" data-template-filter="restaurant">Restaurant</button>
-            <button type="button" data-template-filter="clinic">Clinic</button>
-            <button type="button" data-template-filter="school">School</button>
-            <button type="button" data-template-filter="real-estate">Real Estate</button>
-            <button type="button" data-template-filter="startup">Startup</button>
-          </div>
-          <label>
-            Budget
-            <select data-template-budget>
-              <option value="all">All budgets</option>
-              <option value="5-10">₹5k-10k</option>
-              <option value="10-20">₹10k-20k</option>
-              <option value="20-50">₹20k-50k</option>
-            </select>
-          </label>
-        </div>
-        <div class="demo-card-grid">
-          <article class="demo-card" data-template-card data-industry="salon" data-budget="5-10">
-            <img src="assets/salon.png" alt="Salon website sample" />
-            <div><span>Salon Website</span><strong>₹7,999 onwards</strong><p>Services, packages, look gallery and appointment enquiries.</p></div>
-            <button type="button" data-template-open="Salon">Preview Demo</button>
-          </article>
-          <article class="demo-card" data-template-card data-industry="restaurant" data-budget="5-10">
-            <img src="assets/cafe.png" alt="Restaurant website sample" />
-            <div><span>Restaurant Website</span><strong>₹7,999 onwards</strong><p>Menu, ambience, table booking and WhatsApp ordering.</p></div>
-            <button type="button" data-template-open="Cafe / restaurant">Preview Demo</button>
-          </article>
-          <article class="demo-card" data-template-card data-industry="clinic" data-budget="5-10">
-            <img src="assets/clinic.png" alt="Clinic website sample" />
-            <div><span>Clinic Website</span><strong>₹8,999 onwards</strong><p>Doctor profile, services, timings and appointment flow.</p></div>
-            <button type="button" data-template-open="Clinic">Preview Demo</button>
-          </article>
-          <article class="demo-card" data-template-card data-industry="school" data-budget="10-20">
-            <img src="assets/computer-lab.png" alt="School website sample" />
-            <div><span>School Website</span><strong>₹14,999 onwards</strong><p>Admissions, facilities, parent FAQs and visit booking.</p></div>
-            <button type="button" data-template-open="School">Preview Demo</button>
-          </article>
-          <article class="demo-card" data-template-card data-industry="real-estate" data-budget="10-20">
-            <img src="assets/realestate.png" alt="Real estate website sample" />
-            <div><span>Real Estate Website</span><strong>₹11,999 onwards</strong><p>Listings, location highlights, lead forms and site visits.</p></div>
-            <button type="button" data-template-open="Real estate">Preview Demo</button>
-          </article>
-          <article class="demo-card" data-template-card data-industry="ngo" data-budget="5-10">
-            <img src="assets/ngo.png" alt="NGO website sample" />
-            <div><span>NGO Website</span><strong>₹7,999 onwards</strong><p>Mission, impact stories, volunteer flow and support enquiries.</p></div>
-            <button type="button" data-template-open="NGO / trust">Preview Demo</button>
-          </article>
-          <article class="demo-card" data-template-card data-industry="startup" data-budget="10-20">
-            <img src="assets/startup.png" alt="Startup website sample" />
-            <div><span>Startup Website</span><strong>₹12,999 onwards</strong><p>Product story, features, demo request and waitlist capture.</p></div>
-            <button type="button" data-template-open="Startup">Preview Demo</button>
-          </article>
-          <article class="demo-card" data-template-card data-industry="personal" data-budget="5-10">
-            <img src="assets/blog.png" alt="Personal brand website sample" />
-            <div><span>Personal Brand</span><strong>₹6,999 onwards</strong><p>Profile, blog, work, services and collaboration enquiry.</p></div>
-            <button type="button" data-template-open="Creator / personal brand">Preview Demo</button>
-          </article>
-          <article class="demo-card" data-template-card data-industry="retail" data-budget="5-10">
-            <img src="assets/retail.png" alt="Retail store website sample" />
-            <div><span>Retail Store</span><strong>₹7,999 onwards</strong><p>Products, offers, store timing, map and WhatsApp enquiries.</p></div>
-            <button type="button" data-template-open="Retail store">Preview Demo</button>
-          </article>
-          <article class="demo-card" data-template-card data-industry="local-service" data-budget="5-10">
-            <img src="assets/Localservice.png" alt="Local service website sample" />
-            <div><span>Local Service</span><strong>₹5,999 onwards</strong><p>Services, area, proof, call button and quick lead capture.</p></div>
-            <button type="button" data-template-open="Local service business">Preview Demo</button>
-          </article>
-        </div>
       </section>
 
       <section class="section before-after-section">
@@ -482,6 +352,6 @@
 
     <footer class="site-footer"><div><strong>Tivoro</strong><span>Digital presence, lead generation, social media and AI systems for businesses.</span></div><a class="footer-email" href="mailto:tivorosupport@gmail.com">tivorosupport@gmail.com</a><a class="footer-whatsapp-icon" href="https://wa.me/918826758881" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">WhatsApp</a></footer>
     <script src="lead-config.js?v=20260621-01"></script>
-    <script src="script.js?v=20260721-trust-evidence"></script>
+    <script src="script.js?v=20260724-mascot-moods"></script>
   </body>
 </html>
