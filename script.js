@@ -157,6 +157,30 @@ const tivoroCollegeCareerGoogleForm = {
     ...(window.tivoroGoogleForms?.collegeCareerMatcher?.entries || {}),
   },
 };
+const defaultAmbassadorChallengeGoogleForm = {
+  endpoint: "https://docs.google.com/forms/d/e/1FAIpQLSffo6lJVX3JwTV-0m4Z6S7RGYAOdfT_HAFTphi7jKrnl8GpxA/formResponse",
+  pendingKey: "tivoroPendingAmbassadorChallengeLead",
+  entries: {
+    applicantName: "entry.1396932868",
+    mobile: "entry.506451100",
+    email: "entry.218040165",
+    campusName: "entry.1353740430",
+    motivation: "entry.1297112669",
+    communication: "entry.209695107",
+    initiative: "entry.1818290488",
+    quality: "entry.1243999218",
+    digital: "entry.474599241",
+    task: "entry.342617103",
+  },
+};
+const tivoroAmbassadorChallengeGoogleForm = {
+  ...defaultAmbassadorChallengeGoogleForm,
+  ...(window.tivoroGoogleForms?.ambassadorChallenge || {}),
+  entries: {
+    ...defaultAmbassadorChallengeGoogleForm.entries,
+    ...(window.tivoroGoogleForms?.ambassadorChallenge?.entries || {}),
+  },
+};
 
 function recommendedPathBlock({ title, copy, whatsappHref, detailHref, detailText }) {
   return `
@@ -179,6 +203,125 @@ function formDataToObject(data) {
     payload[key] = value;
     return payload;
   }, {});
+}
+
+function initTivoroMotion() {
+  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+  document.documentElement.classList.add("tivoro-motion-ready");
+  if (reduceMotion) {
+    document.documentElement.classList.add("tivoro-reduced-motion");
+    return;
+  }
+
+  const loader = document.createElement("div");
+  loader.className = "tivoro-page-loader";
+  loader.innerHTML = '<div><span>T</span><strong>Tivoro</strong><small>Building your path</small></div>';
+  document.body.prepend(loader);
+  window.setTimeout(() => {
+    loader.classList.add("is-done");
+    window.setTimeout(() => loader.remove(), 520);
+  }, 620);
+
+  const revealTargets = document.querySelectorAll([
+    ".section",
+    ".page-hero",
+    ".career-hero",
+    ".profile-hero",
+    ".ai-chat-hero",
+    ".ai-return-card",
+    ".codelab-route-grid a",
+    ".tivoro-trust-grid article",
+    ".career-role-grid article",
+    ".career-proof-grid article",
+    ".career-ascent-steps article",
+    ".internship-outcome-grid article",
+    ".internship-pricing-grid article",
+    ".quote-home-flow article",
+    ".choice-pricing-grid article",
+    ".price-builder-steps article",
+    ".feature-price-grid label"
+  ].join(","));
+
+  revealTargets.forEach((element, index) => {
+    element.dataset.motionReveal = "";
+    element.style.setProperty("--motion-delay", `${Math.min(index % 8, 6) * 55}ms`);
+  });
+
+  const revealObserver = "IntersectionObserver" in window
+    ? new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-motion-visible");
+          revealObserver.unobserve(entry.target);
+        });
+      }, { threshold: 0.02, rootMargin: "0px 0px -2% 0px" })
+    : null;
+
+  revealTargets.forEach((element) => {
+    if (revealObserver) {
+      revealObserver.observe(element);
+    } else {
+      element.classList.add("is-motion-visible");
+    }
+  });
+
+  const glowTargets = document.querySelectorAll([
+    ".codelab-ai-panel",
+    ".ai-chat-card",
+    ".career-hero-panel",
+    ".business-mapper-hero",
+    ".trust-score-panel",
+    ".website-price-builder",
+    ".ambassador-challenge",
+    ".impact-slide",
+    ".upcoming-project-card",
+    ".recommended-path-card"
+  ].join(","));
+
+  glowTargets.forEach((element) => {
+    element.classList.add("motion-pointer-glow");
+    if (!element.querySelector(":scope > .tivoro-pointer-light")) {
+      element.insertAdjacentHTML("afterbegin", '<span class="tivoro-pointer-light" aria-hidden="true"></span>');
+    }
+  });
+
+  if (window.matchMedia?.("(pointer: fine)").matches) {
+    glowTargets.forEach((element) => {
+      element.addEventListener("pointermove", (event) => {
+        const rect = element.getBoundingClientRect();
+        element.style.setProperty("--pointer-x", `${event.clientX - rect.left}px`);
+        element.style.setProperty("--pointer-y", `${event.clientY - rect.top}px`);
+      });
+    });
+  }
+
+  const countTargets = document.querySelectorAll(".web-stats-row strong, .speed-grid strong, .career-signal-grid strong");
+  countTargets.forEach((element) => {
+    const raw = element.textContent.trim();
+    const match = raw.match(/^(\d+)(.*)$/);
+    if (!match) return;
+    element.dataset.motionCount = match[1];
+    element.dataset.motionSuffix = match[2] || "";
+    element.textContent = `0${element.dataset.motionSuffix}`;
+  });
+
+  const animateCount = (element) => {
+    const target = Number(element.dataset.motionCount || 0);
+    const suffix = element.dataset.motionSuffix || "";
+    const duration = 900;
+    const start = performance.now();
+    const tick = (now) => {
+      const progress = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      element.textContent = `${Math.round(target * eased)}${suffix}`;
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  document.querySelectorAll("[data-motion-count]").forEach((element, index) => {
+    window.setTimeout(() => animateCount(element), 260 + index * 90);
+  });
 }
 
 async function submitTivoroLead(type, payload) {
@@ -418,6 +561,53 @@ function submitPendingCollegeCareerGoogleForm() {
     .then(() => localStorage.removeItem(tivoroCollegeCareerGoogleForm.pendingKey))
     .catch((error) => {
       console.warn("Pending Tivoro college career lead could not be submitted.", error);
+    });
+}
+
+async function submitAmbassadorChallengeToGoogleForm(data) {
+  if (!tivoroAmbassadorChallengeGoogleForm.endpoint) return false;
+
+  const payload = new URLSearchParams();
+  Object.entries(tivoroAmbassadorChallengeGoogleForm.entries).forEach(([key, entryId]) => {
+    if (!entryId) return;
+    payload.set(entryId, String(data.get(key) || "").trim());
+  });
+
+  if (window.location.protocol === "file:") {
+    try {
+      localStorage.setItem(tivoroAmbassadorChallengeGoogleForm.pendingKey, payload.toString());
+    } catch (error) {
+      console.warn("Tivoro ambassador challenge lead could not be saved for later submission.", error);
+    }
+    return false;
+  }
+
+  try {
+    await fetch(tivoroAmbassadorChallengeGoogleForm.endpoint, {
+      method: "POST",
+      mode: "no-cors",
+      body: payload,
+    });
+    return true;
+  } catch (error) {
+    console.warn("Tivoro ambassador challenge Google Form submission failed", error);
+    return false;
+  }
+}
+
+function submitPendingAmbassadorChallengeGoogleForm() {
+  if (!tivoroAmbassadorChallengeGoogleForm.endpoint || window.location.protocol === "file:") return;
+  const pendingPayload = localStorage.getItem(tivoroAmbassadorChallengeGoogleForm.pendingKey);
+  if (!pendingPayload) return;
+
+  fetch(tivoroAmbassadorChallengeGoogleForm.endpoint, {
+    method: "POST",
+    mode: "no-cors",
+    body: new URLSearchParams(pendingPayload),
+  })
+    .then(() => localStorage.removeItem(tivoroAmbassadorChallengeGoogleForm.pendingKey))
+    .catch((error) => {
+      console.warn("Pending Tivoro ambassador challenge Google Form submission failed", error);
     });
 }
 
@@ -1846,7 +2036,7 @@ function renderBusinessMapperResult(match, alternatives, needsMoreDetail) {
       <strong>${match.confidence}% match</strong>
       <strong>${businessSampleData[match.category]?.conversion || "Enquiry flow"}</strong>
     </div>
-    <p class="business-price-sync-note">Recommended website features are selected in the Price Builder. You can add or remove services before sending the estimate.</p>
+    <p class="business-price-sync-note">Recommended website features are selected in the Price Builder. Tivoro can share matching client websites or upcoming project examples after reviewing your requirement.</p>
     ${alternatives.length ? `<div class="course-alternatives"><span>Also suitable</span>${alternatives.map((item) => `<button type="button" data-business-alt="${item.category}">${item.category}</button>`).join("")}</div>` : ""}
     ${recommendedPathBlock({
       title: "Your business direction is ready. Choose the next step that feels right.",
@@ -1875,9 +2065,6 @@ function matchBusinessFromText(text, preferredCategory = "") {
     return;
   }
 
-  if (sampleCategory) sampleCategory.value = best.category;
-  if (sampleBudget) sampleBudget.value = best.budget;
-  renderBusinessSample();
   applyWebsiteFeatureRecommendation(query, best);
   renderBusinessMapperResult({ ...best, confidence: Math.max(62, Math.min(96, best.score + 44)) }, ranked.filter((item) => item.category !== best.category).slice(0, 2), false);
 }
@@ -2491,14 +2678,26 @@ function createTivoroBot() {
   const bot = document.createElement("div");
   bot.className = "tivoro-bot";
   bot.innerHTML = `
-    <button class="tivoro-bot-toggle" type="button" aria-expanded="false">
-      <span class="tivoro-bot-icon" aria-hidden="true">AI</span>
-      <span class="tivoro-bot-copy"><strong>Tivoro AI</strong><small>Need direction?</small></span>
-      <span class="tivoro-bot-ping" aria-hidden="true"></span>
+    <button class="tivoro-bot-toggle" type="button" aria-expanded="false" aria-label="Open assistant">
+      <span class="tivoro-bot-robot" aria-hidden="true">
+        <span class="tivoro-bot-cloud"></span>
+        <span class="tivoro-bot-face">
+          <span class="tivoro-bot-eye"></span>
+          <span class="tivoro-bot-eye"></span>
+          <span class="tivoro-bot-mouth"></span>
+        </span>
+        <span class="tivoro-bot-body">
+          <span class="tivoro-bot-body-light"></span>
+        </span>
+        <span class="tivoro-bot-arm is-left"></span>
+        <span class="tivoro-bot-arm is-right"></span>
+        <span class="tivoro-bot-leg is-left"></span>
+        <span class="tivoro-bot-leg is-right"></span>
+      </span>
     </button>
-    <section class="tivoro-bot-panel" hidden aria-label="Tivoro AI assistant">
+    <section class="tivoro-bot-panel" hidden aria-label="Assistant">
       <div class="tivoro-bot-head">
-        <div><span>Tivoro AI Guide</span><strong>Start with AI, then explore only what fits.</strong></div>
+        <div><span>Quick Help</span><strong>Tell me what you need. I will guide you to the right path.</strong></div>
         <button type="button" aria-label="Close Tivoro AI">X</button>
       </div>
       <div class="tivoro-bot-messages" aria-live="polite"></div>
@@ -2519,6 +2718,62 @@ function createTivoroBot() {
   const quick = bot.querySelector(".tivoro-bot-quick");
   const form = bot.querySelector(".tivoro-bot-form");
   const input = bot.querySelector(".tivoro-bot-form input");
+  const motionQuery = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+
+  if (!motionQuery?.matches) {
+    let lastScrollY = window.scrollY;
+    let targetY = 0;
+    let currentY = 0;
+    let targetTilt = 0;
+    let currentTilt = 0;
+    let followFrame = 0;
+
+    const renderScrollFollow = () => {
+      currentY += (targetY - currentY) * 0.12;
+      currentTilt += (targetTilt - currentTilt) * 0.14;
+      bot.style.setProperty("--tivoro-bot-follow-y", `${currentY.toFixed(2)}px`);
+      bot.style.setProperty("--tivoro-bot-tilt", `${currentTilt.toFixed(2)}deg`);
+
+      if (Math.abs(targetY - currentY) > 0.15 || Math.abs(targetTilt - currentTilt) > 0.08) {
+        followFrame = window.requestAnimationFrame(renderScrollFollow);
+      } else {
+        followFrame = 0;
+      }
+    };
+
+    const startScrollFollow = () => {
+      if (!followFrame) followFrame = window.requestAnimationFrame(renderScrollFollow);
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (bot.classList.contains("is-open")) return;
+        const delta = window.scrollY - lastScrollY;
+        lastScrollY = window.scrollY;
+        targetY = Math.max(-18, Math.min(18, delta * 0.35));
+        targetTilt = Math.max(-5, Math.min(5, delta * 0.08));
+        startScrollFollow();
+        window.clearTimeout(bot.scrollFollowTimer);
+        bot.scrollFollowTimer = window.setTimeout(() => {
+          targetY = 0;
+          targetTilt = 0;
+          startScrollFollow();
+        }, 160);
+      },
+      { passive: true }
+    );
+
+    const mascotMoods = ["is-working", "is-excited", "is-dancing"];
+    let moodIndex = 0;
+    window.setInterval(() => {
+      if (bot.classList.contains("is-open")) return;
+      bot.classList.remove(...mascotMoods);
+      bot.classList.add(mascotMoods[moodIndex % mascotMoods.length]);
+      moodIndex += 1;
+      window.setTimeout(() => bot.classList.remove(...mascotMoods), 2400);
+    }, 6800);
+  }
 
   function addMessage(text, type = "bot") {
     const message = document.createElement("div");
@@ -2686,6 +2941,7 @@ async function renderAmbassadorResult(data) {
     result: title,
     ...formDataToObject(data),
   });
+  submitAmbassadorChallengeToGoogleForm(data);
 }
 
 function selectedRoleSkills() {
@@ -3175,6 +3431,7 @@ document.addEventListener("click", (event) => {
   ripple.addEventListener("animationend", () => ripple.remove(), { once: true });
 });
 
+initTivoroMotion();
 renderFinderOptions();
 renderBuilderSkills();
 renderBuilderPreview();
@@ -3188,6 +3445,7 @@ submitPendingBookingGoogleForm();
 submitPendingParentCourseGoogleForm();
 submitPendingStudentCourseGoogleForm();
 submitPendingCollegeCareerGoogleForm();
+submitPendingAmbassadorChallengeGoogleForm();
 
 bookingForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
