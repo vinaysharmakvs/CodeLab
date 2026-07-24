@@ -60,10 +60,50 @@ const profileSections = document.querySelectorAll("[data-profile-section]");
 const profileNavLinks = document.querySelectorAll("[data-profile-nav]");
 const profileTitle = document.querySelector("[data-profile-title]");
 const profileText = document.querySelector("[data-profile-text]");
+const growthTabs = document.querySelectorAll("[data-growth-tab]");
+const growthConsoleLabel = document.querySelector("[data-growth-console-label]");
+const growthConsoleScore = document.querySelector("[data-growth-console-score]");
+const growthConsoleCopy = document.querySelector("[data-growth-console-copy]");
+const growthConsoleTags = document.querySelector("[data-growth-console-tags]");
+const growthSlider = document.querySelector("[data-growth-slider]");
+const growthSliderTrack = document.querySelector("[data-growth-slider-track]");
+const growthSliderPrev = document.querySelector("[data-growth-slider-prev]");
+const growthSliderNext = document.querySelector("[data-growth-slider-next]");
+const growthSliderDots = document.querySelector("[data-growth-slider-dots]");
 const whatsappNumber = "918826758881";
 const profileStorageKey = "tivoroProfile";
 const profileQueryKey = "profile";
 let businessMapperTimer = null;
+const growthConsoleData = {
+  visibility: {
+    label: "Visibility score",
+    score: "72%",
+    bars: ["38%", "72%", "91%"],
+    copy: "SEO pages, Google profile signals and clear service positioning make the business easier to discover.",
+    tags: ["SEO map", "Local pages", "Search intent"],
+  },
+  trust: {
+    label: "Trust score",
+    score: "84%",
+    bars: ["41%", "84%", "94%"],
+    copy: "Design, proof sections, reviews, FAQs and strong mobile presentation help visitors believe faster.",
+    tags: ["Reviews", "Proof blocks", "Mobile trust"],
+  },
+  leads: {
+    label: "Lead readiness",
+    score: "79%",
+    bars: ["26%", "79%", "90%"],
+    copy: "WhatsApp CTAs, enquiry forms, booking paths and follow-up prompts turn passive visitors into conversations.",
+    tags: ["WhatsApp flow", "Booking CTA", "Lead capture"],
+  },
+  automation: {
+    label: "Automation level",
+    score: "68%",
+    bars: ["12%", "68%", "86%"],
+    copy: "AI replies, CRM updates, owner alerts and repeat follow-up reduce manual work after every enquiry.",
+    tags: ["AI replies", "CRM update", "Owner alert"],
+  },
+};
 const tivoroSheetEndpoints = {
   parent: "",
   child: "",
@@ -229,11 +269,14 @@ function initTivoroMotion() {
     ".profile-hero",
     ".ai-chat-hero",
     ".ai-return-card",
+    ".growth-console-section",
     ".codelab-route-grid a",
     ".tivoro-trust-grid article",
     ".career-role-grid article",
     ".career-proof-grid article",
     ".career-ascent-steps article",
+    ".growth-slider-shell",
+    ".growth-stage-card",
     ".internship-outcome-grid article",
     ".internship-pricing-grid article",
     ".quote-home-flow article",
@@ -275,7 +318,12 @@ function initTivoroMotion() {
     ".ambassador-challenge",
     ".impact-slide",
     ".upcoming-project-card",
-    ".recommended-path-card"
+    ".recommended-path-card",
+    ".growth-engine-preview",
+    ".growth-console-card",
+    ".growth-slider-shell",
+    ".growth-stage-card",
+    ".growth-cta-section"
   ].join(","));
 
   glowTargets.forEach((element) => {
@@ -295,7 +343,7 @@ function initTivoroMotion() {
     });
   }
 
-  const countTargets = document.querySelectorAll(".web-stats-row strong, .speed-grid strong, .career-signal-grid strong");
+  const countTargets = document.querySelectorAll(".web-stats-row strong, .speed-grid strong, .career-signal-grid strong, .growth-metrics strong");
   countTargets.forEach((element) => {
     const raw = element.textContent.trim();
     const match = raw.match(/^(\d+)(.*)$/);
@@ -2675,6 +2723,7 @@ function guidedRecommendation(type, data) {
 }
 
 function createTivoroBot() {
+  const assistantWhatsappText = "Hello Tivoro, I want help choosing the right Tivoro AI path.";
   const bot = document.createElement("div");
   bot.className = "tivoro-bot";
   bot.innerHTML = `
@@ -2706,7 +2755,7 @@ function createTivoroBot() {
         <input type="text" placeholder="Ask: parent, student or business..." aria-label="Ask Tivoro AI a question" />
         <button type="submit">Ask</button>
       </form>
-      <a class="tivoro-bot-whatsapp" href="https://wa.me/${whatsappNumber}?text=Hello%20Tivoro%2C%20I%20want%20help%20choosing%20the%20right%20Tivoro%20AI%20path." target="_blank" rel="noopener noreferrer">Talk to Tivoro on WhatsApp</a>
+      <a class="tivoro-bot-whatsapp" href="https://wa.me/${whatsappNumber}?text=${encodeURIComponent(assistantWhatsappText)}" target="_blank" rel="noopener noreferrer">Talk on WhatsApp</a>
     </section>
   `;
   document.body.appendChild(bot);
@@ -2844,7 +2893,9 @@ function createTivoroBot() {
     }, 3600);
   }
 
-  addMessage("Hi, I am Tivoro AI. I can help you choose the right path without browsing the full website.");
+  addMessage(
+    "Hi, I am Tivoro AI. I can help you choose the right path without browsing the full website."
+  );
 
   tivoroBotQuickQuestions.forEach((question) => {
     const button = document.createElement("button");
@@ -3056,6 +3107,89 @@ function renderRoleMatcherResult(data) {
 menuButton?.addEventListener("click", () => {
   setMenu(mobileMenu.hidden);
 });
+
+function renderGrowthConsole(key = "visibility") {
+  const data = growthConsoleData[key] || growthConsoleData.visibility;
+  if (!growthConsoleLabel || !growthConsoleScore || !growthConsoleCopy || !growthConsoleTags) return;
+  growthConsoleLabel.textContent = data.label;
+  growthConsoleScore.textContent = data.score;
+  growthConsoleCopy.textContent = data.copy;
+  growthConsoleTags.innerHTML = data.tags.map((tag) => `<span>${tag}</span>`).join("");
+  document.querySelectorAll(".console-bars span").forEach((bar, index) => {
+    bar.style.setProperty("--bar", data.bars[index] || "50%");
+  });
+}
+
+function initGrowthStageSlider() {
+  if (!growthSlider || !growthSliderTrack || !growthSliderDots) return;
+  const cards = Array.from(growthSliderTrack.querySelectorAll(".growth-stage-card"));
+  if (!cards.length) return;
+
+  let activeIndex = 0;
+  let ticking = false;
+
+  const dots = cards.map((card, index) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.setAttribute("aria-label", `Show stage ${index + 1}`);
+    dot.addEventListener("click", () => setActiveStage(index));
+    growthSliderDots.append(dot);
+    card.setAttribute("aria-label", `Growth stage ${index + 1} of ${cards.length}`);
+    return dot;
+  });
+
+  const updateDots = () => {
+    dots.forEach((dot, index) => {
+      const isActive = index === activeIndex;
+      dot.classList.toggle("is-active", isActive);
+      dot.setAttribute("aria-current", isActive ? "true" : "false");
+    });
+  };
+
+  const setActiveStage = (nextIndex, shouldScroll = true) => {
+    activeIndex = (nextIndex + cards.length) % cards.length;
+    updateDots();
+    if (!shouldScroll) return;
+    const target = cards[activeIndex];
+    growthSliderTrack.scrollTo({
+      left: target.offsetLeft - growthSliderTrack.offsetLeft,
+      behavior: "smooth",
+    });
+  };
+
+  const updateFromScroll = () => {
+    ticking = false;
+    const trackLeft = growthSliderTrack.getBoundingClientRect().left;
+    const closestIndex = cards.reduce((closest, card, index) => {
+      const distance = Math.abs(card.getBoundingClientRect().left - trackLeft);
+      return distance < closest.distance ? { index, distance } : closest;
+    }, { index: activeIndex, distance: Number.POSITIVE_INFINITY }).index;
+    if (closestIndex !== activeIndex) {
+      activeIndex = closestIndex;
+      updateDots();
+    }
+  };
+
+  growthSliderPrev?.addEventListener("click", () => setActiveStage(activeIndex - 1));
+  growthSliderNext?.addEventListener("click", () => setActiveStage(activeIndex + 1));
+  growthSliderTrack.addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(updateFromScroll);
+  }, { passive: true });
+
+  setActiveStage(0, false);
+}
+
+growthTabs.forEach((button) => {
+  button.addEventListener("click", () => {
+    growthTabs.forEach((item) => item.classList.toggle("is-active", item === button));
+    renderGrowthConsole(button.dataset.growthTab);
+  });
+});
+
+renderGrowthConsole("visibility");
+initGrowthStageSlider();
 
 mobileMenu?.addEventListener("click", (event) => {
   if (event.target.matches("a")) setMenu(false);
