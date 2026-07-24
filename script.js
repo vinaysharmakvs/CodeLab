@@ -2831,7 +2831,17 @@ function createTivoroBot() {
     panel.hidden = !open;
     toggle.setAttribute("aria-expanded", String(open));
     bot.classList.toggle("is-open", open);
+    bot.classList.remove("is-docked");
+    scheduleBotDock();
     if (open) input.focus({ preventScroll: true });
+  }
+
+  function scheduleBotDock() {
+    window.clearTimeout(bot.dockTimer);
+    if (bot.classList.contains("is-open")) return;
+    bot.dockTimer = window.setTimeout(() => {
+      if (!bot.classList.contains("is-open")) bot.classList.add("is-docked");
+    }, 3600);
   }
 
   addMessage("Hi, I am Tivoro AI. I can help you choose the right path without browsing the full website.");
@@ -2844,8 +2854,30 @@ function createTivoroBot() {
     quick.appendChild(button);
   });
 
-  toggle.addEventListener("click", () => setBotOpen(panel.hidden));
+  scheduleBotDock();
+
+  let wasDockedOnPointerDown = false;
+
+  toggle.addEventListener("pointerdown", () => {
+    wasDockedOnPointerDown = bot.classList.contains("is-docked");
+  });
+
+  toggle.addEventListener("click", () => {
+    if (wasDockedOnPointerDown || bot.classList.contains("is-docked")) {
+      wasDockedOnPointerDown = false;
+      bot.classList.remove("is-docked");
+      scheduleBotDock();
+      return;
+    }
+    wasDockedOnPointerDown = false;
+    setBotOpen(panel.hidden);
+  });
   closeButton.addEventListener("click", () => setBotOpen(false));
+  bot.addEventListener("mouseleave", scheduleBotDock);
+  bot.addEventListener("focusin", () => {
+    if (!wasDockedOnPointerDown) bot.classList.remove("is-docked");
+  });
+  bot.addEventListener("focusout", scheduleBotDock);
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     answerQuestion(input.value);
