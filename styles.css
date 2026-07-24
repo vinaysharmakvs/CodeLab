@@ -5790,10 +5790,31 @@ code {
     padding: 22px 16px;
   }
 
-  .tivoro-trust-grid,
   .how-it-works-grid,
   .business-visual-grid {
     grid-template-columns: 1fr;
+  }
+
+  .tivoro-trust-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .tivoro-trust-grid article {
+    min-height: 108px;
+    border-radius: 18px;
+    padding: 14px 12px;
+    align-content: center;
+  }
+
+  .tivoro-trust-grid strong {
+    font-size: 0.95rem;
+    line-height: 1.1;
+  }
+
+  .tivoro-trust-grid span {
+    font-size: 0.78rem;
+    line-height: 1.35;
   }
 
   .business-visual-grid img {
@@ -7224,7 +7245,7 @@ code {
 
 .ambassador-result-head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(130px, 0.28fr);
+  grid-template-columns: minmax(0, 1fr) minmax(150px, 0.3fr);
   gap: 18px;
   align-items: center;
   padding: 22px;
@@ -7249,8 +7270,11 @@ code {
 
 .ambassador-score-card {
   display: grid;
+  gap: 6px;
   place-items: center;
+  min-width: 150px;
   min-height: 128px;
+  padding: 18px 14px;
   border: 1px solid rgba(54, 124, 255, 0.18);
   border-radius: 20px;
   background:
@@ -7261,8 +7285,9 @@ code {
 
 .ambassador-score-card strong {
   color: var(--white);
-  font-size: clamp(2.4rem, 6vw, 4.2rem);
-  line-height: 0.95;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  line-height: 1.05;
+  white-space: nowrap;
 }
 
 .ambassador-score-card small {
@@ -7270,6 +7295,8 @@ code {
   font-size: 0.74rem;
   font-weight: 950;
   letter-spacing: 0.06em;
+  line-height: 1.25;
+  text-align: center;
   text-transform: uppercase;
 }
 
@@ -14179,6 +14206,8 @@ body:not(.profile-filter-ready) [data-profile-section] {
   .ambassador-score-card,
   .tivoro-career-page #ambassador-challenge .ambassador-score-card {
     min-height: 104px;
+    min-width: 0;
+    padding: 18px 12px;
   }
 }
 
@@ -15783,5 +15812,29 @@ body:not(.profile-filter-ready) [data-profile-section] {
 
   .daily-dabba-visual img {
     width: min(135px, 62%);
+  }
+}
+
+@media (max-width: 760px) {
+  .codelab-home-page .tivoro-trust-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .codelab-home-page .tivoro-trust-grid article {
+    min-height: 108px;
+    border-radius: 18px;
+    padding: 14px 12px;
+    align-content: center;
+  }
+
+  .codelab-home-page .tivoro-trust-grid strong {
+    font-size: 0.95rem;
+    line-height: 1.1;
+  }
+
+  .codelab-home-page .tivoro-trust-grid span {
+    font-size: 0.78rem;
+    line-height: 1.35;
   }
 }
