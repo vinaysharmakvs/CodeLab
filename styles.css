@@ -4880,79 +4880,324 @@ code {
 }
 
 .tivoro-bot {
+  --tivoro-bot-follow-x: 0px;
+  --tivoro-bot-follow-y: 0px;
+  --tivoro-bot-tilt: 0deg;
   position: fixed;
   left: 18px;
   bottom: 18px;
   z-index: 92;
   color: var(--ink);
+  filter: drop-shadow(0 18px 34px rgba(0, 229, 255, 0.2));
+  animation: tivoroRobotFloat 4.6s ease-in-out infinite;
 }
 
 .tivoro-bot-toggle {
   position: relative;
-  display: grid;
-  grid-template-columns: auto auto auto;
-  gap: 8px;
-  align-items: center;
-  min-height: 52px;
-  padding: 7px 13px 7px 7px;
-  color: #132238;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 999px;
-  background:
-    radial-gradient(circle at 90% 8%, rgba(255, 255, 255, 0.42), transparent 26%),
-    linear-gradient(135deg, #42d9b5, #ffd45f);
-  box-shadow: 0 18px 44px rgba(54, 124, 255, 0.18), 0 0 0 8px rgba(66, 217, 181, 0.1);
+  display: block;
+  width: 88px;
+  min-height: 104px;
+  padding: 0;
+  color: #ffffff;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   cursor: pointer;
   font-weight: 950;
-  transition: transform 180ms ease, box-shadow 180ms ease;
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.tivoro-bot-toggle::after {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  bottom: -7px;
+  height: 11px;
+  content: "";
+  border-radius: 999px;
+  background: rgba(19, 34, 56, 0.22);
+  filter: blur(9px);
+  transform: scaleX(0.74);
+  animation: tivoroRobotShadow 4.6s ease-in-out infinite;
 }
 
 .tivoro-bot-toggle:hover {
   transform: translateY(-2px);
-  box-shadow: 0 24px 62px rgba(54, 124, 255, 0.24), 0 0 0 10px rgba(255, 212, 95, 0.14);
+  filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.48));
 }
 
-.tivoro-bot-icon {
+.tivoro-bot-robot {
   position: relative;
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  overflow: hidden;
-  color: #ffd45f;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.26), transparent 32%),
-    #132238;
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.08), 0 0 24px rgba(19, 34, 56, 0.26);
-  font-size: 0.78rem;
-  font-weight: 950;
+  display: block;
+  width: 88px;
+  height: 104px;
+  animation: tivoroRobotNod 4.2s ease-in-out infinite;
+  transform-origin: 50% 64%;
 }
 
-.tivoro-bot-icon::before,
-.tivoro-bot-icon::after {
+.tivoro-bot-cloud {
+  position: absolute;
+  top: 0;
+  left: 7px;
+  width: 74px;
+  height: 54px;
+  border-radius: 28px 31px 21px 21px;
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.36), transparent 19%),
+    radial-gradient(circle at 77% 15%, rgba(182, 255, 56, 0.24), transparent 22%),
+    linear-gradient(145deg, #00e5ff 0%, #3977ff 42%, #7c3cff 100%);
+  box-shadow:
+    -11px 13px 0 -2px #236bff,
+    11px 12px 0 -2px #6938f2,
+    0 5px 0 #081437,
+    0 0 18px rgba(0, 229, 255, 0.28),
+    inset 0 -10px 15px rgba(8, 20, 55, 0.36),
+    inset 0 7px 12px rgba(255, 255, 255, 0.22);
+}
+
+.tivoro-bot-cloud::before,
+.tivoro-bot-cloud::after {
   position: absolute;
   content: "";
   border-radius: 50%;
+  background: inherit;
 }
 
-.tivoro-bot-icon::before {
-  inset: 7px;
-  border: 1px solid rgba(66, 217, 181, 0.78);
+.tivoro-bot-cloud::before {
+  top: -9px;
+  left: 10px;
+  width: 36px;
+  height: 36px;
+  box-shadow: 25px 1px 0 -4px #29d5ff;
 }
 
-.tivoro-bot-icon::after {
-  top: 8px;
-  right: 8px;
-  width: 6px;
-  height: 6px;
-  background: #42d9b5;
-  box-shadow: 0 0 12px #42d9b5;
+.tivoro-bot-cloud::after {
+  top: 10px;
+  right: -6px;
+  width: 33px;
+  height: 34px;
+}
+
+.tivoro-bot-face {
+  position: absolute;
+  top: 28px;
+  left: 21px;
+  display: grid;
+  grid-template-columns: 11px 16px;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 50px;
+  height: 34px;
+  border: 2px solid #071129;
+  border-radius: 9px;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(142, 244, 255, 0.11), transparent 26%),
+    linear-gradient(145deg, #171b52, #070b24);
+  box-shadow: inset 0 -7px 10px rgba(0, 0, 0, 0.24), 0 4px 0 rgba(7, 17, 41, 0.54), 0 0 18px rgba(0, 229, 255, 0.22);
+  z-index: 2;
+  overflow: hidden;
+}
+
+.tivoro-bot-face::before,
+.tivoro-bot-face::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+}
+
+.tivoro-bot-face::before {
+  inset: 5px 6px auto;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.9), transparent);
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.tivoro-bot-face::after {
+  right: 7px;
+  bottom: 5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #b6ff38;
+  box-shadow: 0 0 9px rgba(182, 255, 56, 0.78);
+  opacity: 0.72;
+}
+
+.tivoro-bot-eye {
+  position: relative;
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  border-right: 4px solid #b6ff38;
+  border-bottom: 4px solid #b6ff38;
+  transform: rotate(-45deg);
+  filter: drop-shadow(0 0 8px rgba(182, 255, 56, 0.78));
+  animation: tivoroRobotEyeGlow 2.8s ease-in-out infinite;
+}
+
+.tivoro-bot-eye + .tivoro-bot-eye {
+  width: 15px;
+  height: 4px;
+  border: 0;
+  border-radius: 999px;
+  background: #00e5ff;
+  transform: none;
+}
+
+.tivoro-bot-mouth {
+  display: none;
+}
+
+.tivoro-bot-body {
+  position: absolute;
+  top: 64px;
+  left: 28px;
+  width: 33px;
+  height: 29px;
+  border: 2px solid #081437;
+  border-radius: 10px 10px 12px 12px;
+  background:
+    radial-gradient(circle at 58% 42%, rgba(255, 255, 255, 0.3), transparent 18%),
+    radial-gradient(circle at 82% 24%, rgba(182, 255, 56, 0.28), transparent 18%),
+    linear-gradient(145deg, #00e5ff, #4a6cff 56%, #7c3cff);
+  box-shadow: inset 0 -9px 12px rgba(8, 20, 55, 0.32), 0 0 18px rgba(0, 229, 255, 0.18);
+  z-index: 1;
+}
+
+.tivoro-bot-body-light {
+  position: absolute;
+  top: 9px;
+  left: 11px;
+  width: 12px;
+  height: 9px;
+}
+
+.tivoro-bot-body-light::before {
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 7px;
+  height: 7px;
+  content: "";
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  border-radius: 2px;
+  transform: rotate(-45deg);
+}
+
+.tivoro-bot-body-light::after {
+  position: absolute;
+  right: -4px;
+  top: 4px;
+  width: 10px;
+  height: 2px;
+  content: "";
+  border-radius: 999px;
+  background: #b6ff38;
+  box-shadow: 0 0 10px rgba(182, 255, 56, 0.78);
+}
+
+.tivoro-bot-arm,
+.tivoro-bot-leg {
+  position: absolute;
+  background: linear-gradient(145deg, #00d8ff, #5467ff 54%, #7c3cff);
+  border: 2px solid #081437;
+  box-shadow: inset 0 -5px 8px rgba(8, 20, 55, 0.28);
+}
+
+.tivoro-bot-arm {
+  top: 66px;
+  width: 13px;
+  height: 27px;
+  border-radius: 999px;
+}
+
+.tivoro-bot-arm.is-left {
+  left: 19px;
+  transform: rotate(16deg);
+}
+
+.tivoro-bot-arm.is-right {
+  right: 18px;
+  transform: rotate(-18deg);
+  transform-origin: 50% 12%;
+  animation: tivoroRobotWave 2.9s ease-in-out infinite;
+}
+
+.tivoro-bot-leg {
+  bottom: 0;
+  width: 13px;
+  height: 18px;
+  border-radius: 7px 7px 8px 8px;
+}
+
+.tivoro-bot-leg.is-left {
+  left: 33px;
+}
+
+.tivoro-bot-leg.is-right {
+  right: 31px;
+}
+
+.tivoro-bot.is-working .tivoro-bot-face::before {
+  animation: tivoroRobotScan 1.1s ease-in-out 2;
+}
+
+.tivoro-bot.is-working .tivoro-bot-eye {
+  animation: tivoroRobotLookLeft 1.2s ease-in-out 2;
+}
+
+.tivoro-bot.is-excited {
+  filter: drop-shadow(0 20px 38px rgba(0, 229, 255, 0.34));
+}
+
+.tivoro-bot.is-excited .tivoro-bot-robot {
+  animation: tivoroRobotExcited 0.62s ease-in-out 4;
+}
+
+.tivoro-bot.is-excited .tivoro-bot-cloud {
+  box-shadow:
+    -11px 13px 0 -2px #236bff,
+    11px 12px 0 -2px #6938f2,
+    0 5px 0 #081437,
+    0 0 30px rgba(0, 229, 255, 0.45),
+    inset 0 -10px 15px rgba(8, 20, 55, 0.36),
+    inset 0 7px 12px rgba(255, 255, 255, 0.24);
+}
+
+.tivoro-bot.is-dancing .tivoro-bot-robot {
+  animation: tivoroRobotDance 0.74s ease-in-out 4;
+}
+
+.tivoro-bot.is-dancing .tivoro-bot-arm.is-left {
+  animation: tivoroRobotLeftDance 0.74s ease-in-out 4;
+}
+
+.tivoro-bot.is-dancing .tivoro-bot-arm.is-right {
+  animation: tivoroRobotRightDance 0.74s ease-in-out 4;
+}
+
+.tivoro-bot.is-dancing .tivoro-bot-leg.is-left {
+  animation: tivoroRobotStepLeft 0.74s ease-in-out 4;
+}
+
+.tivoro-bot.is-dancing .tivoro-bot-leg.is-right {
+  animation: tivoroRobotStepRight 0.74s ease-in-out 4;
 }
 
 .tivoro-bot-copy {
-  display: grid;
-  gap: 1px;
+  display: none;
+  gap: 2px;
+  margin-bottom: 8px;
+  padding: 8px 10px;
+  border: 1px solid rgba(142, 244, 255, 0.16);
+  border-radius: 14px;
+  background: rgba(16, 25, 67, 0.52);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .tivoro-bot-copy strong,
@@ -4963,16 +5208,18 @@ code {
 }
 
 .tivoro-bot-copy strong {
-  font-size: 0.95rem;
+  font-size: 0.98rem;
 }
 
 .tivoro-bot-copy small {
-  font-size: 0.66rem;
+  color: #8ef4ff;
+  font-size: 0.68rem;
   font-weight: 900;
-  opacity: 0.78;
+  opacity: 0.9;
 }
 
 .tivoro-bot-ping {
+  display: none;
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -4985,6 +5232,83 @@ code {
   0% { box-shadow: 0 0 0 0 rgba(31, 174, 98, 0.55); }
   70% { box-shadow: 0 0 0 10px rgba(31, 174, 98, 0); }
   100% { box-shadow: 0 0 0 0 rgba(31, 174, 98, 0); }
+}
+
+@keyframes tivoroRobotFloat {
+  0%, 100% { transform: translate3d(var(--tivoro-bot-follow-x), var(--tivoro-bot-follow-y), 0) rotate(var(--tivoro-bot-tilt)); }
+  35% { transform: translate3d(calc(var(--tivoro-bot-follow-x) + 5px), calc(var(--tivoro-bot-follow-y) - 6px), 0) rotate(calc(var(--tivoro-bot-tilt) - 1deg)); }
+  70% { transform: translate3d(calc(var(--tivoro-bot-follow-x) - 3px), calc(var(--tivoro-bot-follow-y) - 3px), 0) rotate(calc(var(--tivoro-bot-tilt) + 1deg)); }
+}
+
+@keyframes tivoroRobotShadow {
+  0%, 100% { opacity: 0.42; transform: scaleX(0.72); }
+  35% { opacity: 0.22; transform: scaleX(0.52); }
+  70% { opacity: 0.32; transform: scaleX(0.62); }
+}
+
+@keyframes tivoroRobotNod {
+  0%, 100% { transform: rotate(0deg); }
+  45% { transform: rotate(-4deg); }
+  72% { transform: rotate(3deg); }
+}
+
+@keyframes tivoroRobotScan {
+  0% { opacity: 0; transform: translateY(-6px); }
+  18%, 82% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(22px); }
+}
+
+@keyframes tivoroRobotLookLeft {
+  0%, 100% { translate: 0 0; filter: drop-shadow(0 0 6px rgba(182, 255, 56, 0.64)); }
+  35% { translate: -3px 0; filter: drop-shadow(0 0 11px rgba(0, 229, 255, 0.92)); }
+  70% { translate: 3px 0; }
+}
+
+@keyframes tivoroRobotExcited {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  28% { transform: translateY(-8px) rotate(-5deg) scale(1.04); }
+  55% { transform: translateY(1px) rotate(5deg) scale(0.99); }
+  78% { transform: translateY(-4px) rotate(-2deg) scale(1.02); }
+}
+
+@keyframes tivoroRobotDance {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-5px) rotate(-7deg); }
+  50% { transform: translateX(2px) translateY(-3px) rotate(5deg); }
+  75% { transform: translateX(5px) rotate(7deg); }
+}
+
+@keyframes tivoroRobotWave {
+  0%, 100% { transform: rotate(-18deg) translateY(0); }
+  35% { transform: rotate(-38deg) translateY(-2px); }
+  62% { transform: rotate(-10deg) translateY(1px); }
+}
+
+@keyframes tivoroRobotLeftDance {
+  0%, 100% { transform: rotate(16deg); }
+  35% { transform: rotate(42deg) translateY(-2px); }
+  70% { transform: rotate(-4deg); }
+}
+
+@keyframes tivoroRobotRightDance {
+  0%, 100% { transform: rotate(-18deg); }
+  35% { transform: rotate(-4deg); }
+  70% { transform: rotate(-42deg) translateY(-2px); }
+}
+
+@keyframes tivoroRobotStepLeft {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  42% { transform: translateY(-4px) rotate(-8deg); }
+}
+
+@keyframes tivoroRobotStepRight {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  62% { transform: translateY(-4px) rotate(8deg); }
+}
+
+@keyframes tivoroRobotEyeGlow {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(182, 255, 56, 0.64)); opacity: 0.88; }
+  50% { filter: drop-shadow(0 0 13px rgba(0, 229, 255, 0.95)); opacity: 1; }
 }
 
 .tivoro-bot-panel {
@@ -9449,6 +9773,23 @@ h1 {
     max-width: calc(100vw - 24px);
   }
 
+  .tivoro-bot:not(.is-open) {
+    right: auto;
+    width: auto;
+  }
+
+  .tivoro-bot:not(.is-open) .tivoro-bot-toggle {
+    width: 82px;
+    min-height: 100px;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .tivoro-bot:not(.is-open) .tivoro-bot-copy,
+  .tivoro-bot:not(.is-open) .tivoro-bot-ping {
+    display: none;
+  }
+
   .tivoro-bot-panel {
     width: calc(100vw - 24px);
     max-height: calc(100vh - 110px);
@@ -9477,11 +9818,10 @@ h1 {
   }
 
   .business-page .tivoro-bot:not(.is-open) .tivoro-bot-toggle {
-    grid-template-columns: auto;
-    width: 54px;
-    min-height: 54px;
-    padding: 8px;
-    border-radius: 50%;
+    width: 82px;
+    min-height: 100px;
+    padding: 0;
+    border-radius: 0;
   }
 
   .business-page .tivoro-bot:not(.is-open) .tivoro-bot-copy,
@@ -11975,12 +12315,10 @@ body:not(.profile-filter-ready) [data-profile-section] {
 }
 
 .tivoro-premium-page .tivoro-bot-toggle {
-  color: #101c34;
-  border-color: rgba(255, 255, 255, 0.54);
-  background:
-    radial-gradient(circle at 90% 12%, rgba(255, 255, 255, 0.42), transparent 28%),
-    linear-gradient(135deg, var(--mint), var(--yellow));
-  box-shadow: 0 20px 52px rgba(23, 70, 159, 0.2), 0 0 0 8px rgba(66, 217, 181, 0.12);
+  color: #ffffff;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .tivoro-premium-page .tivoro-bot-copy strong,
@@ -11988,9 +12326,8 @@ body:not(.profile-filter-ready) [data-profile-section] {
   color: #101c34;
 }
 
-.tivoro-premium-page .tivoro-bot-icon {
-  color: #ffd45f;
-  background: #101c34;
+.tivoro-premium-page .tivoro-bot-robot {
+  background: transparent;
 }
 
 @media (max-width: 700px) {
@@ -14398,6 +14735,8 @@ body:not(.profile-filter-ready) [data-profile-section] {
 }
 
 .impact-slide-copy a {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -14434,7 +14773,7 @@ body:not(.profile-filter-ready) [data-profile-section] {
     var(--impact-panel-bg, rgba(255, 255, 255, 0.62));
   box-shadow: 0 18px 54px rgba(15, 45, 86, 0.12);
   backdrop-filter: blur(18px);
-  min-height: 220px
+  min-height: 220px;
   padding: 20px;
   text-align: center;
   transition: transform 0.32s ease;
@@ -15761,6 +16100,8 @@ body:not(.profile-filter-ready) [data-profile-section] {
 }
 
 .upcoming-project-copy b {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   width: fit-content;
   align-items: center;
@@ -15836,5 +16177,234 @@ body:not(.profile-filter-ready) [data-profile-section] {
   .codelab-home-page .tivoro-trust-grid span {
     font-size: 0.78rem;
     line-height: 1.35;
+  }
+}
+
+/* Tivoro Motion System */
+.tivoro-page-loader {
+  position: fixed;
+  z-index: 999;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 36% 28%, rgba(66, 217, 181, 0.22), transparent 22rem),
+    radial-gradient(circle at 70% 32%, rgba(125, 92, 255, 0.24), transparent 24rem),
+    linear-gradient(135deg, #071326, #111a35 52%, #071326);
+  opacity: 1;
+  transition: opacity 420ms ease, visibility 420ms ease;
+}
+
+.tivoro-page-loader.is-done {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.tivoro-page-loader div {
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  color: #ffffff;
+  transform: translateY(0);
+  animation: tivoroLoaderFloat 900ms ease-in-out infinite alternate;
+}
+
+.tivoro-page-loader span {
+  display: grid;
+  width: 74px;
+  height: 74px;
+  place-items: center;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 24% 18%, rgba(255, 255, 255, 0.4), transparent 35%),
+    linear-gradient(135deg, var(--mint), var(--blue), var(--purple));
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 950;
+  box-shadow: 0 24px 70px rgba(66, 217, 181, 0.24), 0 0 0 10px rgba(255, 255, 255, 0.06);
+}
+
+.tivoro-page-loader strong {
+  font-size: 1.35rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tivoro-page-loader small {
+  color: rgba(255, 255, 255, 0.68);
+  font-weight: 850;
+}
+
+@keyframes tivoroLoaderFloat {
+  from { transform: translateY(5px) scale(0.985); }
+  to { transform: translateY(-5px) scale(1.015); }
+}
+
+[data-motion-reveal] {
+  opacity: 0;
+  transform: translateY(26px) scale(0.985);
+  transition:
+    opacity 680ms ease var(--motion-delay, 0ms),
+    transform 680ms cubic-bezier(0.22, 1, 0.36, 1) var(--motion-delay, 0ms);
+}
+
+[data-motion-reveal].is-motion-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.impact-slide[data-motion-reveal],
+.upcoming-project-card[data-motion-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+.motion-pointer-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.tivoro-pointer-light {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 18%), rgba(66, 217, 181, 0.22), transparent 17rem),
+    radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 18%), rgba(255, 212, 95, 0.13), transparent 11rem);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.motion-pointer-glow:hover > .tivoro-pointer-light {
+  opacity: 1;
+}
+
+.motion-pointer-glow > *:not(.tivoro-pointer-light) {
+  position: relative;
+  z-index: 1;
+}
+
+.header-cta::after,
+.primary-button::after,
+.secondary-button::after,
+.vertical-card a::after,
+.career-role-grid article a::before,
+.upcoming-project-copy b::before,
+.impact-slide-copy a::before {
+  position: absolute;
+  inset: -40% auto -40% -70%;
+  width: 58%;
+  content: "";
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.42), transparent);
+  transform: skewX(-18deg);
+  transition: left 520ms ease;
+}
+
+.header-cta:hover::after,
+.primary-button:hover::after,
+.secondary-button:hover::after,
+.vertical-card a:hover::after,
+.career-role-grid article a:hover::before,
+.upcoming-project-card:hover .upcoming-project-copy b::before,
+.impact-slide-copy a:hover::before {
+  left: 120%;
+}
+
+.codelab-route-grid a,
+.tivoro-trust-grid article,
+.choice-pricing-grid article,
+.quote-home-flow article,
+.career-role-grid article,
+.career-ascent-steps article,
+.career-proof-grid article,
+.internship-outcome-grid article,
+.internship-pricing-grid article,
+.feature-price-grid label,
+.price-builder-steps article {
+  will-change: transform;
+}
+
+.codelab-route-grid a:hover,
+.tivoro-trust-grid article:hover,
+.choice-pricing-grid article:hover,
+.quote-home-flow article:hover,
+.career-ascent-steps article:hover,
+.career-proof-grid article:hover,
+.internship-outcome-grid article:hover,
+.internship-pricing-grid article:hover,
+.feature-price-grid label:hover,
+.price-builder-steps article:hover {
+  border-color: rgba(66, 217, 181, 0.28);
+  box-shadow: 0 26px 68px rgba(54, 124, 255, 0.14);
+  transform: translateY(-6px);
+}
+
+.codelab-ai-panel,
+.ai-chat-card,
+.career-hero-panel {
+  animation: tivoroPanelPulse 5.8s ease-in-out infinite;
+}
+
+.codelab-ai-top span,
+.sample-browser-top span,
+.course-fit-card-top span {
+  animation: tivoroDotPulse 1.8s ease-in-out infinite;
+}
+
+.codelab-ai-top span:nth-child(2),
+.sample-browser-top span:nth-child(2),
+.course-fit-card-top span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.codelab-ai-top span:nth-child(3),
+.sample-browser-top span:nth-child(3),
+.course-fit-card-top span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.codelab-ai-progress span {
+  animation: tivoroProgressBreathe 2.8s ease-in-out infinite;
+}
+
+@keyframes tivoroPanelPulse {
+  0%, 100% { box-shadow: var(--shadow); }
+  50% { box-shadow: 0 34px 92px rgba(54, 124, 255, 0.18), 0 0 0 1px rgba(66, 217, 181, 0.12); }
+}
+
+@keyframes tivoroDotPulse {
+  0%, 100% { transform: scale(1); opacity: 0.74; }
+  50% { transform: scale(1.28); opacity: 1; }
+}
+
+@keyframes tivoroProgressBreathe {
+  0%, 100% { transform: translateX(0) scaleX(1); filter: saturate(1); }
+  50% { transform: translateX(8%) scaleX(1.08); filter: saturate(1.25); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  [data-motion-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .tivoro-page-loader {
+    display: none;
+  }
+}
+
+@media (max-width: 760px), (pointer: coarse) {
+  .tivoro-pointer-light {
+    display: none;
   }
 }
