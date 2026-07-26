@@ -18,15 +18,15 @@
     </script>
     <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=20260724-tivoro-robot-restored" />
+    <link rel="stylesheet" href="styles.css?v=20260726-security" />
   </head>
   <body class="growth-partner-page ai-chat-page tivoro-premium-page">
     <header class="site-header">
       <a class="brand" href="index.html" aria-label="Tivoro home"><span class="brand-mark">T</span><span><strong>Tivoro</strong><small>Where Ideas Become Reality</small></span></a>
-      <nav class="desktop-nav" aria-label="Primary navigation"><a href="index.html">Home</a><a href="business.html">Business</a><a href="how-we-work.html">How We Work</a><a href="students.html">Students</a><a href="career.html">Career</a><a href="parents.html">Parents</a><a href="faq.html">FAQ</a></nav>
+      <nav class="desktop-nav" aria-label="Primary navigation"><a href="index.html" data-profile-nav="all">Home</a><a href="ai-growth-partner.html#chat-card" data-profile-nav="all">Tivoro AI</a><a href="about.html" data-profile-nav="shared">About</a><a href="how-we-work.html" data-profile-nav="all">How We Work</a><a href="students.html" data-profile-nav="student">Students</a><a href="parents.html" data-profile-nav="parent">Parents</a><a href="business.html" data-profile-nav="business">Business</a><div class="header-contact-menu" data-profile-nav="shared"><button type="button" aria-haspopup="true" aria-expanded="false">Contact Us</button><div class="header-contact-list" aria-label="Contact Us menu"><a href="career.html">Career</a><a href="faq.html">FAQ</a><a href="index.html#booking">Book Slot</a></div></div></nav>
       <div class="header-actions"><a class="header-cta" href="#ai-chat">Start Chat</a><button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
     </header>
-    <nav class="mobile-menu" aria-label="Mobile navigation" hidden><a href="index.html">Home</a><a href="business.html">Business</a><a href="how-we-work.html">How We Work</a><a href="students.html">Students</a><a href="career.html">Career</a><a href="parents.html">Parents</a><a href="faq.html">FAQ</a></nav>
+    <nav class="mobile-menu" aria-label="Mobile navigation" hidden><a href="index.html" data-profile-nav="all">Home</a><a href="ai-growth-partner.html#chat-card" data-profile-nav="all">Tivoro AI</a><a href="about.html" data-profile-nav="shared">About</a><a href="how-we-work.html" data-profile-nav="all">How We Work</a><a href="students.html" data-profile-nav="student">Students</a><a href="parents.html" data-profile-nav="parent">Parents</a><a href="business.html" data-profile-nav="business">Business</a><details class="mobile-contact-menu" data-profile-nav="shared"><summary>Contact Us</summary><a href="career.html">Career</a><a href="faq.html">FAQ</a><a href="index.html#booking">Book Slot</a></details></nav>
 
     <main class="ai-chat-main" id="ai-chat">
       <section class="ai-chat-hero">
@@ -95,6 +95,7 @@
           <div class="ai-result-next-actions">
             <a class="primary-button" data-ai-result-whatsapp href="https://wa.me/918826758881" target="_blank" rel="noopener noreferrer">Move to WhatsApp</a>
             <a class="secondary-button" data-ai-result-details href="index.html">Explore Programs</a>
+            <a class="secondary-button" data-ai-result-strategy href="how-we-work.html">See How We Work</a>
           </div>
         </div>
         <div class="ai-report-actions">
@@ -108,7 +109,7 @@
 
     <footer class="site-footer"><div><strong>Tivoro</strong><span>Where Ideas Become Reality for learning, careers, websites and automation.</span></div><a class="footer-email" href="mailto:tivorosupport@gmail.com">tivorosupport@gmail.com</a><a class="footer-whatsapp-icon" href="https://wa.me/918826758881" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">WhatsApp</a></footer>
     <script src="lead-config.js?v=20260621-01"></script>
-    <script src="script.js?v=20260724-tivoro-chatbot-how-work"></script>
+    <script src="script.js?v=20260726-security"></script>
     <script>
       (() => {
         const whatsappNumber = "918826758881";
@@ -164,7 +165,7 @@
               ["What is your main goal?", ["Website and trust", "More leads", "Online booking", "SEO / Google visibility", "AI chatbot"]],
               ["How advanced should the first version be?", ["Starter website", "Lead-focused website", "Automation ready", "Not sure, guide me"]],
             ],
-            features: ["Website", "WhatsApp", "SEO", "Booking", "AI chatbot"],
+            features: ["Growth Engine", "Website", "WhatsApp", "SEO", "AI chatbot"],
             current: "You want clarity before paying for website features or digital services.",
             analysis: "The smart path starts with trust and lead capture, then adds automation only where it genuinely helps.",
             path: "Start with a mobile-first website and add only the selected features your business actually needs.",
@@ -233,6 +234,12 @@
           if (/1:1|mentorship/.test(joined)) return "1:1 mentorship";
           if (/project|portfolio|Internship/.test(joined)) return "Project track";
           return "Guided roadmap";
+        }
+
+        function strategyUrl(profile) {
+          if (profile === "parent") return "how-we-work-parents.html";
+          if (profile === "student") return "how-we-work-students.html";
+          return "how-we-work.html";
         }
 
         function showChoices(items, handler) {
@@ -371,8 +378,11 @@
           const resultDetails = document.querySelector("[data-ai-result-details]");
           resultDetails.href = flow.detailsUrl;
           resultDetails.textContent = flow.detailsText;
+          const resultStrategy = document.querySelector("[data-ai-result-strategy]");
+          resultStrategy.href = strategyUrl(state.profile);
+          resultStrategy.textContent = state.profile === "business" ? "See Growth Engine" : "See How Tivoro Works";
           document.querySelector("[data-result-next-title]").textContent = "Your path is ready. Choose the next step that feels right.";
-          document.querySelector("[data-result-next-copy]").textContent = "For personal guidance, move to WhatsApp. If you want to understand the options first, explore the detailed page.";
+          document.querySelector("[data-result-next-copy]").textContent = "For personal guidance, move to WhatsApp. To understand how Tivoro works for your selected profile, open How We Work. For options, explore the detailed page.";
           report.scrollIntoView({ behavior: "smooth", block: "start" });
         }
 
