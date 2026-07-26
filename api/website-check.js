@@ -1,17 +1,4 @@
-function normalizeWebsiteUrl(value) {
-  const trimmed = String(value || "").trim();
-  if (!trimmed || /\s/.test(trimmed) || /@/.test(trimmed)) throw new Error("invalid-url");
-
-  const withProtocol = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
-  const url = new URL(withProtocol);
-  const hostname = url.hostname.toLowerCase().replace(/^www\./, "");
-  const labels = hostname.split(".");
-  const tld = labels[labels.length - 1] || "";
-  const hasValidLabels = labels.length >= 2 && labels.every((label) => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/i.test(label));
-  const hasValidTld = /^[a-z]{2,24}$/i.test(tld);
-  if (!hasValidLabels || !hasValidTld) throw new Error("invalid-url");
-  return url;
-}
+import { applyApiSecurityHeaders, fetchPublicHtml, normalizePublicWebsiteUrl, rateLimit } from "./security.js";
 
 function clamp(score) {
   return Math.max(0, Math.min(100, Math.round(score)));
@@ -219,23 +206,7 @@ function analyzeHtml(url, html, responseMs, finalUrl) {
 }
 
 async function fetchWebsite(url) {
-  const started = Date.now();
-  const response = await fetch(url.href, {
-    redirect: "follow",
-    headers: {
-      "user-agent": "Tivoro-WebsiteChecker/1.0",
-      accept: "text/html,application/xhtml+xml",
-    },
-  });
-  const contentType = response.headers.get("content-type") || "";
-  if (!response.ok) throw new Error("website-not-reachable");
-  if (!contentType.includes("text/html") && !contentType.includes("application/xhtml")) throw new Error("not-html");
-  const html = await response.text();
-  return {
-    html,
-    responseMs: Date.now() - started,
-    finalUrl: response.url || url.href,
-  };
+  return fetchPublicHtml(url, "Tivoro-WebsiteChecker/1.0");
 }
 
 async function fetchWithFallback(url) {
@@ -252,8 +223,7 @@ async function fetchWithFallback(url) {
 }
 
 export default async function handler(req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  applyApiSecurityHeaders(res);
 
   if (req.method === "OPTIONS") {
     res.status(204).end();
@@ -265,9 +235,16 @@ export default async function handler(req, res) {
     return;
   }
 
+  const rate = rateLimit(req, "website-check", { limit: 18, windowMs: 60_000 });
+  if (!rate.allowed) {
+    res.setHeader("Retry-After", String(rate.retryAfter));
+    res.status(429).json({ error: "rate-limited", message: "Too many checks. Please try again shortly." });
+    return;
+  }
+
   let url;
   try {
-    url = normalizeWebsiteUrl(req.query.url);
+    url = normalizePublicWebsiteUrl(req.query.url);
   } catch {
     res.status(400).json({ error: "invalid-url", message: "Please enter a valid website URL." });
     return;
@@ -278,9 +255,16 @@ export default async function handler(req, res) {
     res.status(200).json(analyzeHtml(url, result.html, result.responseMs, result.finalUrl));
   } catch (error) {
     const message = error instanceof Error ? error.message : "website-not-reachable";
-    res.status(502).json({
+    res.status(message === "blocked-url" ? 400 : 502).json({
       error: message,
-      message: message === "not-html" ? "This URL does not appear to return a normal HTML website." : "The website could not be reached or inspected.",
+      message:
+        message === "not-html"
+          ? "This URL does not appear to return a normal HTML website."
+          : message === "blocked-url"
+            ? "This website cannot be checked automatically."
+            : message === "response-too-large"
+              ? "This website is too large to inspect automatically."
+              : "The website could not be reached or inspected.",
     });
   }
 }
