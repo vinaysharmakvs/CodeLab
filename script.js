@@ -52,12 +52,17 @@ const mapperSelected = document.querySelector("[data-mapper-selected]");
 const roleMatcherForm = document.querySelector("[data-role-matcher]");
 const roleSkillPicker = document.querySelector(".role-skill-picker");
 const roleResult = document.querySelector("[data-role-result]");
+const rolePreviewTitle = document.querySelector("[data-role-preview-title]");
+const rolePreviewCopy = document.querySelector("[data-role-preview-copy]");
+const rolePreviewScore = document.querySelector("[data-role-preview-score]");
+const rolePreviewFit = document.querySelector("[data-role-preview-fit]");
+const rolePreviewSkill = document.querySelector("[data-role-preview-skill]");
 const ambassadorForm = document.querySelector("[data-ambassador-form]");
 const ambassadorResult = document.querySelector("[data-ambassador-result]");
 const decisionForms = document.querySelectorAll("[data-decision-form]");
 const profileTriggers = document.querySelectorAll("[data-profile-select]");
 const profileSections = document.querySelectorAll("[data-profile-section]");
-const profileNavLinks = document.querySelectorAll("[data-profile-nav]");
+const profilePrompt = document.querySelector("[data-profile-prompt]");
 const profileTitle = document.querySelector("[data-profile-title]");
 const profileText = document.querySelector("[data-profile-text]");
 const growthTabs = document.querySelectorAll("[data-growth-tab]");
@@ -70,9 +75,12 @@ const growthSliderTrack = document.querySelector("[data-growth-slider-track]");
 const growthSliderPrev = document.querySelector("[data-growth-slider-prev]");
 const growthSliderNext = document.querySelector("[data-growth-slider-next]");
 const growthSliderDots = document.querySelector("[data-growth-slider-dots]");
+const parentWorkBuilder = document.querySelector("[data-parent-work-builder]");
+const studentWorkBuilder = document.querySelector("[data-student-work-builder]");
 const whatsappNumber = "918826758881";
 const profileStorageKey = "tivoroProfile";
 const profileQueryKey = "profile";
+const sharedProfileNavLabels = new Set(["home", "about", "career", "faq", "book slot", "contact us"]);
 let businessMapperTimer = null;
 const growthConsoleData = {
   visibility: {
@@ -243,6 +251,53 @@ function formDataToObject(data) {
     payload[key] = value;
     return payload;
   }, {});
+}
+
+function initPrivacyAndFormSafety() {
+  const footer = document.querySelector(".site-footer");
+  if (footer && !footer.querySelector(".footer-legal-links")) {
+    const legalLinks = document.createElement("nav");
+    legalLinks.className = "footer-legal-links";
+    legalLinks.setAttribute("aria-label", "Legal links");
+    legalLinks.innerHTML = '<a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a>';
+    const whatsappLink = footer.querySelector(".footer-whatsapp-icon");
+    footer.insertBefore(legalLinks, whatsappLink || null);
+  }
+
+  document.querySelectorAll("form").forEach((form) => {
+    if (form.classList.contains("tivoro-bot-form")) return;
+
+    form.querySelectorAll("input, textarea").forEach((field) => {
+      const tag = field.tagName.toLowerCase();
+      const type = String(field.getAttribute("type") || "text").toLowerCase();
+      if (tag === "textarea") {
+        field.maxLength = field.maxLength > 0 ? Math.min(field.maxLength, 800) : 800;
+      } else if (type === "email") {
+        field.maxLength = field.maxLength > 0 ? Math.min(field.maxLength, 120) : 120;
+      } else if (type === "tel") {
+        field.maxLength = field.maxLength > 0 ? Math.min(field.maxLength, 18) : 18;
+        field.setAttribute("inputmode", "tel");
+        field.setAttribute("pattern", "[+0-9\\s-]{7,18}");
+      } else if (type === "url") {
+        field.maxLength = field.maxLength > 0 ? Math.min(field.maxLength, 220) : 220;
+        field.setAttribute("inputmode", "url");
+      } else if (["text", "search"].includes(type)) {
+        field.maxLength = field.maxLength > 0 ? Math.min(field.maxLength, 90) : 90;
+      }
+
+      field.addEventListener("input", () => {
+        if (field.value && /[<>]/.test(field.value)) field.value = field.value.replace(/[<>]/g, "");
+      });
+    });
+
+    if (!form.querySelector(".form-consent-note")) {
+      const note = document.createElement("p");
+      note.className = "form-consent-note";
+      note.innerHTML = 'By continuing, you agree that Tivoro may use these details to respond to your enquiry. Read the <a href="privacy.html">Privacy Policy</a>.';
+      const submitControl = form.querySelector('button[type="submit"], input[type="submit"]');
+      form.insertBefore(note, submitControl || null);
+    }
+  });
 }
 
 function initTivoroMotion() {
@@ -746,6 +801,52 @@ const tivoroBotAnswers = [
   },
 ];
 
+let tivoroFaqDataPromise = null;
+
+function loadTivoroFaqData() {
+  if (Array.isArray(window.tivoroFaqData)) return Promise.resolve(window.tivoroFaqData);
+  if (tivoroFaqDataPromise) return tivoroFaqDataPromise;
+  tivoroFaqDataPromise = new Promise((resolve) => {
+    const existing = document.querySelector('script[src*="faq-data.js"]');
+    if (existing) {
+      existing.addEventListener("load", () => resolve(Array.isArray(window.tivoroFaqData) ? window.tivoroFaqData : []), { once: true });
+      existing.addEventListener("error", () => resolve([]), { once: true });
+      window.setTimeout(() => resolve(Array.isArray(window.tivoroFaqData) ? window.tivoroFaqData : []), 1200);
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = "faq-data.js?v=20260726-faq-live-search-v2";
+    script.onload = () => resolve(Array.isArray(window.tivoroFaqData) ? window.tivoroFaqData : []);
+    script.onerror = () => resolve([]);
+    document.head.appendChild(script);
+  });
+  return tivoroFaqDataPromise;
+}
+
+function findTivoroFaqAnswer(query, faqItems) {
+  const words = String(query || "")
+    .toLowerCase()
+    .split(/[^a-z0-9+]+/)
+    .filter((word) => word.length > 2);
+  if (!words.length || !Array.isArray(faqItems)) return null;
+  const ranked = faqItems
+    .map((item) => {
+      const question = String(item.question || "").toLowerCase();
+      const category = String(item.category || "").toLowerCase();
+      const answer = String(item.answer || "").toLowerCase();
+      const haystack = `${question} ${category} ${answer}`;
+      const score = words.reduce((total, word) => {
+        if (question.includes(word)) return total + 4;
+        if (category.includes(word)) return total + 3;
+        if (haystack.includes(word)) return total + 1;
+        return total;
+      }, 0);
+      return { item, score };
+    })
+    .sort((a, b) => b.score - a.score);
+  return ranked[0]?.score >= 3 ? ranked[0].item : null;
+}
+
 const pathData = {
   young: {
     label: "Recommended path",
@@ -795,6 +896,15 @@ function isValidProfile(profile) {
   return Boolean(profileCopy[profile]);
 }
 
+function getCurrentPageName() {
+  return window.location.pathname.split("/").pop() || "index.html";
+}
+
+function isHomePage() {
+  const page = getCurrentPageName();
+  return page === "index.html" || page === "";
+}
+
 function getProfileFromUrl() {
   try {
     const profile = new URLSearchParams(window.location.search).get(profileQueryKey) || "";
@@ -822,8 +932,115 @@ function storeProfile(profile) {
   }
 }
 
+function getCleanNavText(link) {
+  return (link?.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+function getProfileNavLinks() {
+  return document.querySelectorAll("[data-profile-nav]");
+}
+
+function inferNavGroups(link) {
+  const existing = (link.dataset.profileNav || "").split(/\s+/).filter(Boolean);
+  if (existing.includes("shared")) return existing;
+  const text = getCleanNavText(link);
+  const href = (link.getAttribute("href") || "").toLowerCase();
+  if (sharedProfileNavLabels.has(text) || href.startsWith("mailto:")) return ["shared"];
+  if (text.includes("student") || href.includes("students.html") || href.includes("career.html")) return ["student"];
+  if (text.includes("parent") || href.includes("parents.html")) return ["parent"];
+  if (text.includes("business") || href.includes("business.html") || href.includes("institutions.html")) return ["business"];
+  if (text.includes("how we work") || text.includes("faq") || text.includes("tivoro ai") || text.includes("impact")) {
+    return ["student", "parent", "business"];
+  }
+  if (existing.length && !existing.includes("all")) return existing;
+  return ["shared"];
+}
+
+function ensureContactMenu(nav) {
+  const isMobile = nav.classList.contains("mobile-menu");
+  const menuSelector = isMobile ? ".mobile-contact-menu" : ".header-contact-menu";
+  const listSelector = isMobile ? ".mobile-contact-menu" : ".header-contact-list";
+  const directLinks = Array.from(nav.children).filter((child) => child.matches?.("a"));
+  const menuLinks = directLinks.filter((link) => {
+    const text = getCleanNavText(link);
+    return text === "career" || text === "faq" || text === "book slot" || text === "contact us";
+  });
+  const hrefByText = new Map();
+
+  menuLinks.forEach((link) => {
+    const text = getCleanNavText(link);
+    if (text !== "contact us") hrefByText.set(text, link.getAttribute("href") || "#");
+    link.remove();
+  });
+
+  let menu = nav.querySelector(menuSelector);
+  if (!menu) {
+    if (isMobile) {
+      menu = document.createElement("details");
+      menu.className = "mobile-contact-menu";
+      menu.dataset.profileNav = "shared";
+      const summary = document.createElement("summary");
+      summary.textContent = "Contact Us";
+      menu.appendChild(summary);
+    } else {
+      menu = document.createElement("div");
+      menu.className = "header-contact-menu";
+      menu.dataset.profileNav = "shared";
+      menu.innerHTML = '<button type="button" aria-haspopup="true" aria-expanded="false">Contact Us</button><div class="header-contact-list" aria-label="Contact Us menu"></div>';
+    }
+    nav.appendChild(menu);
+  }
+
+  menu.dataset.profileNav = "shared";
+  menu.dataset.profileShared = "true";
+
+  const list = isMobile ? menu : menu.querySelector(listSelector);
+  if (!list) return;
+  Array.from(list.querySelectorAll("a")).forEach((link) => link.remove());
+
+  [
+    ["career", "Career", "career.html"],
+    ["faq", "FAQ", "faq.html"],
+    ["book slot", "Book Slot", "index.html#booking"],
+  ].forEach(([key, label, fallbackHref]) => {
+    const link = document.createElement("a");
+    link.href = hrefByText.get(key) || fallbackHref;
+    link.textContent = label;
+    link.dataset.profileShared = "true";
+    list.appendChild(link);
+  });
+}
+
+function addSharedContactLinks() {
+  document.querySelectorAll(".desktop-nav, .mobile-menu").forEach((nav) => {
+    ensureContactMenu(nav);
+  });
+}
+
+function normalizeProfileNavigation() {
+  addSharedContactLinks();
+  document.querySelectorAll(".header-actions .header-cta").forEach((link) => {
+    const text = getCleanNavText(link);
+    const href = (link.getAttribute("href") || "").toLowerCase();
+    if (text.includes("book") || href.includes("#booking")) link.remove();
+  });
+  document.querySelectorAll(".desktop-nav > a, .mobile-menu > a").forEach((link) => {
+    if (!link.dataset.profileNav) link.dataset.profileNav = "all";
+  });
+  getProfileNavLinks().forEach((link) => {
+    const groups = inferNavGroups(link);
+    link.dataset.profileNav = groups.join(" ");
+    if (groups.includes("shared")) {
+      link.dataset.profileShared = "true";
+    }
+    if (!link.dataset.profileBaseHref) {
+      link.dataset.profileBaseHref = link.getAttribute("href") || "";
+    }
+  });
+}
+
 function isInternalProfileLink(link) {
-  if (!link || link.hasAttribute("download") || link.dataset.profileSelect || link.dataset.profileFixed) return false;
+  if (!link || link.hasAttribute("download") || link.dataset.profileSelect || link.dataset.profileFixed || link.dataset.profileShared) return false;
   const rawHref = link.getAttribute("href") || "";
   if (!rawHref || rawHref.startsWith("#")) return false;
   if (/^(tel|mailto|sms|whatsapp):/i.test(rawHref)) return false;
@@ -853,15 +1070,35 @@ function syncProfileLinks(profile) {
   if (!isValidProfile(profile)) return;
   document.querySelectorAll("a[href]").forEach((link) => {
     if (!isInternalProfileLink(link)) return;
-    link.href = buildProfileUrl(link.getAttribute("href") || link.href, profile);
+    link.href = buildProfileUrl(link.dataset.profileBaseHref || link.getAttribute("href") || link.href, profile);
+  });
+}
+
+function syncProfileNavDestinations(profile) {
+  if (!isValidProfile(profile)) return;
+  getProfileNavLinks().forEach((link) => {
+    const text = getCleanNavText(link);
+    if (text.includes("how we work")) {
+      if (profile === "business") link.href = "how-we-work.html";
+      if (profile === "student") link.href = "how-we-work-students.html";
+      if (profile === "parent") link.href = "how-we-work-parents.html";
+      return;
+    }
+    if (text.includes("faq")) {
+      link.href = buildProfileUrl("faq.html", profile);
+      return;
+    }
+    if (text.includes("tivoro ai")) {
+      link.href = buildProfileUrl("ai-growth-partner.html#chat-card", profile);
+    }
   });
 }
 
 function inferProfileFromPage() {
-  const page = window.location.pathname.split("/").pop();
-  if (page === "students.html" || page === "students.txt" || page === "career.html" || page === "career.txt") return "student";
-  if (page === "parents.html" || page === "parents.txt") return "parent";
-  if (page === "business.html" || page === "business.txt" || page === "institutions.html" || page === "institutions.txt") return "business";
+  const page = getCurrentPageName();
+  if (page === "students.html" || page === "students.txt" || page === "career.html" || page === "career.txt" || page === "how-we-work-students.html" || page === "college-career-matcher.html") return "student";
+  if (page === "parents.html" || page === "parents.txt" || page === "how-we-work-parents.html") return "parent";
+  if (page === "business.html" || page === "business.txt" || page === "institutions.html" || page === "institutions.txt" || page === "how-we-work-business.html" || page === "digital-trust-score.html" || page === "website-readiness-checker.html") return "business";
   return "";
 }
 
@@ -873,11 +1110,21 @@ function profileDestination(profile) {
 }
 
 function applyProfileNavigation(profile) {
-  if (!isValidProfile(profile)) return;
-  profileNavLinks.forEach((link) => {
+  getProfileNavLinks().forEach((link) => {
     const allowed = (link.dataset.profileNav || "").split(/\s+/);
-    link.hidden = !(allowed.includes("all") || allowed.includes(profile));
+    link.hidden = isValidProfile(profile)
+      ? !(allowed.includes("shared") || allowed.includes(profile))
+      : !allowed.includes("shared");
   });
+}
+
+function applyNeutralProfile() {
+  delete document.body.dataset.activeProfile;
+  profileTriggers.forEach((trigger) => {
+    trigger.classList.remove("is-selected");
+  });
+  applyProfileNavigation("");
+  if (profilePrompt && isHomePage()) profilePrompt.hidden = false;
 }
 
 function applyProfile(profile) {
@@ -891,6 +1138,7 @@ function applyProfile(profile) {
 
   applyProfileNavigation(profile);
   syncProfileLinks(profile);
+  syncProfileNavDestinations(profile);
 
   profileSections.forEach((section) => {
     const allowed = (section.dataset.profileSection || "").split(/\s+/);
@@ -900,31 +1148,35 @@ function applyProfile(profile) {
 
   if (profileTitle) profileTitle.textContent = profileCopy[profile].title;
   if (profileText) profileText.textContent = profileCopy[profile].text;
+  if (profilePrompt) profilePrompt.hidden = true;
 }
 
 profileSections.forEach((section) => {
   section.hidden = true;
 });
+normalizeProfileNavigation();
 document.body.classList.add("profile-filter-ready");
 
-const activeProfile = getProfileFromUrl() || getStoredProfile() || inferProfileFromPage();
+const activeProfile = getProfileFromUrl() || inferProfileFromPage() || (isHomePage() ? "" : getStoredProfile());
 if (activeProfile) {
   applyProfile(activeProfile);
+} else {
+  applyNeutralProfile();
 }
 
-profileTriggers.forEach((trigger) => {
-  trigger.addEventListener("click", (event) => {
-    event.preventDefault();
-    const profile = trigger.dataset.profileSelect;
-    const hasHomeProfilePanel = Boolean(document.querySelector("#profile-content"));
-    const isHeaderToggle = trigger.closest(".top-profile-toggle");
-    applyProfile(profile);
-    if (hasHomeProfilePanel) {
-      document.querySelector("#profile-content")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else if (isHeaderToggle) {
-      window.location.href = buildProfileUrl(profileDestination(profile), profile);
-    }
-  });
+document.addEventListener("click", (event) => {
+  const trigger = event.target.closest("[data-profile-select]");
+  if (!trigger) return;
+  event.preventDefault();
+  const profile = trigger.dataset.profileSelect;
+  const hasHomeProfilePanel = Boolean(document.querySelector("#profile-content"));
+  const isHeaderToggle = trigger.closest(".top-profile-toggle");
+  applyProfile(profile);
+  if (hasHomeProfilePanel) {
+    document.querySelector("#profile-content")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  } else if (isHeaderToggle && !isHomePage()) {
+    window.location.href = buildProfileUrl(profileDestination(profile), profile);
+  }
 });
 
 document.addEventListener("click", (event) => {
@@ -2838,7 +3090,7 @@ function createTivoroBot() {
     messages.scrollTop = messages.scrollHeight;
   }
 
-  function answerQuestion(question) {
+  async function answerQuestion(question) {
     const cleanQuestion = question.trim();
     if (!cleanQuestion) return;
     addMessage(cleanQuestion, "user");
@@ -2861,6 +3113,11 @@ function createTivoroBot() {
         return;
       }
       addMessage("Start with the Tivoro AI button on the homepage. It gives the shortest path: choose Student, Parent or Business, answer a few questions, then move to WhatsApp or explore the detailed page. If you want to understand Tivoro's business-building approach, open How We Work.", "bot");
+      return;
+    }
+    const faqMatch = findTivoroFaqAnswer(query, await loadTivoroFaqData());
+    if (faqMatch) {
+      addMessage(`${faqMatch.question}: ${faqMatch.answer}`, "bot");
       return;
     }
     if (query.includes("whatsapp") || query.includes("talk")) {
@@ -3057,9 +3314,8 @@ function roleFitLabel(score) {
   return "Explore with guidance";
 }
 
-function renderRoleMatcherResult(data) {
-  if (!roleResult) return;
-  const answers = {
+function getCareerRoleAnswers(data) {
+  return {
     studentName: String(data.get("studentName") || "Student").trim(),
     year: String(data.get("year") || ""),
     branch: String(data.get("branch") || ""),
@@ -3069,10 +3325,32 @@ function renderRoleMatcherResult(data) {
     strength: String(data.get("strength") || ""),
     goal: String(data.get("goal") || ""),
   };
+}
+
+function getRankedCareerRoles(data) {
+  const answers = getCareerRoleAnswers(data);
   const skills = selectedRoleSkills();
-  const ranked = careerRoleData
+  return careerRoleData
     .map((role) => ({ ...role, score: scoreCareerRole(role, answers, skills) }))
     .sort((a, b) => b.score - a.score);
+}
+
+function updateCareerRolePreview() {
+  if (!roleMatcherForm || !rolePreviewTitle) return;
+  const data = new FormData(roleMatcherForm);
+  const top = getRankedCareerRoles(data)[0] || careerRoleData[0];
+  if (!top) return;
+  rolePreviewTitle.textContent = top.title;
+  if (rolePreviewCopy) rolePreviewCopy.textContent = top.project;
+  if (rolePreviewScore) rolePreviewScore.textContent = `${top.score}%`;
+  if (rolePreviewFit) rolePreviewFit.textContent = roleFitLabel(top.score);
+  if (rolePreviewSkill) rolePreviewSkill.textContent = top.skills[0] || "Project proof";
+}
+
+function renderRoleMatcherResult(data) {
+  if (!roleResult) return;
+  const answers = getCareerRoleAnswers(data);
+  const ranked = getRankedCareerRoles(data);
   const top = ranked[0];
   const alternates = ranked.slice(0, 3);
   const skillFocus = top.skills.slice(0, 3);
@@ -3197,6 +3475,168 @@ growthTabs.forEach((button) => {
 renderGrowthConsole("visibility");
 initGrowthStageSlider();
 
+if (parentWorkBuilder) {
+  const parentGoalData = {
+    confidence: {
+      title: "Creative Coding Starter",
+      label: "Confidence through creative coding",
+      copy: "Game-based coding path for confidence, logic and visible first projects.",
+      detail: "Short game-based missions, visual logic, confidence demos and parent progress notes.",
+      fit: "personal",
+    },
+    coding: {
+      title: "Kids Coding Foundation",
+      label: "Coding basics with project proof",
+      copy: "Scratch, logic, sequencing and small projects before moving toward Python or web.",
+      detail: "A structured coding foundation with playful activities, mini-games and demo milestones.",
+      fit: "group",
+    },
+    ai: {
+      title: "Safe AI Explorer",
+      label: "AI curiosity with guided safety",
+      copy: "Age-friendly AI exploration, prompts, creativity tasks and responsible usage habits.",
+      detail: "Safe prompt activities, AI creativity tasks, simple assistant ideas and parent-visible demos.",
+      fit: "personal",
+    },
+    school: {
+      title: "Learning Support Sprint",
+      label: "School confidence and learning rhythm",
+      copy: "Support plan for homework rhythm, concept clarity, communication and confidence.",
+      detail: "Focused support sessions, small goals, review notes and confidence-building checkpoints.",
+      fit: "personal",
+    },
+  };
+
+  const personalityBoost = {
+    curious: "We keep the child engaged with discovery-based tasks and guided direction.",
+    shy: "We keep the pace gentle, use confidence demos and avoid pressure-heavy learning.",
+    fast: "We add extension challenges so the child stays stretched without skipping foundations.",
+    distracted: "We use shorter missions, visible rewards and frequent checkpoints.",
+  };
+
+  const parentState = { goal: "confidence", personality: "curious" };
+  const parentCourseTitleTargets = document.querySelectorAll("[data-parent-course-title], [data-parent-course-card-title]");
+  const parentCourseCopyTarget = document.querySelector("[data-parent-course-copy]");
+  const parentCardCopyTarget = document.querySelector("[data-parent-course-card-copy]");
+  const parentMapLabelTarget = document.querySelector("[data-parent-map-label]");
+  const parentFitCards = document.querySelectorAll("[data-fit-card]");
+
+  function updateParentJourney() {
+    const goal = parentGoalData[parentState.goal] || parentGoalData.confidence;
+    parentCourseTitleTargets.forEach((target) => {
+      target.textContent = goal.title;
+    });
+    if (parentCourseCopyTarget) parentCourseCopyTarget.textContent = goal.copy;
+    if (parentCardCopyTarget) parentCardCopyTarget.textContent = `${goal.detail} ${personalityBoost[parentState.personality] || ""}`;
+    if (parentMapLabelTarget) parentMapLabelTarget.textContent = goal.label;
+    parentFitCards.forEach((card) => {
+      card.classList.toggle("is-active", card.dataset.fitCard === goal.fit);
+    });
+  }
+
+  parentWorkBuilder.addEventListener("click", (event) => {
+    const goalButton = event.target.closest("[data-parent-goal]");
+    const personalityButton = event.target.closest("[data-child-personality]");
+    if (goalButton) {
+      parentState.goal = goalButton.dataset.parentGoal;
+      parentWorkBuilder.querySelectorAll("[data-parent-goal]").forEach((button) => {
+        button.classList.toggle("is-active", button === goalButton);
+      });
+      updateParentJourney();
+    }
+    if (personalityButton) {
+      parentState.personality = personalityButton.dataset.childPersonality;
+      parentWorkBuilder.querySelectorAll("[data-child-personality]").forEach((button) => {
+        button.classList.toggle("is-active", button === personalityButton);
+      });
+      updateParentJourney();
+    }
+  });
+
+  updateParentJourney();
+}
+
+if (studentWorkBuilder) {
+  const studentGoalData = {
+    portfolio: {
+      title: "Portfolio Project Sprint",
+      label: "From learning to portfolio proof",
+      copy: "Build one real project, publish it, and learn how to explain it with confidence.",
+      detail: "Guided project build with demo, GitHub-ready output and interview explanation notes.",
+      fit: "personal",
+    },
+    coding: {
+      title: "Coding Foundation Lab",
+      label: "Coding basics with project proof",
+      copy: "Learn logic, structure and coding basics through mini projects instead of passive lessons.",
+      detail: "Step-by-step coding missions, practice tasks, review checkpoints and visible mini project outcomes.",
+      fit: "group",
+    },
+    ai: {
+      title: "AI Project Builder",
+      label: "AI curiosity into working demos",
+      copy: "Explore AI tools, prompt thinking and simple AI-powered project ideas with guided safety.",
+      detail: "AI use-case discovery, prompt experiments, workflow demos and a small AI-powered proof asset.",
+      fit: "personal",
+    },
+    internship: {
+      title: "Internship Proof Track",
+      label: "Skills that become interview stories",
+      copy: "Build project evidence, communication confidence and a clearer path toward internships.",
+      detail: "Resume-ready project proof, explanation practice, role-fit guidance and next-step preparation.",
+      fit: "personal",
+    },
+  };
+
+  const studentStageBoost = {
+    beginner: "We keep the path structured so the student can start without feeling lost.",
+    curious: "We turn scattered interest into one clear direction and a visible first output.",
+    builder: "We add stronger build missions so the student can move faster with purpose.",
+    interview: "We focus on proof, explanation quality and confidence for real conversations.",
+  };
+
+  const studentState = { goal: "portfolio", stage: "beginner" };
+  const studentProofTitleTargets = document.querySelectorAll("[data-student-proof-title], [data-student-proof-card-title]");
+  const studentProofCopyTarget = document.querySelector("[data-student-proof-copy]");
+  const studentCardCopyTarget = document.querySelector("[data-student-proof-card-copy]");
+  const studentMapLabelTarget = document.querySelector("[data-student-map-label]");
+  const studentFitCards = document.querySelectorAll("[data-student-fit-card]");
+
+  function updateStudentJourney() {
+    const goal = studentGoalData[studentState.goal] || studentGoalData.portfolio;
+    studentProofTitleTargets.forEach((target) => {
+      target.textContent = goal.title;
+    });
+    if (studentProofCopyTarget) studentProofCopyTarget.textContent = goal.copy;
+    if (studentCardCopyTarget) studentCardCopyTarget.textContent = `${goal.detail} ${studentStageBoost[studentState.stage] || ""}`;
+    if (studentMapLabelTarget) studentMapLabelTarget.textContent = goal.label;
+    studentFitCards.forEach((card) => {
+      card.classList.toggle("is-active", card.dataset.studentFitCard === goal.fit);
+    });
+  }
+
+  studentWorkBuilder.addEventListener("click", (event) => {
+    const goalButton = event.target.closest("[data-student-goal]");
+    const stageButton = event.target.closest("[data-student-stage]");
+    if (goalButton) {
+      studentState.goal = goalButton.dataset.studentGoal;
+      studentWorkBuilder.querySelectorAll("[data-student-goal]").forEach((button) => {
+        button.classList.toggle("is-active", button === goalButton);
+      });
+      updateStudentJourney();
+    }
+    if (stageButton) {
+      studentState.stage = stageButton.dataset.studentStage;
+      studentWorkBuilder.querySelectorAll("[data-student-stage]").forEach((button) => {
+        button.classList.toggle("is-active", button === stageButton);
+      });
+      updateStudentJourney();
+    }
+  });
+
+  updateStudentJourney();
+}
+
 mobileMenu?.addEventListener("click", (event) => {
   if (event.target.matches("a")) setMenu(false);
 });
@@ -3291,7 +3731,11 @@ roleSkillPicker?.addEventListener("click", (event) => {
   const button = event.target.closest("[data-role-skill]");
   if (!button || !roleSkillPicker.contains(button)) return;
   button.classList.toggle("is-selected");
+  updateCareerRolePreview();
 });
+
+roleMatcherForm?.addEventListener("input", updateCareerRolePreview);
+roleMatcherForm?.addEventListener("change", updateCareerRolePreview);
 
 roleMatcherForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -3304,6 +3748,8 @@ roleMatcherForm?.addEventListener("submit", async (event) => {
   });
   submitCollegeCareerToGoogleForm(data);
 });
+
+updateCareerRolePreview();
 
 ambassadorForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -3603,6 +4049,7 @@ document.addEventListener("click", (event) => {
   ripple.addEventListener("animationend", () => ripple.remove(), { once: true });
 });
 
+initPrivacyAndFormSafety();
 initTivoroMotion();
 renderFinderOptions();
 renderBuilderSkills();
