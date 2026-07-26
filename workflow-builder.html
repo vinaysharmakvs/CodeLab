@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Workflow Builder | Tivoro</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NZWE7QDBTH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NZWE7QDBTH');
+    </script>
+    <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=20260726-security" />
+  </head>
+  <body class="workflow-builder-page">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Tivoro home">
+        <span class="brand-mark">T</span>
+        <span>
+          <strong>Tivoro</strong>
+          <small>Where Ideas Become Reality</small>
+        </span>
+      </a>
+      <div class="header-actions">
+        <a class="header-cta" href="index.html">Back to Tivoro</a>
+      </div>
+    </header>
+
+    <main class="workflow-main">
+      <section class="workflow-hero">
+        <div class="workflow-hero-copy">
+          <p class="eyebrow">Tivoro Logic to Report Builder</p>
+          <h1>Turn any task into a form, workflow and report system.</h1>
+          <p>
+            Share the task logic once. Tivoro will map the process, recommend form fields,
+            define scoring rules, and create a report layout that your team can use.
+          </p>
+          <div class="workflow-hero-pills">
+            <span>Form fields</span>
+            <span>Workflow steps</span>
+            <span>Report outcome</span>
+            <span>Dashboard KPIs</span>
+          </div>
+        </div>
+        <div class="workflow-hero-panel" aria-label="Workflow system preview">
+          <span>System preview</span>
+          <strong>Logic in. Report out.</strong>
+          <div>
+            <b>01 Input</b>
+            <b>02 Process</b>
+            <b>03 Decision</b>
+            <b>04 Report</b>
+          </div>
+        </div>
+      </section>
+
+      <section class="workflow-workspace">
+        <form class="workflow-form" data-workflow-form>
+          <div class="requirement-brief-header">
+            <span>01</span>
+            <div>
+              <strong>Describe the task logic</strong>
+              <p>Write the purpose, who will fill the form, what data is needed, how decisions are made, and what final report should show.</p>
+            </div>
+          </div>
+
+          <label>
+            Workflow name
+            <input name="workflowName" type="text" placeholder="Example: Student Monthly Progress Report" required />
+          </label>
+
+          <label>
+            Who will use this?
+            <select name="audience" required>
+              <option>Teachers</option>
+              <option>Parents</option>
+              <option>Management</option>
+              <option>Sales team</option>
+              <option>Operations team</option>
+              <option>Students</option>
+              <option>Business owner</option>
+            </select>
+          </label>
+
+          <label>
+            Task logic
+            <textarea
+              name="workflowLogic"
+              rows="8"
+              placeholder="Example: Teacher selects class and student, rates 10 learning areas, adds remarks and improvement focus. The system should generate student score, strengths, improvement areas, parent suggestions and a monthly report."
+              required
+            ></textarea>
+          </label>
+
+          <div class="workflow-chip-row" aria-label="Workflow examples">
+            <button type="button" data-workflow-template="Teacher selects class and student, uploads child photo, rates academics, behaviour, communication, responsibility and creativity. Report should show score, grade, strengths, improvement areas, parent suggestions and teacher recommendations.">Student report</button>
+            <button type="button" data-workflow-template="School management observes class behaviour, checks greeting discipline, walking discipline, water habits, classroom behaviour and values. Report should show class culture score, top strengths, need-attention areas and teacher action plan.">Class audit</button>
+            <button type="button" data-workflow-template="Parent rates happiness with teacher, founders, communication, operations, content, technology and transport. Report should show happiness index, weak areas, urgent concerns and improvement plan.">Parent feedback</button>
+            <button type="button" data-workflow-template="Business lead enters requirement, budget, urgency, current problem and desired outcome. Report should show recommended website pages, automation needs, priority score and next-step proposal.">Business lead</button>
+          </div>
+
+          <p class="form-consent-note">By continuing, you agree that Tivoro may use these details to respond to your enquiry. Read the <a href="privacy.html">Privacy Policy</a>.</p>
+          <button class="primary-button workflow-generate-button" type="submit">Generate Workflow System</button>
+        </form>
+
+        <section class="workflow-output" data-workflow-output hidden aria-live="polite"></section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>Tivoro</strong>
+        <span>Your digital growth partner.</span>
+      </div>
+      <a class="footer-email" href="mailto:tivorosupport@gmail.com">tivorosupport@gmail.com</a>
+      <nav class="footer-legal-links" aria-label="Legal links"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a></nav>
+      <a class="footer-whatsapp-icon" href="https://wa.me/918826758881" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">WhatsApp</a>
+    </footer>
+
+    <script src="workflow-builder.js?v=20260721-02"></script>
+  </body>
+</html>
