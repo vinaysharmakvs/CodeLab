@@ -1,3 +1,5 @@
+import { applyApiSecurityHeaders, fetchPublicHtml, normalizePublicWebsiteUrl, rateLimit } from "./security.js";
+
 function clean(value) {
   return String(value || "").trim();
 }
@@ -7,18 +9,7 @@ function clamp(score, max = 100) {
 }
 
 function normalizeWebsiteUrl(value) {
-  const trimmed = clean(value);
-  if (!trimmed || /\s/.test(trimmed) || /@/.test(trimmed)) throw new Error("invalid-url");
-
-  const withProtocol = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
-  const url = new URL(withProtocol);
-  const hostname = url.hostname.toLowerCase().replace(/^www\./, "");
-  const labels = hostname.split(".");
-  const tld = labels[labels.length - 1] || "";
-  const hasValidLabels = labels.length >= 2 && labels.every((label) => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/i.test(label));
-  const hasValidTld = /^[a-z]{2,24}$/i.test(tld);
-  if (!hasValidLabels || !hasValidTld) throw new Error("invalid-url");
-  return url;
+  return normalizePublicWebsiteUrl(value);
 }
 
 function words(value, keepGeneric = false) {
@@ -42,6 +33,37 @@ function countMatches(html, regex) {
 function countWordHits(text, tokens) {
   const lower = text.toLowerCase();
   return tokens.filter((token) => lower.includes(token)).length;
+}
+
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function tokenAppears(text, token) {
+  if (!token) return false;
+  return new RegExp(`(^|[^a-z0-9])${escapeRegExp(token)}([^a-z0-9]|$)`, "i").test(text);
+}
+
+function countExactTokenHits(text, tokens) {
+  return tokens.filter((token) => tokenAppears(text, token)).length;
+}
+
+function htmlToPlainText(html) {
+  return String(html || "")
+    .toLowerCase()
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ");
+}
+
+function locationWords(value) {
+  const weak = ["pradesh", "district", "tehsil", "city", "state", "india", "near"];
+  return words(value, true).filter((word) => !weak.includes(word));
+}
+
+function compactName(value) {
+  return words(value).join("");
 }
 
 function makeCandidateDomains(businessName) {
@@ -70,32 +92,106 @@ function websiteCandidates({ businessName }) {
   return candidates;
 }
 
-async function fetchWebsite(url) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 8500);
-  const started = Date.now();
-  try {
-    const response = await fetch(url.href, {
-      redirect: "follow",
-      signal: controller.signal,
-      headers: {
-        "user-agent": "Tivoro-TrustScore/1.0",
-        accept: "text/html,application/xhtml+xml",
-      },
-    });
-    const contentType = response.headers.get("content-type") || "";
-    if (!response.ok) throw new Error("website-not-reachable");
-    if (!contentType.includes("text/html") && !contentType.includes("application/xhtml")) throw new Error("not-html");
-    const html = await response.text();
-    return {
-      requestedUrl: url.href,
-      finalUrl: response.url || url.href,
-      responseMs: Date.now() - started,
-      html,
-    };
-  } finally {
-    clearTimeout(timeout);
+function extractInternalSupportPages(html, baseUrl) {
+  const supportPatterns = /(contact|about|location|reach|visit|address|admission|campus|directions)/i;
+  const links = [];
+  const seen = new Set();
+  const anchorRegex = /<a\b[^>]+href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
+  let match;
+  while ((match = anchorRegex.exec(html))) {
+    const href = clean(match[1]);
+    const label = htmlToPlainText(match[2]);
+    if (!href || href.startsWith("#") || /^mailto:|^tel:|^javascript:/i.test(href)) continue;
+    if (!supportPatterns.test(`${href} ${label}`)) continue;
+    try {
+      const url = new URL(href, baseUrl);
+      const base = new URL(baseUrl);
+      if (url.hostname.replace(/^www\./, "") !== base.hostname.replace(/^www\./, "")) continue;
+      url.hash = "";
+      const normalized = url.href;
+      if (seen.has(normalized)) continue;
+      seen.add(normalized);
+      links.push(url);
+    } catch (error) {
+      // Ignore malformed links and continue scanning.
+    }
   }
+  return links.slice(0, 4);
+}
+
+function evaluateMatch(site, input) {
+  const coreTokens = words(input.businessName);
+  const allNameTokens = words(input.businessName, true);
+  const cityTokens = locationWords(input.city);
+  const stateTokens = locationWords(input.state);
+  const requiredLocationTokens = [...cityTokens, ...stateTokens];
+  const domain = site.domain.toLowerCase();
+  const compactBusiness = compactName(input.businessName);
+  const domainLooksLikeBrand = compactBusiness.length >= 5 && domain.replace(/[^a-z0-9]/g, "").includes(compactBusiness);
+  const strongNameMatch =
+    site.coreHits >= Math.min(coreTokens.length, 2) ||
+    (domainLooksLikeBrand && site.nameHits >= Math.min(allNameTokens.length, 2));
+  const localMatchRequired = requiredLocationTokens.length > 0;
+  const hasCityMatch = cityTokens.length ? cityTokens.some((token) => tokenAppears(site.signalText, token)) : false;
+  const hasStateMatch = stateTokens.length ? stateTokens.some((token) => tokenAppears(site.signalText, token)) : false;
+  const hasLocalMatch = cityTokens.length ? hasCityMatch : hasStateMatch;
+  const verified = strongNameMatch && (!localMatchRequired || hasLocalMatch);
+  let confidence = 28;
+  if (strongNameMatch) confidence += 32;
+  if (domainLooksLikeBrand) confidence += 16;
+  if (hasLocalMatch) confidence += 24;
+  return {
+    verified,
+    confidence: clamp(confidence),
+    domainLooksLikeBrand,
+    strongNameMatch,
+    hasLocalMatch,
+    hasCityMatch,
+    hasStateMatch,
+    matchedLocationTokens: requiredLocationTokens.filter((token) => tokenAppears(site.signalText, token)),
+    requiredLocationTokens,
+    reason: !strongNameMatch
+      ? "The discovered website did not strongly match the entered business name."
+      : localMatchRequired && !hasLocalMatch
+        ? cityTokens.length
+          ? "The discovered website matched the name but the entered city/locality was not found on the homepage/contact/about pages."
+          : "The discovered website matched the name but the entered state/location was not found on the homepage/contact/about pages."
+        : "The discovered website matched the entered business name and local address signals.",
+  };
+}
+
+async function fetchWebsite(url) {
+  const result = await fetchPublicHtml(url, "Tivoro-TrustScore/1.0");
+  return {
+    requestedUrl: url.href,
+    ...result,
+  };
+}
+
+async function enrichWebsiteFetch(fetchResult) {
+  const supportPages = [];
+  const supportLinks = extractInternalSupportPages(fetchResult.html, fetchResult.finalUrl);
+  for (const link of supportLinks) {
+    try {
+      const page = await fetchWebsite(link);
+      supportPages.push({
+        url: page.finalUrl,
+        html: page.html,
+        responseMs: page.responseMs,
+      });
+    } catch (error) {
+      // Contact/about pages are helpful, but homepage analysis can continue if they fail.
+    }
+  }
+  return {
+    ...fetchResult,
+    supportPages,
+    combinedHtml: [fetchResult.html, ...supportPages.map((page) => page.html)].join("\n"),
+    combinedResponseMs: Math.round(
+      [fetchResult.responseMs, ...supportPages.map((page) => page.responseMs)].reduce((sum, value) => sum + value, 0) /
+        Math.max(1, supportPages.length + 1)
+    ),
+  };
 }
 
 async function findBusinessWebsite(input) {
@@ -104,8 +200,9 @@ async function findBusinessWebsite(input) {
   for (const candidate of candidates) {
     try {
       const result = await fetchWebsite(candidate);
-      const analysis = analyzeWebsite(result, input);
-      if (analysis.matchStrength >= 1) return analysis;
+      const enriched = await enrichWebsiteFetch(result);
+      const analysis = analyzeWebsite(enriched, input);
+      if (analysis.match.verified) return analysis;
     } catch (error) {
       lastError = error;
     }
@@ -114,25 +211,28 @@ async function findBusinessWebsite(input) {
 }
 
 function analyzeWebsite(fetchResult, { businessName, city, state }) {
-  const html = fetchResult.html;
+  const html = fetchResult.combinedHtml || fetchResult.html;
   const lower = html.toLowerCase();
-  const plainText = lower.replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<style[\s\S]*?<\/style>/gi, " ").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ");
-  const title = tagContent(html, /<title[^>]*>([\s\S]*?)<\/title>/i);
-  const description = tagContent(html, /<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)["'][^>]*>|<meta[^>]+content=["']([^"']*)["'][^>]+name=["']description["'][^>]*>/i);
-  const canonical = tagContent(html, /<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']*)["'][^>]*>|<link[^>]+href=["']([^"']*)["'][^>]+rel=["']canonical["'][^>]*>/i);
-  const hasLang = /<html[^>]+\slang=["'][^"']+["']/i.test(html);
-  const hasViewport = /<meta[^>]+name=["']viewport["']/i.test(html);
+  const plainText = htmlToPlainText(html);
+  const title = tagContent(fetchResult.html, /<title[^>]*>([\s\S]*?)<\/title>/i);
+  const description = tagContent(fetchResult.html, /<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)["'][^>]*>|<meta[^>]+content=["']([^"']*)["'][^>]+name=["']description["'][^>]*>/i);
+  const canonical = tagContent(fetchResult.html, /<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']*)["'][^>]*>|<link[^>]+href=["']([^"']*)["'][^>]+rel=["']canonical["'][^>]*>/i);
+  const hasLang = /<html[^>]+\slang=["'][^"']+["']/i.test(fetchResult.html);
+  const hasViewport = /<meta[^>]+name=["']viewport["']/i.test(fetchResult.html);
   const hasContact = /wa\.me|api\.whatsapp\.com|whatsapp|tel:|mailto:|<form\b/i.test(lower);
   const hasWhatsapp = /wa\.me|api\.whatsapp\.com|whatsapp/i.test(lower);
   const hasPhone = /tel:|\+91|phone|call us|contact/i.test(lower);
   const hasEmail = /mailto:|email/i.test(lower);
   const hasMap = /google\.com\/maps|maps\.app\.goo\.gl|goo\.gl\/maps|map/i.test(lower);
-  const hasSocial = /instagram\.com|facebook\.com|linkedin\.com|youtube\.com/i.test(lower);
+  const hasSocialLink = /instagram\.com|facebook\.com|linkedin\.com|youtube\.com/i.test(lower);
+  const hasSocialMention = /\b(instagram|facebook|youtube|follow us|social media|reels?)\b/i.test(plainText);
   const hasSchema = /application\/ld\+json/i.test(lower);
   const hasOpenGraph = /<meta[^>]+property=["']og:/i.test(lower);
   const hasAbout = /about|founder|team|staff|doctor|principal|owner|history/i.test(lower);
   const hasService = /service|admission|course|product|menu|pricing|facility|appointment|booking|program/i.test(lower);
-  const hasProof = /testimonial|review|success|gallery|portfolio|case study|parents|clients|results|award/i.test(lower);
+  const hasGalleryProof = /gallery|photos|moments|activities|events|celebration|cultural|annual|classroom|sports|portfolio/i.test(lower);
+  const hasParentProof = /testimonial|review|success|parents|clients|results|award|happy families|trusted|parent hub|founder story/i.test(lower);
+  const hasProof = hasGalleryProof || hasParentProof;
   const hasVideo = /youtube\.com|youtu\.be|video|reel/i.test(lower);
   const imageTags = html.match(/<img\b[^>]*>/gi) || [];
   const missingAlt = imageTags.filter((tag) => !/\salt=["'][^"']+["']/i.test(tag)).length;
@@ -142,16 +242,16 @@ function analyzeWebsite(fetchResult, { businessName, city, state }) {
   const signalText = `${title} ${description} ${plainText.slice(0, 9000)}`;
   const nameHits = countWordHits(signalText, nameTokens);
   const coreHits = countWordHits(signalText, coreNameTokens);
-  const locationHits = countWordHits(signalText, locationTokens);
+  const locationHits = countExactTokenHits(signalText, locationTokens);
   const matchStrength = Math.max(nameHits, coreHits);
 
-  return {
+  const site = {
     businessName,
     city,
     state,
     requestedUrl: fetchResult.requestedUrl,
     finalUrl: fetchResult.finalUrl,
-    responseMs: fetchResult.responseMs,
+    responseMs: fetchResult.combinedResponseMs || fetchResult.responseMs,
     domain: new URL(fetchResult.finalUrl).hostname.replace(/^www\./, ""),
     title,
     description,
@@ -163,12 +263,16 @@ function analyzeWebsite(fetchResult, { businessName, city, state }) {
     hasPhone,
     hasEmail,
     hasMap,
-    hasSocial,
+    hasSocial: hasSocialLink || hasSocialMention,
+    hasSocialLink,
+    hasSocialMention,
     hasSchema,
     hasOpenGraph,
     hasAbout,
     hasService,
     hasProof,
+    hasGalleryProof,
+    hasParentProof,
     hasVideo,
     imageCount: imageTags.length,
     missingAlt,
@@ -176,6 +280,14 @@ function analyzeWebsite(fetchResult, { businessName, city, state }) {
     coreHits,
     locationHits,
     matchStrength,
+    supportPagesChecked: fetchResult.supportPages?.length || 0,
+    supportPageUrls: (fetchResult.supportPages || []).map((page) => page.url),
+    signalText: signalText.toLowerCase(),
+  };
+
+  return {
+    ...site,
+    match: evaluateMatch(site, { businessName, city, state }),
   };
 }
 
@@ -187,8 +299,8 @@ function buildTrustScore(site) {
   const websitePresence = factor(
     "Website Presence",
     20,
-    10 + (site.title ? 3 : 0) + (site.description ? 3 : 0) + (site.hasService ? 2 : 0) + (site.hasViewport ? 2 : 0),
-    `Website was discovered from the business name and inspected: ${site.domain}.`
+    Math.min(18, 6 + Math.round(site.match.confidence / 12) + (site.title ? 2 : 0) + (site.description ? 2 : 0) + (site.hasService ? 2 : 0) + (site.hasViewport ? 2 : 0)),
+    `Verified local website was discovered and inspected: ${site.domain}. Match confidence: ${site.match.confidence}%.`
   );
   const enquiry = factor(
     "Contact & Enquiry Readiness",
@@ -200,7 +312,9 @@ function buildTrustScore(site) {
     "Local Trust Signals",
     15,
     (site.hasMap ? 6 : 0) + Math.min(5, site.locationHits * 2) + (site.hasAbout ? 4 : 0),
-    site.locationHits || site.hasMap ? "Location or map-related signals were found on the website." : "Location signals are weak. Add city, address and map clearly."
+    site.locationHits || site.hasMap
+      ? `Location or map-related signals were found across homepage/support pages. Support pages checked: ${site.supportPagesChecked}.`
+      : `Location signals are weak even after checking homepage/support pages. Support pages checked: ${site.supportPagesChecked}.`
   );
   const seoBasics = factor(
     "SEO Basics",
@@ -211,14 +325,14 @@ function buildTrustScore(site) {
   const socialProof = factor(
     "Social Proof",
     10,
-    (site.hasSocial ? 5 : 0) + (site.hasVideo ? 2 : 0) + (site.hasProof ? 3 : 0),
-    site.hasSocial || site.hasProof ? "Social links, proof, gallery, testimonials or video signals were detected." : "Social proof appears limited on the website."
+    (site.hasSocialLink ? 3 : 0) + (site.hasSocialMention ? 1 : 0) + (site.hasGalleryProof ? 2 : 0) + (site.hasParentProof ? 2 : 0) + (site.hasVideo ? 1 : 0) + (site.imageCount >= 8 ? 1 : 0),
+    site.hasSocial || site.hasProof ? "Social proof visible on the website was detected: social links, gallery, parent proof, testimonials, videos or real activity content." : "Social proof appears limited on the inspected website. Add social links, gallery, parent stories or video proof."
   );
   const brandConsistency = factor(
     "Brand Consistency",
     10,
-    Math.min(6, site.matchStrength * 2) + Math.min(2, site.locationHits) + (site.description ? 2 : 0),
-    site.matchStrength ? "Business name signals appear on the website." : "Business name match is weak. The website should clearly mention the brand."
+    Math.min(5, site.matchStrength * 2) + (site.match.hasLocalMatch ? 3 : 0) + (site.description ? 2 : 0),
+    site.match.verified ? "Business name and location signals appear on the website." : "Business name or location match is weak. Manual verification is needed."
   );
   const mobile = factor(
     "Mobile Readiness",
@@ -232,7 +346,6 @@ function buildTrustScore(site) {
     (site.hasProof ? 2 : 0) + (site.imageCount >= 4 ? 1 : 0) + (site.hasAbout ? 1 : 0) + (site.hasVideo ? 1 : 0),
     site.hasProof || site.hasAbout ? "Some confidence-building content is visible." : "Add testimonials, gallery, founder/team story or customer proof."
   );
-
   const factors = [websitePresence, enquiry, localTrust, seoBasics, socialProof, brandConsistency, mobile, confidence];
   const overall = factors.reduce((total, item) => total + item.score, 0);
   const summary =
@@ -280,14 +393,24 @@ function buildTrustScore(site) {
       missingAlt: site.missingAlt,
       nameHits: site.nameHits,
       locationHits: site.locationHits,
+      supportPagesChecked: site.supportPagesChecked,
+      supportPageUrls: site.supportPageUrls,
+      matchConfidence: site.match.confidence,
+      matchReason: site.match.reason,
       discoveredAutomatically: !site.websiteEntered,
+    },
+    match: {
+      verified: site.match.verified,
+      confidence: site.match.confidence,
+      reason: site.match.reason,
+      matchedLocationTokens: site.match.matchedLocationTokens,
+      requiredLocationTokens: site.match.requiredLocationTokens,
     },
   };
 }
 
 export default async function handler(req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  applyApiSecurityHeaders(res);
 
   if (req.method === "OPTIONS") {
     res.status(204).end();
@@ -299,9 +422,20 @@ export default async function handler(req, res) {
     return;
   }
 
+  const rate = rateLimit(req, "trust-score", { limit: 12, windowMs: 60_000 });
+  if (!rate.allowed) {
+    res.setHeader("Retry-After", String(rate.retryAfter));
+    res.status(429).json({ error: "rate-limited", message: "Too many checks. Please try again shortly." });
+    return;
+  }
+
   const businessName = clean(req.query.businessName);
   const city = clean(req.query.city);
   const state = clean(req.query.state);
+  if (businessName.length > 90 || city.length > 60 || state.length > 60 || /[<>]/.test(`${businessName}${city}${state}`)) {
+    res.status(400).json({ error: "invalid-fields", message: "Please enter a valid business name, city and state." });
+    return;
+  }
   if (!businessName || !city || !state) {
     res.status(400).json({
       error: "missing-fields",
@@ -321,7 +455,7 @@ export default async function handler(req, res) {
     }
     res.status(404).json({
       error: "website-not-found",
-      message: "Tivoro could not automatically find matching live website signals from this business name and location.",
+      message: "Tivoro could not confidently verify an official local website for this business name and location after checking the homepage and contact/about pages. A same-name website from another location is not counted as the official website.",
     });
   }
 }
