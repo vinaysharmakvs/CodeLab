@@ -300,6 +300,57 @@ function initPrivacyAndFormSafety() {
   });
 }
 
+function activeProfileOrFallback() {
+  return document.body.dataset.activeProfile || getStoredProfile() || getProfileFromUrl() || inferProfileFromPage() || "";
+}
+
+function syncMobileWorkflow(profile) {
+  const activeProfile = isValidProfile(profile) ? profile : "";
+  document.querySelectorAll("[data-mobile-profile-card]").forEach((card) => {
+    card.hidden = card.dataset.mobileProfileCard !== activeProfile;
+  });
+  document.querySelectorAll(".mobile-default-path").forEach((card) => {
+    card.hidden = Boolean(activeProfile);
+  });
+  document.querySelectorAll(".mobile-profile-rail [data-profile-select], .mobile-menu-profile-switch [data-profile-select]").forEach((button) => {
+    button.classList.toggle("is-selected", button.dataset.profileSelect === activeProfile);
+  });
+  document.querySelectorAll("[data-mobile-ai-link]").forEach((link) => {
+    link.href = activeProfile
+      ? buildProfileUrl("ai-growth-partner.html#chat-card", activeProfile)
+      : "ai-growth-partner.html#chat-card";
+  });
+}
+
+function initMobileWorkflowShell() {
+  document.querySelectorAll(".mobile-menu").forEach((nav) => {
+    if (nav.querySelector(".mobile-menu-profile-switch")) return;
+    const switcher = document.createElement("div");
+    switcher.className = "mobile-menu-profile-switch";
+    switcher.setAttribute("aria-label", "Switch Tivoro profile");
+    switcher.innerHTML = `
+      <span>Profile</span>
+      <button type="button" data-profile-select="student">Student</button>
+      <button type="button" data-profile-select="parent">Parent</button>
+      <button type="button" data-profile-select="business">Business</button>
+    `;
+    nav.insertBefore(switcher, nav.firstChild);
+  });
+
+  if (!document.querySelector(".mobile-sticky-actions")) {
+    const bar = document.createElement("div");
+    bar.className = "mobile-sticky-actions";
+    bar.setAttribute("aria-label", "Quick mobile actions");
+    bar.innerHTML = `
+      <a class="mobile-sticky-ai" href="ai-growth-partner.html#chat-card" data-mobile-ai-link>Ask Tivoro AI</a>
+      <a class="mobile-sticky-book" href="index.html#booking">Book Slot</a>
+    `;
+    document.body.appendChild(bar);
+  }
+
+  syncMobileWorkflow(activeProfileOrFallback());
+}
+
 function initTivoroMotion() {
   const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
   document.documentElement.classList.add("tivoro-motion-ready");
@@ -1124,6 +1175,7 @@ function applyNeutralProfile() {
     trigger.classList.remove("is-selected");
   });
   applyProfileNavigation("");
+  syncMobileWorkflow("");
   if (profilePrompt && isHomePage()) profilePrompt.hidden = false;
 }
 
@@ -1148,6 +1200,7 @@ function applyProfile(profile) {
 
   if (profileTitle) profileTitle.textContent = profileCopy[profile].title;
   if (profileText) profileText.textContent = profileCopy[profile].text;
+  syncMobileWorkflow(profile);
   if (profilePrompt) profilePrompt.hidden = true;
 }
 
@@ -1155,6 +1208,7 @@ profileSections.forEach((section) => {
   section.hidden = true;
 });
 normalizeProfileNavigation();
+initMobileWorkflowShell();
 document.body.classList.add("profile-filter-ready");
 
 const activeProfile = getProfileFromUrl() || inferProfileFromPage() || (isHomePage() ? "" : getStoredProfile());
