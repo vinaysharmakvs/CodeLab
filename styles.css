@@ -18729,6 +18729,341 @@ body:not(.profile-filter-ready) [data-profile-nav] {
   }
 }
 
+/* Mobile-first Tivoro workflow. Desktop layout is intentionally untouched. */
+.mobile-journey-workflow,
+.mobile-sticky-actions,
+.mobile-menu-profile-switch {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  body.tivoro-premium-page {
+    padding-bottom: 82px;
+  }
+
+  .tivoro-premium-page .top-profile-toggle {
+    display: none;
+  }
+
+  .mobile-menu-profile-switch {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid rgba(142, 232, 255, 0.16);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .mobile-menu-profile-switch span {
+    grid-column: 1 / -1;
+    color: #8ee8ff;
+    font-size: 0.72rem;
+    font-weight: 950;
+    text-transform: uppercase;
+  }
+
+  .mobile-menu-profile-switch button {
+    min-height: 42px;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 950;
+  }
+
+  .mobile-menu-profile-switch button.is-selected {
+    color: #071326;
+    border-color: transparent;
+    background: linear-gradient(135deg, #8ee8ff, #42d9b5);
+    box-shadow: 0 12px 26px rgba(66, 217, 181, 0.18);
+  }
+
+  .mobile-journey-workflow {
+    display: grid;
+    gap: 14px;
+    width: min(100% - 24px, 1180px);
+    margin: 126px auto 0;
+    padding: 16px;
+    color: #f7fbff;
+    border: 1px solid rgba(142, 232, 255, 0.18);
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 12% 10%, rgba(142, 232, 255, 0.22), transparent 36%),
+      radial-gradient(circle at 88% 0%, rgba(255, 188, 226, 0.16), transparent 38%),
+      linear-gradient(145deg, #071326, #101c34 58%, #151f38);
+    box-shadow: 0 24px 70px rgba(8, 17, 31, 0.22);
+  }
+
+  .mobile-journey-workflow + .codelab-home-hero {
+    margin-top: 16px;
+  }
+
+  .mobile-workflow-head {
+    display: grid;
+    gap: 7px;
+  }
+
+  .mobile-workflow-head h2 {
+    color: #ffffff;
+    font-size: clamp(1.55rem, 7vw, 2.2rem);
+    line-height: 1;
+  }
+
+  .mobile-workflow-head p:not(.eyebrow) {
+    color: rgba(247, 251, 255, 0.76);
+    font-size: 0.92rem;
+    font-weight: 760;
+    line-height: 1.5;
+  }
+
+  .mobile-profile-rail,
+  .mobile-workflow-steps {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(132px, 42%);
+    gap: 9px;
+    margin-inline: -16px;
+    padding: 0 16px 4px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+  }
+
+  .mobile-profile-rail::-webkit-scrollbar,
+  .mobile-workflow-steps::-webkit-scrollbar,
+  .codelab-home-page .codelab-route-grid::-webkit-scrollbar,
+  .codelab-home-page .tivoro-trust-grid::-webkit-scrollbar,
+  .codelab-home-page .booking-intent-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-profile-rail button {
+    display: grid;
+    gap: 5px;
+    min-height: 90px;
+    padding: 13px;
+    text-align: left;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at 18% 10%, rgba(142, 232, 255, 0.18), transparent 42%),
+      rgba(255, 255, 255, 0.075);
+    scroll-snap-align: start;
+    cursor: pointer;
+  }
+
+  .mobile-profile-rail button:nth-child(2) {
+    background:
+      radial-gradient(circle at 18% 10%, rgba(66, 217, 181, 0.2), transparent 42%),
+      rgba(255, 255, 255, 0.075);
+  }
+
+  .mobile-profile-rail button:nth-child(3) {
+    background:
+      radial-gradient(circle at 18% 10%, rgba(255, 212, 95, 0.18), transparent 42%),
+      rgba(255, 255, 255, 0.075);
+  }
+
+  .mobile-profile-rail button.is-selected {
+    border-color: rgba(142, 232, 255, 0.48);
+    box-shadow: 0 18px 42px rgba(66, 217, 181, 0.14);
+  }
+
+  .mobile-profile-rail span {
+    width: fit-content;
+    padding: 6px 8px;
+    color: #071326;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #8ee8ff, #ffd45f);
+    font-size: 0.68rem;
+    font-weight: 950;
+    text-transform: uppercase;
+  }
+
+  .mobile-profile-rail strong {
+    color: #ffffff;
+    font-size: 0.96rem;
+    line-height: 1.18;
+  }
+
+  .mobile-workflow-preview article {
+    display: grid;
+    gap: 9px;
+    padding: 15px;
+    border: 1px solid rgba(142, 232, 255, 0.16);
+    border-radius: 20px;
+    background:
+      radial-gradient(circle at 8% 10%, rgba(142, 232, 255, 0.2), transparent 42%),
+      rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  }
+
+  .mobile-workflow-preview article[hidden] {
+    display: none !important;
+  }
+
+  .mobile-workflow-preview span {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    color: #071326;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #42d9b5, #ffd45f);
+    font-size: 0.78rem;
+    font-weight: 950;
+  }
+
+  .mobile-workflow-preview strong {
+    color: #ffffff;
+    font-size: 1.08rem;
+    line-height: 1.18;
+  }
+
+  .mobile-workflow-preview p {
+    color: rgba(247, 251, 255, 0.74);
+    font-size: 0.9rem;
+    font-weight: 760;
+    line-height: 1.52;
+  }
+
+  .mobile-workflow-preview a {
+    display: inline-flex;
+    width: fit-content;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 13px;
+    color: #071326;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #8ee8ff, #42d9b5);
+    font-size: 0.82rem;
+    font-weight: 950;
+  }
+
+  .mobile-workflow-steps {
+    grid-auto-columns: minmax(112px, 34%);
+  }
+
+  .mobile-workflow-steps span {
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 11px;
+    color: rgba(247, 251, 255, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.075);
+    scroll-snap-align: start;
+    font-size: 0.76rem;
+    font-weight: 950;
+    white-space: nowrap;
+  }
+
+  .mobile-sticky-actions {
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    z-index: 92;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    padding: 8px;
+    border: 1px solid rgba(142, 232, 255, 0.2);
+    border-radius: 18px;
+    background: rgba(7, 19, 38, 0.84);
+    box-shadow: 0 20px 54px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(18px);
+  }
+
+  .mobile-sticky-actions a {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 14px;
+    border-radius: 14px;
+    font-size: 0.88rem;
+    font-weight: 950;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .mobile-sticky-ai {
+    color: #071326;
+    background: linear-gradient(135deg, #8ee8ff, #42d9b5);
+  }
+
+  .mobile-sticky-book {
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.09);
+  }
+
+  .tivoro-premium-page .tivoro-bot {
+    bottom: 82px;
+  }
+
+  .tivoro-premium-page .tivoro-bot:not(.is-open) {
+    right: auto !important;
+    left: -54px !important;
+    bottom: 84px !important;
+    transform: scale(0.68);
+    transform-origin: left bottom;
+  }
+
+  .tivoro-premium-page .tivoro-bot:not(.is-open) .tivoro-bot-copy {
+    display: none;
+  }
+
+  .tivoro-premium-page .tivoro-bot.is-open {
+    bottom: 84px;
+  }
+
+  .codelab-home-page .codelab-route-grid,
+  .codelab-home-page .tivoro-trust-grid,
+  .codelab-home-page .booking-intent-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(238px, 82%);
+    grid-template-columns: none;
+    margin-inline: -18px;
+    padding: 0 18px 6px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline mandatory;
+  }
+
+  .codelab-home-page .codelab-route-grid a,
+  .codelab-home-page .tivoro-trust-grid article,
+  .codelab-home-page .booking-intent-grid article {
+    scroll-snap-align: start;
+  }
+
+  .codelab-home-page .booking-intent-grid article {
+    grid-template-columns: 38px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 390px) {
+  .mobile-sticky-actions {
+    grid-template-columns: 1fr 0.72fr;
+  }
+
+  .mobile-sticky-actions a {
+    min-height: 42px;
+    padding: 0 10px;
+    font-size: 0.8rem;
+  }
+}
+
 .ai-tools-page {
   background:
     radial-gradient(circle at 14% 5%, rgba(142, 232, 255, 0.2), transparent 28rem),
