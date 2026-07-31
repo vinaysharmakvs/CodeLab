@@ -65,6 +65,16 @@ const profileSections = document.querySelectorAll("[data-profile-section]");
 const profilePrompt = document.querySelector("[data-profile-prompt]");
 const profileTitle = document.querySelector("[data-profile-title]");
 const profileText = document.querySelector("[data-profile-text]");
+const routeEyebrow = document.querySelector("[data-route-eyebrow]");
+const routeTitle = document.querySelector("[data-route-title]");
+const routeCopy = document.querySelector("[data-route-copy]");
+const routeCards = document.querySelectorAll("[data-route-profile]");
+const homeAiLineOne = document.querySelector("[data-home-ai-line-one]");
+const homeAiLineTwo = document.querySelector("[data-home-ai-line-two]");
+const bookingProfileField = document.querySelector("[data-booking-profile-field]");
+const bookingLevelSelect = document.querySelector('[name="bookingLevel"]');
+const bookingInterestSelect = document.querySelector('[name="bookingInterest"]');
+const bookingModeSelect = document.querySelector('[name="bookingMode"]');
 const growthTabs = document.querySelectorAll("[data-growth-tab]");
 const growthConsoleLabel = document.querySelector("[data-growth-console-label]");
 const growthConsoleScore = document.querySelector("[data-growth-console-score]");
@@ -452,11 +462,13 @@ async function submitTivoroLead(type, payload) {
 async function submitBookingToGoogleForm(data) {
   if (!tivoroBookingGoogleForm.endpoint) return false;
 
+  const activeProfile = getActiveProfile();
+  const context = profileContext[activeProfile];
   const payload = new URLSearchParams();
   const entryValues = {
     name: data.get("bookingStudent"),
     mobile: data.get("bookingMobile"),
-    userType: data.get("bookingLevel"),
+    userType: context?.bookingLevel || data.get("bookingLevel"),
     requirement: data.get("bookingInterest"),
     support: data.get("bookingMode"),
   };
@@ -721,8 +733,9 @@ function leadTypeForGuidedForm(type) {
 }
 
 function leadTypeForBooking(level) {
-  if (String(level).toLowerCase().includes("business")) return "business";
-  if (String(level).toLowerCase().includes("parent")) return "parent";
+  const normalized = String(level).toLowerCase();
+  if (normalized.includes("business")) return "business";
+  if (normalized.includes("parent")) return "parent";
   return "child";
 }
 
@@ -892,6 +905,54 @@ const profileCopy = {
   },
 };
 
+const profileContext = {
+  student: {
+    label: "Student",
+    bookingLevel: "College student",
+    bookingInterest: "Final year project / internship",
+    bookingMode: "Project consultation",
+    routeEyebrow: "Student mode",
+    routeTitle: "Build skills, projects and interview proof.",
+    routeCopy: "Tivoro will show student-focused tools: coding, AI, projects, internships, portfolio proof and career direction.",
+    aiLineOne: "Hi, you are exploring Tivoro as a student.",
+    aiLineTwo: "What would you like to build: AI, coding, internship, career direction or projects?",
+    botIntro: "Hi, I see you are exploring Student mode. I can help with coding, AI, projects, internships, portfolio proof and career direction.",
+    botPlaceholder: "Ask: AI project, coding, internship...",
+    whatsapp: "Hello Tivoro, I am exploring Student support. Please guide me with projects, skills or career direction.",
+    quick: ["AI project", "Coding path", "Internship", "Career direction"],
+  },
+  parent: {
+    label: "Parent",
+    bookingLevel: "Grade 3-5 student / parent",
+    bookingInterest: "Find right course",
+    bookingMode: "Not sure, guide me",
+    routeEyebrow: "Parent mode",
+    routeTitle: "Find the right learning path for your child.",
+    routeCopy: "Tivoro will focus on child assessment, reading, coding readiness, confidence, class format and parent guidance.",
+    aiLineOne: "Hi, you are exploring Tivoro as a parent.",
+    aiLineTwo: "What does your child need today: reading, school support, coding, confidence or assessment?",
+    botIntro: "Hi, I see you are exploring Parent mode. I can help with child assessment, reading support, course fit, 1:1 vs group guidance and confidence-building paths.",
+    botPlaceholder: "Ask: reading, assessment, course fit...",
+    whatsapp: "Hello Tivoro, I am a parent. Please help me assess the right learning path for my child.",
+    quick: ["Assess my child", "Reading support", "Coding readiness", "1:1 or group"],
+  },
+  business: {
+    label: "Business",
+    bookingLevel: "Business owner",
+    bookingInterest: "Website design / branding",
+    bookingMode: "Business service consultation",
+    routeEyebrow: "Business mode",
+    routeTitle: "Improve leads, trust and automation.",
+    routeCopy: "Tivoro will show business-focused tools: website review, SEO, AI automation, chatbot, lead generation and digital trust.",
+    aiLineOne: "Hi, you are exploring Tivoro for business growth.",
+    aiLineTwo: "What would you like to improve: website, leads, SEO, automation or online reputation?",
+    botIntro: "Hi, I see you are exploring Business mode. I can help with website review, lead generation, SEO, AI chatbot, automation and online reputation.",
+    botPlaceholder: "Ask: website review, leads, SEO...",
+    whatsapp: "Hello Tivoro, I am exploring Business support. Please help me review my website, leads or automation needs.",
+    quick: ["Website review", "Increase leads", "SEO", "AI automation"],
+  },
+};
+
 function isValidProfile(profile) {
   return Boolean(profileCopy[profile]);
 }
@@ -921,6 +982,11 @@ function getStoredProfile() {
   } catch (error) {
     return "";
   }
+}
+
+function getActiveProfile() {
+  const profile = document.body.dataset.activeProfile || getProfileFromUrl() || getStoredProfile() || inferProfileFromPage();
+  return isValidProfile(profile) ? profile : "";
 }
 
 function storeProfile(profile) {
@@ -1118,12 +1184,55 @@ function applyProfileNavigation(profile) {
   });
 }
 
+function updateHomeProfileContext(profile) {
+  const context = profileContext[profile];
+  if (!context) {
+    if (routeEyebrow) routeEyebrow.textContent = "Choose your journey";
+    if (routeTitle) routeTitle.textContent = "What would you like to grow?";
+    if (routeCopy) routeCopy.textContent = "Tivoro is organised into three clear paths, so visitors do not have to decode every service before taking action.";
+    if (homeAiLineOne) homeAiLineOne.textContent = "Hi, I will help you choose the right path.";
+    if (homeAiLineTwo) homeAiLineTwo.textContent = "Are you a student, parent or business owner?";
+    routeCards.forEach((card) => {
+      card.hidden = false;
+    });
+    return;
+  }
+
+  if (routeEyebrow) routeEyebrow.textContent = context.routeEyebrow;
+  if (routeTitle) routeTitle.textContent = context.routeTitle;
+  if (routeCopy) routeCopy.textContent = context.routeCopy;
+  if (homeAiLineOne) homeAiLineOne.textContent = context.aiLineOne;
+  if (homeAiLineTwo) homeAiLineTwo.textContent = context.aiLineTwo;
+  routeCards.forEach((card) => {
+    card.hidden = card.dataset.routeProfile !== profile;
+  });
+}
+
+function updateBookingForProfile(profile) {
+  const context = profileContext[profile];
+  if (!bookingForm || !bookingLevelSelect) return;
+
+  if (!context) {
+    if (bookingProfileField) bookingProfileField.hidden = false;
+    bookingLevelSelect.required = true;
+    return;
+  }
+
+  bookingLevelSelect.value = context.bookingLevel;
+  bookingLevelSelect.required = false;
+  if (bookingProfileField) bookingProfileField.hidden = true;
+  if (bookingInterestSelect && !bookingInterestSelect.value) bookingInterestSelect.value = context.bookingInterest;
+  if (bookingModeSelect && !bookingModeSelect.value) bookingModeSelect.value = context.bookingMode;
+}
+
 function applyNeutralProfile() {
   delete document.body.dataset.activeProfile;
   profileTriggers.forEach((trigger) => {
     trigger.classList.remove("is-selected");
   });
   applyProfileNavigation("");
+  updateHomeProfileContext("");
+  updateBookingForProfile("");
   if (profilePrompt && isHomePage()) profilePrompt.hidden = false;
 }
 
@@ -1148,7 +1257,10 @@ function applyProfile(profile) {
 
   if (profileTitle) profileTitle.textContent = profileCopy[profile].title;
   if (profileText) profileText.textContent = profileCopy[profile].text;
+  updateHomeProfileContext(profile);
+  updateBookingForProfile(profile);
   if (profilePrompt) profilePrompt.hidden = true;
+  document.dispatchEvent(new CustomEvent("tivoro:profilechange", { detail: { profile } }));
 }
 
 profileSections.forEach((section) => {
@@ -1157,7 +1269,7 @@ profileSections.forEach((section) => {
 normalizeProfileNavigation();
 document.body.classList.add("profile-filter-ready");
 
-const activeProfile = getProfileFromUrl() || inferProfileFromPage() || (isHomePage() ? "" : getStoredProfile());
+const activeProfile = getProfileFromUrl() || inferProfileFromPage() || getStoredProfile();
 if (activeProfile) {
   applyProfile(activeProfile);
 } else {
@@ -2981,7 +3093,8 @@ function guidedRecommendation(type, data) {
 }
 
 function createTivoroBot() {
-  const assistantWhatsappText = "Hello Tivoro, I want help choosing the right Tivoro AI path.";
+  const initialProfile = getActiveProfile();
+  const assistantWhatsappText = profileContext[initialProfile]?.whatsapp || "Hello Tivoro, I want help choosing the right Tivoro AI path.";
   const bot = document.createElement("div");
   bot.className = "tivoro-bot";
   bot.innerHTML = `
@@ -3010,7 +3123,7 @@ function createTivoroBot() {
       <div class="tivoro-bot-messages" aria-live="polite"></div>
       <div class="tivoro-bot-quick" aria-label="Quick Tivoro questions"></div>
       <form class="tivoro-bot-form">
-        <input type="text" placeholder="Ask: parent, student or business..." aria-label="Ask Tivoro AI a question" />
+        <input type="text" placeholder="${profileContext[initialProfile]?.botPlaceholder || "Ask: parent, student or business..."}" aria-label="Ask Tivoro AI a question" />
         <button type="submit">Ask</button>
       </form>
       <a class="tivoro-bot-whatsapp" href="https://wa.me/${whatsappNumber}?text=${encodeURIComponent(assistantWhatsappText)}" target="_blank" rel="noopener noreferrer">Talk on WhatsApp</a>
@@ -3026,6 +3139,31 @@ function createTivoroBot() {
   const form = bot.querySelector(".tivoro-bot-form");
   const input = bot.querySelector(".tivoro-bot-form input");
   const motionQuery = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+
+  function currentBotQuestions() {
+    const context = profileContext[getActiveProfile()];
+    return context ? [...context.quick, "Talk on WhatsApp"] : tivoroBotQuickQuestions;
+  }
+
+  function renderBotQuickQuestions() {
+    quick.innerHTML = "";
+    currentBotQuestions().forEach((question) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = question;
+      button.addEventListener("click", () => answerQuestion(question));
+      quick.appendChild(button);
+    });
+  }
+
+  function syncBotContext() {
+    const context = profileContext[getActiveProfile()];
+    input.placeholder = context?.botPlaceholder || "Ask: parent, student or business...";
+    const whatsappText = context?.whatsapp || assistantWhatsappText;
+    const whatsappLink = bot.querySelector(".tivoro-bot-whatsapp");
+    if (whatsappLink) whatsappLink.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}`;
+    renderBotQuickQuestions();
+  }
 
   if (!motionQuery?.matches) {
     let lastScrollY = window.scrollY;
@@ -3095,6 +3233,19 @@ function createTivoroBot() {
     if (!cleanQuestion) return;
     addMessage(cleanQuestion, "user");
     const query = cleanQuestion.toLowerCase();
+    const active = getActiveProfile();
+    if (active === "business" && (query.includes("website") || query.includes("lead") || query.includes("seo") || query.includes("automation") || query.includes("review") || query.includes("reputation"))) {
+      addMessage("Business mode is active. Start with Website Review, Digital Trust Score, SEO, lead generation or AI automation. If you share your business type, Tivoro can map the quickest growth path.", "bot");
+      return;
+    }
+    if (active === "parent" && (query.includes("assess") || query.includes("reading") || query.includes("course") || query.includes("child") || query.includes("1:1") || query.includes("group"))) {
+      addMessage("Parent mode is active. We should first understand the child’s age, grade, confidence and goal, then decide whether reading support, coding readiness, 1:1 guidance or a group path fits best.", "bot");
+      return;
+    }
+    if (active === "student" && (query.includes("ai") || query.includes("coding") || query.includes("internship") || query.includes("career") || query.includes("project"))) {
+      addMessage("Student mode is active. The best next step is to choose one proof path: AI project, coding foundation, internship direction, career role or portfolio project.", "bot");
+      return;
+    }
     if (query.includes("start tivoro") || query === "i am a parent" || query === "i am a student" || query === "i am a business owner" || query.includes("show detailed")) {
       if (query.includes("parent")) {
         addMessage("Best next step: open Tivoro AI in Parent mode for a quick recommendation, or use the Parents page if you already want the detailed course finder.", "bot");
@@ -3134,7 +3285,7 @@ function createTivoroBot() {
     addMessage(
       best?.score
         ? best.item.answer
-        : "The cleanest path is to start with Tivoro AI. It will ask whether you are a student, parent or business owner, then create a simple roadmap. You can also open How We Work to see Tivoro's Growth Engine, or use the Explore links on the homepage for detailed pages.",
+        : profileContext[getActiveProfile()]?.botIntro || "The cleanest path is to start with Tivoro AI. Choose Student, Parent or Business once, then Tivoro creates a simple roadmap. You can also open How We Work to see Tivoro's Growth Engine.",
       "bot"
     );
   }
@@ -3156,16 +3307,11 @@ function createTivoroBot() {
     }, 3600);
   }
 
-  addMessage(
-    "Hi, I am Tivoro AI. I can help you choose the right path or explain how Tivoro turns ideas into digital businesses."
-  );
-
-  tivoroBotQuickQuestions.forEach((question) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = question;
-    button.addEventListener("click", () => answerQuestion(question));
-    quick.appendChild(button);
+  addMessage(profileContext[getActiveProfile()]?.botIntro || "Hi, I am Tivoro AI. I can help you choose the right path or explain how Tivoro turns ideas into digital businesses.");
+  syncBotContext();
+  document.addEventListener("tivoro:profilechange", () => {
+    syncBotContext();
+    addMessage(profileContext[getActiveProfile()]?.botIntro || "Profile updated. I will guide you with the right Tivoro path.");
   });
 
   scheduleBotDock();
@@ -4068,14 +4214,21 @@ submitPendingAmbassadorChallengeGoogleForm();
 
 bookingForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
+  const activeProfile = getActiveProfile();
+  updateBookingForProfile(activeProfile);
   const data = new FormData(bookingForm);
   setBookingError("");
+  const context = profileContext[activeProfile];
+  const profileLabel = context?.label || data.get("bookingLevel");
+  const leadType = activeProfile === "student" ? "child" : leadTypeForBooking(profileLabel || data.get("bookingLevel"));
 
   const message = encodeURIComponent(
-    `Hello Tivoro, I want to discuss and book a meeting. Name: ${data.get("bookingStudent")}. Mobile: ${data.get("bookingMobile")}. I am: ${data.get("bookingLevel")}. Need help with: ${data.get("bookingInterest")}. Preferred support: ${data.get("bookingMode")}. Please guide me with the next step.`
+    `Hello Tivoro, I want to discuss and book a meeting. Name: ${data.get("bookingStudent")}. Mobile: ${data.get("bookingMobile")}. Profile: ${profileLabel || "Not selected"}. Need help with: ${data.get("bookingInterest")}. Preferred support: ${data.get("bookingMode")}. Please guide me with the next step.`
   );
-  submitTivoroLead(leadTypeForBooking(data.get("bookingLevel")), {
+  submitTivoroLead(leadType, {
     formType: "WhatsApp Meeting Request",
+    selectedProfile: activeProfile || "",
+    profileLabel: profileLabel || "",
     ...formDataToObject(data),
   });
   submitBookingToGoogleForm(data);
