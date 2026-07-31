@@ -80,9 +80,9 @@
             <span>Live roadmap preview</span>
             <strong>2 min</strong>
           </div>
-          <div class="codelab-ai-chat">
-            <p>Hi, I will help you choose the right path.</p>
-            <p>Are you a student, parent or business owner?</p>
+          <div class="codelab-ai-chat" data-home-ai-preview>
+            <p data-home-ai-line-one>Hi, I will help you choose the right path.</p>
+            <p data-home-ai-line-two>Are you a student, parent or business owner?</p>
           </div>
           <div class="codelab-ai-progress" aria-hidden="true"><span></span></div>
           <div class="codelab-choice-grid" aria-label="Start Tivoro AI by profile">
@@ -115,28 +115,28 @@
       <section class="section codelab-manual-routes" id="manual-routes" aria-label="Explore Tivoro manually">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">Choose your journey</p>
-            <h2>What would you like to grow?</h2>
+            <p class="eyebrow" data-route-eyebrow>Choose your journey</p>
+            <h2 data-route-title>What would you like to grow?</h2>
           </div>
-          <p>Tivoro is organised into three clear paths, so visitors do not have to decode every service before taking action.</p>
+          <p data-route-copy>Tivoro is organised into three clear paths, so visitors do not have to decode every service before taking action.</p>
         </div>
         <div class="codelab-route-grid">
-          <a href="business.html?profile=business" data-profile-fixed="true">
+          <a href="business.html?profile=business" data-profile-fixed="true" data-route-profile="business">
             <span>My Business</span>
             <strong>Build a digital growth system</strong>
             <p>Product strategy, website experience, lead journeys, AI and automation.</p>
           </a>
-          <a href="students.html?profile=student" data-profile-fixed="true">
+          <a href="students.html?profile=student" data-profile-fixed="true" data-route-profile="student">
             <span>My Skills or Career</span>
             <strong>Find the right learning path</strong>
             <p>Coding, AI, live projects, career direction, internships and portfolio proof.</p>
           </a>
-          <a href="parents.html?profile=parent" data-profile-fixed="true">
+          <a href="parents.html?profile=parent" data-profile-fixed="true" data-route-profile="parent">
             <span>My Child's Future</span>
             <strong>Get personalized parent guidance</strong>
             <p>Choose the right learning path before selecting any course or format.</p>
           </a>
-          <a href="career.html?profile=student" data-profile-fixed="true">
+          <a href="career.html?profile=student" data-profile-fixed="true" data-route-profile="student">
             <span>Career Opportunities</span>
             <strong>Explore student leadership roles</strong>
             <p>Campus ambassador, internships and project-based career tracks.</p>
@@ -229,6 +229,25 @@
                   </div>
                 </div>
               </article>
+
+              <article class="impact-slide garry-cares-slide">
+                <div class="impact-slide-copy">
+                  <span>Social Impact Foundation</span>
+                  <strong>Garry Cares Foundation</strong>
+                  <p>Live NGO platform with donation clarity, team story, tribute pages, certificates, impact reporting and WhatsApp-first communication.</p>
+                  <a href="https://www.garrycaresfoundation.org.in/" target="_blank" rel="noopener noreferrer">View Garry Cares Foundation</a>
+                </div>
+                <div class="impact-slide-panel">
+                  <div class="brand-story-frame garry-cares-story-frame">
+                    <img src="assets/garry-cares-hero.jpg" alt="Garry Cares Foundation website preview showing community care" />
+                    <span class="brand-story-badge">Garry Cares Foundation</span>
+                  </div>
+                  <div class="impact-proof">
+                    <b>Live foundation website</b>
+                    <small>Donation, proof and legacy storytelling</small>
+                  </div>
+                </div>
+              </article>
             </div>
           </div>
           <button class="impact-nav impact-next" type="button" aria-label="Next brand">›</button>
@@ -236,6 +255,7 @@
             <button class="active" type="button" aria-label="Show Genesis Educates"></button>
             <button type="button" aria-label="Show Stone Field International School"></button>
             <button type="button" aria-label="Show Kidsverse School"></button>
+            <button type="button" aria-label="Show Garry Cares Foundation"></button>
           </div>
         </div>
       </section>
@@ -247,7 +267,7 @@
             <h2>Fresh launches coming from the Tivoro studio.</h2>
           </div>
           <p>
-            New food, healthcare and social impact brands are being shaped with clean websites,
+            New food and healthcare brands are being shaped with clean websites,
             WhatsApp-first enquiry flows, storytelling and conversion-focused digital presence.
           </p>
         </div>
@@ -291,18 +311,6 @@
                   <b>View Project</b>
                 </div>
               </a>
-              <a class="upcoming-project-card garry-cares-project" href="https://gcf-ochre.vercel.app/" target="_blank" rel="noopener noreferrer">
-                <div class="upcoming-project-visual garry-cares-visual">
-                  <img src="assets/garry-cares-hero.jpg" alt="Garry Cares Foundation website hero showing community care" />
-                  <em>Social impact</em>
-                </div>
-                <div class="upcoming-project-copy">
-                  <span>Foundation Website</span>
-                  <strong>Garry Cares Foundation</strong>
-                  <p>Human-first NGO presence with impact storytelling, donation clarity, project sections and volunteer enquiry flow.</p>
-                  <b>View Project</b>
-                </div>
-              </a>
             </div>
           </div>
           <button class="impact-nav upcoming-next" type="button" aria-label="Next upcoming project">›</button>
@@ -310,7 +318,6 @@
             <button class="active" type="button" aria-label="Show The Daily Dabba"></button>
             <button type="button" aria-label="Show The Velvet Plate"></button>
             <button type="button" aria-label="Show Dental Care Centre"></button>
-            <button type="button" aria-label="Show Garry Cares Foundation"></button>
           </div>
         </div>
       </section>
@@ -358,7 +365,7 @@
           <div class="booking-fields">
             <label>Name<input name="bookingStudent" type="text" placeholder="Student, parent or business name" required /></label>
             <label>Mobile / WhatsApp<input name="bookingMobile" type="tel" placeholder="+91" required /></label>
-            <label>You are<select name="bookingLevel" required><option value="">Select</option><option>Grade 3-5 student / parent</option><option>Grade 6-8 student / parent</option><option>Grade 9-12 student / parent</option><option>College student</option><option>Business owner</option><option>School / college representative</option><option>Creator / professional</option></select></label>
+            <label data-booking-profile-field>You are<select name="bookingLevel" required><option value="">Select</option><option>Grade 3-5 student / parent</option><option>Grade 6-8 student / parent</option><option>Grade 9-12 student / parent</option><option>College student</option><option>Business owner</option><option>School / college representative</option><option>Creator / professional</option></select></label>
             <label>Need help with<select name="bookingInterest" required><option value="">Select</option><option>Find right course</option><option>AI Champions Program</option><option>Python / web development</option><option>Final year project / internship</option><option>Website design / branding</option><option>Instagram / Facebook handling</option><option>Ads / WhatsApp lead funnel</option><option>AI chatbot / automation</option><option>School, college or corporate workshop</option></select></label>
             <label>Preferred support<select name="bookingMode" required><option value="">Select</option><option>1:1 live class</option><option>Small group class</option><option>Project consultation</option><option>Business service consultation</option><option>Workshop discussion</option><option>Not sure, guide me</option></select></label>
           </div>
