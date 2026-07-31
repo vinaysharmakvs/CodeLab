@@ -178,7 +178,22 @@
         const report = document.querySelector("[data-ai-report]");
         const switchButtons = document.querySelectorAll("[data-ai-switch-profile]");
         const state = { profile: null, step: -1, answers: [] };
-        const initialProfile = new URLSearchParams(window.location.search).get("profile");
+
+        function validProfile(profile) {
+          return Object.prototype.hasOwnProperty.call(flows, profile);
+        }
+
+        function getSavedProfile() {
+          try {
+            return localStorage.getItem("tivoroProfile") || "";
+          } catch (error) {
+            return "";
+          }
+        }
+
+        const requestedProfile = new URLSearchParams(window.location.search).get("profile") || "";
+        const savedProfile = getSavedProfile();
+        const initialProfile = validProfile(requestedProfile) ? requestedProfile : validProfile(savedProfile) ? savedProfile : "";
 
         function addMessage(text, type = "bot") {
           const bubble = document.createElement("div");
